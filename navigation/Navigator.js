@@ -13,7 +13,8 @@ const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 const RootNavigator = () => {
-  const loggedIn = true;
+  // !! DEV VALUE, TOGGLE BETWEEN LOGIN/REGISTER AND HOME/PROFILE/UPLOAD
+  const loggedIn = true; 
   return (
     <Stack.Navigator>
       {loggedIn ? (<Stack.Screen
