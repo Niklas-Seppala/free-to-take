@@ -5,26 +5,32 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FontAwesome } from '@expo/vector-icons';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen'
-import UploadScreen from '../screens/UploadScreen'
-import RegisterScreen from '../screens/RegisterScreen'
+import ProfileScreen from '../screens/ProfileScreen';
+import UploadScreen from '../screens/UploadScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import SingleScreen from '../screens/SingleScreen';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 const RootNavigator = () => {
   // !! DEV VALUE, TOGGLE BETWEEN LOGIN/REGISTER AND HOME/PROFILE/UPLOAD
-  const loggedIn = true; 
+  const loggedIn = true;
   return (
     <Stack.Navigator>
-      {loggedIn ? (<Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />) : (
+      {loggedIn ? (
         <>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen
+            name="Root"
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Single" component={SingleScreen} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
         </>
       )}
     </Stack.Navigator>
@@ -73,6 +79,13 @@ function BottomTabNavigator() {
   );
 }
 
-function TabBarIcon({name, color}) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} name={name} color={color} />;
+function TabBarIcon({ name, color }) {
+  return (
+    <FontAwesome
+      size={30}
+      style={{ marginBottom: -3 }}
+      name={name}
+      color={color}
+    />
+  );
 }

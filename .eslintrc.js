@@ -15,11 +15,6 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    'react-native',
-    'prettier'
-  ],
-  rules: {
-  },
+  plugins: ['react', 'react-native', 'prettier'],
+  rules: {},
 };
