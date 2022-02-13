@@ -15,7 +15,6 @@ import PropTypes from 'prop-types';
  */
 const GlobalContext = React.createContext({});
 
-
 const GlobalProvider = (props) => {
   // API call that invalidates previous fetch results.
   const [apiAction, setApiAction] = useState(false);

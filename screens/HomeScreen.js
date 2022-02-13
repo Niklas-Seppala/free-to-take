@@ -10,10 +10,10 @@ import { getToken } from '../utils/storage';
 const LoginScreen = () => {
   const { user, isAuthenticated, token } = useContext(GlobalContext);
   const login = useFormLogin();
-  const setToken = useTokenLogin();
+  const loginWithToken = useTokenLogin();
   const logout = useLogout();
 
-  useEffect(async () => setToken(await getToken()), []);
+  useEffect(async () => loginWithToken(await getToken()), []);
 
   return (
     <View>
@@ -21,11 +21,14 @@ const LoginScreen = () => {
         <View>
           <Text>{user?.username}</Text>
           <Text>{token}</Text>
-          <Button title='logout' onPress={() => logout()}></Button>
+          <Button title="logout" onPress={() => logout()}></Button>
         </View>
-      ): (
+      ) : (
         <View>
-          <Button title='login' onPress={() => login({username: 'nikke-nakke', password: 'salainen-sana'})}></Button>
+          <Button
+            title="login"
+            onPress={() => login({ username: 'nikke-nakke', password: 'salainen-sana' })}
+          ></Button>
         </View>
       )}
     </View>

@@ -4,9 +4,9 @@ import { clearStorage } from '../../utils/storage';
 
 /**
  * Hook for logging out. Clears @see GlobalContext of active user and JWT,
- * clears device permanent storage. 
+ * clears device permanent storage.
  * IsAuthenticated flag is set to false.
- * 
+ *
  * @returns {() => void} logout
  */
 export default function useLogout() {
@@ -24,7 +24,7 @@ export default function useLogout() {
       const storage = clearStorage(); // Start IO.
       setUser(null);
       setToken(null);
-      setIsAuthenticated(false)
+      setIsAuthenticated(false);
       await storage; // Sync IO.
     }
   }, [logoutRequested]);

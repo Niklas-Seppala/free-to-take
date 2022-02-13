@@ -4,7 +4,7 @@ const TOKEN_KEY = 'TOKEN';
 
 /**
  * Store JWT to device permanent storage.
- * 
+ *
  * @param {string} token JWT
  */
 export const storeToken = async (token) => {
@@ -24,4 +24,4 @@ export const getToken = async () => {
  */
 export const clearStorage = async () => {
   await AsyncStorage.clear();
-}
+};
