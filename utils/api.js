@@ -1,4 +1,8 @@
-const BASE_URL = 'https://media.mw.metropolia.fi/wbma';
+import axios from 'axios';
+
+export const BASE_URL = 'https://media.mw.metropolia.fi/wbma';
+export const TAG = '07A28F724E';
+export const client = axios;
 
 /**
  * Helper function for building API URL routes.
@@ -11,7 +15,7 @@ const urlBuilder = (route, param) => {
   return param ? `${URL}/${param}` : URL;
 };
 
-const routes = {
+export const routes = {
   auth: {
     /**
      * PERMISSION - ALL
@@ -192,9 +196,9 @@ const routes = {
 
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Update existing media.
-     * 
+     *
      * @method PUT
      * @param {number} id
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Media-UpdateMediaFile
@@ -203,32 +207,32 @@ const routes = {
 
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Upload new media.
-     * 
+     *
      * multipart/form-data
      * @method POST
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Media-PostMediaFile
      */
-    uploads: urlBuilder('media')
+    uploads: urlBuilder('media'),
   },
   uploads: {
     /**
      * PERMISSION - ALL
-     * 
+     *
      * Static file location on the server.
-     * 
+     *
      * @method GET
-     * @param {string} name 
+     * @param {string} name
      */
-    file: (name) => urlBuilder('uploads', name)
+    file: (name) => urlBuilder('uploads', name),
   },
   comment: {
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Delete user's comment.
-     * 
+     *
      * @method DELETE
      * @param {number} id comment id.
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Comment-DeleteComment
@@ -237,19 +241,19 @@ const routes = {
 
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Post new comment.
-     * 
+     *
      * @method POST
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Comment-PostComment
      */
     post: urlBuilder('comments'),
-    
+
     /**
      * PERMISSION - ALL
-     * 
+     *
      * Get all comments posted to media file.
-     * 
+     *
      * @method GET
      * @param {number} id File id.
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Comment-GetFileComments
@@ -258,20 +262,20 @@ const routes = {
 
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Get all comments by current user.
-     * 
+     *
      * @method GET
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Comment-GetCurrentUserComments
      */
-    byUser: urlBuilder('comments')
+    byUser: urlBuilder('comments'),
   },
   favourite: {
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Favourite media post.
-     * 
+     *
      * @method POST
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Favourite-PostFavourite
      */
@@ -279,9 +283,9 @@ const routes = {
 
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Remove file from favourites.
-     * 
+     *
      * @method DELETE
      * @param {number} id File id.
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Favourite-DeleteFavourite
@@ -290,47 +294,46 @@ const routes = {
 
     /**
      * PERMISSION - ALL
-     * 
+     *
      * Get all those users who favourited specified file.
-     * 
+     *
      * @method GET
      * @param {number} id File id
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Favourite-GetFileFavourites
      */
     byFile: (id) => urlBuilder('favourites/file', id),
 
-
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Get all favourites by current user.
-     * 
+     *
      * @method GET
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Favourite-GetCurrentUserFavourites
      */
-    byUser: urlBuilder('favourites')
+    byUser: urlBuilder('favourites'),
   },
   rating: {
     /**
-     * 
-     * @method 
-     * @param {number} id 
+     *
+     * @method
+     * @param {number} id
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Rating-PostRating
      */
     create: urlBuilder('ratings'),
 
     /**
-     * 
+     *
      * @method DELETE
-     * @param {number} id 
+     * @param {number} id
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Rating-DeleteRating
      */
     delete: (id) => urlBuilder('ratings/file', id),
 
     /**
-     * 
+     *
      * @method GET
-     * @param {number} id 
+     * @param {number} id
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Rating-GetFileRatings
      */
     byFile: (id) => urlBuilder('ratings/file', id),
@@ -339,13 +342,12 @@ const routes = {
      * @method GET
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Rating-GetCurrentUserRatings
      */
-    byUser: urlBuilder('ratings')
-
+    byUser: urlBuilder('ratings'),
   },
   tag: {
     /**
      * PERMISSION - ADMIN
-     * 
+     *
      * @method DELETE
      * @param {number} id tag id.
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Tag-DeleteTag
@@ -354,9 +356,9 @@ const routes = {
 
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Create a new tag.
-     * 
+     *
      * @method POST
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Tag-PostTag
      */
@@ -364,34 +366,34 @@ const routes = {
 
     /**
      * PERMISSION - ALL
-     * 
+     *
      * Get all files related to specified tag.
-     * 
+     *
      * @method GET
-     * @param {string} tag 
+     * @param {string} tag
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Tag-GetTagFiles
      */
     files: (tag) => urlBuilder('tags', tag),
 
     /**
      * PERMISSION - ALL
-     * 
+     *
      * Get all tags related to specified file.
-     * 
+     *
      * @method GET
-     * @param {number} id 
+     * @param {number} id
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Tag-GetFileTags
      */
     filesTags: (id) => urlBuilder('tags/file', id),
 
     /**
      * PERMISSION - TOKEN
-     * 
+     *
      * Get all tags.
-     * 
+     *
      * @method GET
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-Tag-GetTags
      */
-    all: urlBuilder('tags')
+    all: urlBuilder('tags'),
   },
 };
