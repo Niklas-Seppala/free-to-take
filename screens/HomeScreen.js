@@ -8,11 +8,14 @@ import useTokenLogin from '../hooks/api/useTokenLogin';
 import { getToken } from '../utils/storage';
 
 const LoginScreen = () => {
+  // THIS IS A DEMO.
+
   const { user, isAuthenticated, token } = useContext(GlobalContext);
-  const login = useFormLogin();
+  const loginWithForm = useFormLogin();
   const loginWithToken = useTokenLogin();
   const logout = useLogout();
 
+  // Try to log in with JWT.
   useEffect(async () => loginWithToken(await getToken()), []);
 
   return (
@@ -27,7 +30,9 @@ const LoginScreen = () => {
         <View>
           <Button
             title="login"
-            onPress={() => login({ username: 'nikke-nakke', password: 'salainen-sana' })}
+            onPress={() =>
+              loginWithForm({ username: 'nikke-nakke', password: 'salainen-sana' })
+            }
           ></Button>
         </View>
       )}
