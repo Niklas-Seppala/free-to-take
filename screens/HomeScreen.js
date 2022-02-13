@@ -1,13 +1,24 @@
+import { useContext, useEffect } from 'react';
 import { View } from 'react-native';
-import { Button, Text } from 'react-native-elements';
-import useAllMedia from '../hooks/api/useAllMedia';
+import { Text } from 'react-native-elements';
+import { GlobalContext } from '../context/GlobalContext';
+import useTokenLogin from '../hooks/api/useTokenLogin';
+import { getToken } from '../utils/storage';
 
 const LoginScreen = () => {
-  const media = useAllMedia();
-  
+  const { user, isAuthenticated, token } = useContext(GlobalContext);
+  const setToken = useTokenLogin();
+
+  useEffect(async () => setToken(await getToken()), []);
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 26 }}>Home</Text>
+    <View>
+      {isAuthenticated && (
+        <View>
+          <Text>{user?.username}</Text>
+          <Text>{token}</Text>
+        </View>
+      )}
     </View>
   );
 };
