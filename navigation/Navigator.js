@@ -80,12 +80,5 @@ function BottomTabNavigator() {
 }
 
 function TabBarIcon({ name, color }) {
-  return (
-    <FontAwesome
-      size={30}
-      style={{ marginBottom: -3 }}
-      name={name}
-      color={color}
-    />
-  );
+  return <FontAwesome size={30} style={{ marginBottom: -3 }} name={name} color={color} />;
 }
