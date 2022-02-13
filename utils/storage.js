@@ -13,7 +13,7 @@ export const storeToken = async (token) => {
 
 /**
  * Get JWT token from device permanent storage.
- * @returns {string} JWT
+ * @returns {Promise<string>} JWT
  */
 export const getToken = async () => {
   return await AsyncStorage.getItem(TOKEN_KEY);

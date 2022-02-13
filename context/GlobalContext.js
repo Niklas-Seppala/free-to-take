@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 /**
  * @type {React.Context<{
  * user: {user_id: number, username: string, email: string, full_name: ?string},
- * setUser: React.Dispatch<object>,
+ * setUser: React.Dispatch<{user_id: number, username: string, email: string, full_name: ?string}>,
  * apiAction: boolean,
  * apiActionComplete: () => void,
  * isAuthenticated: boolean,
  * setIsAuthenticated: React.Dispatch<Boolean>,
- * token: string,
- * setToken: React.Dispatch<string>
+ * token: ?string,
+ * setToken: React.Dispatch<string | null>
  * }>}
  */
 const GlobalContext = React.createContext({});
