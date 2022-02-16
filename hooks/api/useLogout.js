@@ -10,22 +10,15 @@ import { clearStorage } from '../../utils/storage';
  * @returns {() => void} logout
  */
 export default function useLogout() {
-  const { setToken, isAuthenticated, setUser, setIsAuthenticated } =
-    useContext(GlobalContext);
-
-  // Internal hook state.
+  const { setUser, user } = useContext(GlobalContext);
   const [logoutRequested, setLogoutRequested] = useState(false);
-
   const logout = () => setLogoutRequested(!logoutRequested);
 
   useEffect(async () => {
-    // If user is authenticated, clear everything.
-    if (isAuthenticated) {
-      const storage = clearStorage(); // Start IO.
+    if (logoutRequested && user) {
+      await clearStorage();
       setUser(null);
-      setToken(null);
-      setIsAuthenticated(false);
-      await storage; // Sync IO.
+      setLogoutRequested(true);
     }
   }, [logoutRequested]);
 

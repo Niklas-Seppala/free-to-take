@@ -16,7 +16,7 @@ import { storeToken } from '../../utils/storage';
 export default function useFormLogin() {
   // Form values for password and username.
   const [loginData, setLoginData] = useState(null);
-  const { setUser, setIsAuthenticated, setToken } = useContext(GlobalContext);
+  const { setUser } = useContext(GlobalContext);
 
   /**
    * Set response payload data to GlobalContext and device
@@ -25,21 +25,19 @@ export default function useFormLogin() {
    * @param {{token: string: user: object}} response Server response payload.
    */
   const login = async (response) => {
-    const storage = storeToken(response.token); // Start IO.
-    setUser(response.user);
-    setToken(response.token);
-    setIsAuthenticated(true);
+    const {user, token} = response;
+    const storage = storeToken(token); // Start IO.
+    user.token = token;
+    setUser(user);
     await storage; // Sync IO.
   };
-
   useEffect(async () => {
     if (loginData) {
       try {
         const resp = await client.post(routes.auth.login, loginData);
         await login(resp.data);
       } catch (error) {
-        console.error(error);
-        setIsAuthenticated(false);
+        console.error(error.message, 'at use FromLogin hook');
       }
     }
   }, [loginData]); // re-run when username and password change.

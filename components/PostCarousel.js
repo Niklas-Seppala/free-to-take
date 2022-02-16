@@ -1,28 +1,21 @@
 import React from 'react';
 import { View, Dimensions, StyleSheet } from 'react-native';
-import { Text, Image, Button } from 'react-native-elements';
+import { Text, Button } from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
-import { routes } from '../utils/api';
-
-const CarouselCard = ({ item }) => {
-  return (
-    <View style={styles.card}>
-      <Image
-        containerStyle={{ width: '100%', height: 300 }}
-        source={{ uri: routes.uploads.file(item.thumbnails.w640) }}
-      ></Image>
-      <View style={{ flex: 1, alignItems: 'center', padding: 10 }}>
-        <Text h3>{`${item.title}`}</Text>
-        <Text>{item.description}</Text>
-      </View>
-    </View>
-  );
-};
+import CarouselCard from './CarouselCard';
 
 const PostCarousel = ({ data, style }) => {
   const WINDOW_WIDTH = Dimensions.get('window').width;
   const carouselRef = React.createRef();
 
+  if (data.length === 0)  {
+    return (
+      <View style={[style, {alignItems: 'center', justifyContent: 'center'}]}>
+        <Text>Nothing here</Text>
+      </View>
+    )
+  }
+  
   return (
     <View style={style}>
       <Carousel
@@ -38,16 +31,16 @@ const PostCarousel = ({ data, style }) => {
       <View style={styles.buttonContainer}>
         <Button
           buttonStyle={styles.button}
-          icon={{ name: 'chevron-left', size: 40, color: 'white' }}
+          icon={{ name: 'chevron-left', size: 40, color: '#daf2d3' }}
           onPress={() => carouselRef.current.snapToPrev()}
         ></Button>
         <Button
-          buttonStyle={{ backgroundColor: '#5dd455', paddingVertical: 10 }}
-          title="Reserver"
+          buttonStyle={{ backgroundColor: '#6ab07c', paddingVertical: 10 }}
+          title={<Text style={{color: '#daf2d3'}}>Reserve</Text>}
         ></Button>
         <Button
           buttonStyle={styles.button}
-          icon={{ name: 'chevron-right', size: 40, color: 'white' }}
+          icon={{ name: 'chevron-right', size: 40, color: '#daf2d3' }}
           onPress={() => carouselRef.current.snapToNext()}
         ></Button>
       </View>
@@ -56,26 +49,14 @@ const PostCarousel = ({ data, style }) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
-    margin: 15,
-    marginBottom: 10,
-    overflow: 'hidden',
-    flex: 1,
-    borderRadius: 5,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 20,
-    width: '100%',
-    borderRadius: 5,
+    marginVertical: 10,
     justifyContent: 'space-around',
     flexDirection: 'row',
   },
   button: {
     padding: 0,
-    backgroundColor: '#5dd455',
+    backgroundColor: '#5ba86f',
   },
 });
 
