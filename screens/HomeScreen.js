@@ -1,43 +1,23 @@
-import { useContext, useEffect } from 'react';
-import { View } from 'react-native';
-import { Text, Button } from 'react-native-elements';
-import { GlobalContext } from '../context/GlobalContext';
-import useFormLogin from '../hooks/api/useFormLogin';
-import useLogout from '../hooks/api/useLogout';
-import useTokenLogin from '../hooks/api/useTokenLogin';
-import { getToken } from '../utils/storage';
+import React, { useEffect, useState } from 'react';
+import PostCarousel from '../components/PostCarousel';
+import useAllMedia from '../hooks/api/useAllMedia'
+import { View, ActivityIndicator } from 'react-native';
 
-const LoginScreen = () => {
-  // THIS IS A DEMO.
 
-  const { user, isAuthenticated, token } = useContext(GlobalContext);
-  const loginWithForm = useFormLogin();
-  const loginWithToken = useTokenLogin();
-  const logout = useLogout();
+const HomeScreen = () => {
+  const data = useAllMedia();
+  const [ready, setReady] = useState(false);
 
-  // Try to log in with JWT.
-  useEffect(async () => loginWithToken(await getToken()), []);
+  useEffect(() => setReady(Boolean(data)), [data])
 
-  return (
-    <View>
-      {isAuthenticated ? (
-        <View>
-          <Text>{user?.username}</Text>
-          <Text>{token}</Text>
-          <Button title="logout" onPress={() => logout()}></Button>
-        </View>
-      ) : (
-        <View>
-          <Button
-            title="login"
-            onPress={() =>
-              loginWithForm({ username: 'nikke-nakke', password: 'salainen-sana' })
-            }
-          ></Button>
-        </View>
-      )}
-    </View>
-  );
+  if (!ready)  {
+    return (
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <ActivityIndicator size={120} color='green' />
+      </View>
+    )
+  }
+  return <PostCarousel data={data} style={{flex: 1}}/>;
 };
 
-export default LoginScreen;
+export default HomeScreen;

@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { client, routes, setJWT } from '../../utils/api';
+import { getToken } from '../../utils/storage';
 
 /**
  * Hook for logging in with JWT. Setting JWT triggeres effect that attempts to fetch user
@@ -9,23 +10,28 @@ import { client, routes, setJWT } from '../../utils/api';
  *
  * (JWT should be read from permanent storage).
  *
- * @returns {React.Dispatch<string>} setToken - Set JWT token.
  */
 export default function useTokenLogin() {
-  const { setUser, setIsAuthenticated, token, setToken } = useContext(GlobalContext);
+  const { setUser, user } = useContext(GlobalContext);
+  const [onGoing, setOnGoing] = useState(true);
 
   useEffect(async () => {
+    const token = await getToken()
     if (token) {
       try {
         const resp = await client.get(routes.user.myInfo, { headers: setJWT(token) });
-        setUser(resp.data);
-        setIsAuthenticated(true);
+        const user = resp.data;
+        user.token = token;
+        setUser(user);
+        setOnGoing(false);
       } catch (error) {
-        console.error(error);
-        setIsAuthenticated(false);
+        setOnGoing(false);
+        console.error(error.message, 'at useTokenLogin hook');
       }
+    } else {
+      setOnGoing(false);
     }
-  }, [token]);
+  }, []);
 
-  return setToken;
+  return [onGoing, user];
 }
