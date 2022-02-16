@@ -20,7 +20,7 @@ import MiniProfile from './MiniProfile';
  *  thumbnails: {
  *    w160: string,
  *    w320: string,
- *    w640: string 
+ *    w640: string
  *  },
  *  time_added: string,
  *  title: string}}} _

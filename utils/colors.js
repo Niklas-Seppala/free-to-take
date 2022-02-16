@@ -4,5 +4,5 @@ export default {
   dark: '#242624',
   light: '#daf2d3',
   active: '#e2f5dc',
-  inactive: '#6ab07caa'
-}
+  inactive: '#6ab07caa',
+};

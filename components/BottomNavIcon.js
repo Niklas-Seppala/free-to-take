@@ -8,8 +8,8 @@ const ICON_MAP = {
 };
 
 /**
- * Icon for bottom tab navigator. 
- * 
+ * Icon for bottom tab navigator.
+ *
  * @param {{focused: boolean, name: 'Upload' | 'Home' | 'Profile'}} param0
  * @returns
  */
