@@ -12,13 +12,13 @@ import { clearStorage } from '../../utils/storage';
 export default function useLogout() {
   const { setUser, user } = useContext(GlobalContext);
   const [logoutRequested, setLogoutRequested] = useState(false);
-  const logout = () => setLogoutRequested(!logoutRequested);
+  const logout = () => setLogoutRequested(true);
 
   useEffect(async () => {
     if (logoutRequested && user) {
       await clearStorage();
       setUser(null);
-      setLogoutRequested(true);
+      setLogoutRequested(false);
     }
   }, [logoutRequested]);
 
