@@ -1,11 +1,15 @@
 import React from 'react';
 import { View, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import CarouselCard from './CarouselCard';
-
+import CarouselItem from './CarouselItem';
+import PropTypes from 'prop-types';
 import { CarouselControls } from './CarouselControls';
-import { EmptyResults } from './EmptyResults.1';
+import { EmptyResults } from './EmptyResults';
 
+/**
+ * Carousel for browsing app content.
+ * @param {{data: [any], style: any}} props
+ */
 const PostCarousel = ({ data, style }) => {
   const WINDOW_WIDTH = Dimensions.get('window').width;
   const carouselRef = React.createRef();
@@ -20,7 +24,7 @@ const PostCarousel = ({ data, style }) => {
         sliderWidth={WINDOW_WIDTH}
         itemWidth={WINDOW_WIDTH}
         layoutCardOffset={18}
-        renderItem={({ item }) => <CarouselCard item={item} />}
+        renderItem={({ item }) => <CarouselItem item={item} />}
         layout={'default'}
       />
       <CarouselControls
@@ -30,6 +34,11 @@ const PostCarousel = ({ data, style }) => {
       ></CarouselControls>
     </View>
   );
+};
+
+PostCarousel.propTypes = {
+  data: PropTypes.array.isRequired,
+  style: PropTypes.object,
 };
 
 export default PostCarousel;

@@ -1,7 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Icon, Text } from 'react-native-elements';
+import PropTypes from 'prop-types';
 
+/**
+ *
+ * @param {{ISOString: string, row: boolean, icon: boolean}} props
+ * @returns
+ */
 export default function Time({ ISOString, row = true, icon = true }) {
   const datetime = new Date(ISOString);
   return (
@@ -16,6 +22,12 @@ export default function Time({ ISOString, row = true, icon = true }) {
     </View>
   );
 }
+
+Time.propTypes = {
+  ISOString: PropTypes.string.isRequired,
+  row: PropTypes.bool,
+  icon: PropTypes.bool,
+};
 
 const styles = StyleSheet.create({
   container: {

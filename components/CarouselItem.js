@@ -2,8 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Card, Text } from 'react-native-elements';
 import { routes } from '../utils/api';
-import CardHeader from './CardHeader';
+import CarouselItemHeader from './CarouselItemHeader';
 import MiniProfile from './MiniProfile';
+import { PostPropType } from '../utils/AppPropTypes';
 
 /**
  * @param {{item: {
@@ -13,22 +14,22 @@ import MiniProfile from './MiniProfile';
  *  media_type: string,
  *  owner: {
  *    email: string,
- *    user_id: string,
+ *    user_id: number,
  *    username: string
  *  },
- *  screenshot: string,
+ *  screenshot: string | undefined,
  *  thumbnails: {
  *    w160: string,
  *    w320: string,
  *    w640: string
  *  },
  *  time_added: string,
- *  title: string}}} _
+ *  title: string}}} props
  */
-export default function CarouselCard({ item }) {
+export default function CarouselItem({ item }) {
   return (
     <View style={styles.card}>
-      <CardHeader item={item}></CardHeader>
+      <CarouselItemHeader item={item}></CarouselItemHeader>
       <Image
         style={styles.image}
         source={{ uri: routes.uploads.file(item.thumbnails.w640) }}
@@ -44,6 +45,8 @@ export default function CarouselCard({ item }) {
     </View>
   );
 }
+
+CarouselItem.propTypes = { item: PostPropType };
 
 const styles = StyleSheet.create({
   card: {

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
+import PropTypes from 'prop-types';
 
+/**
+ * Control buttons for moving carousel.
+ * @param {{count: number, onLeft: () => void, onRight: () => void}} props
+ */
 export function CarouselControls({ count, onLeft, onRight }) {
   const [index, setIndex] = useState(0);
 
@@ -39,6 +44,12 @@ export function CarouselControls({ count, onLeft, onRight }) {
     </View>
   );
 }
+
+CarouselControls.propTypes = {
+  count: PropTypes.number,
+  onLeft: PropTypes.func.isRequired,
+  onRight: PropTypes.func.isRequired,
+};
 
 export const styles = StyleSheet.create({
   buttonContainer: {

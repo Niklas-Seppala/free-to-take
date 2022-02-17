@@ -2,8 +2,13 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import DateTime from './DateTime';
+import { PostPropType } from '../utils/AppPropTypes';
 
-export default function CardHeader({ item }) {
+/**
+ * Header component for content carousel.
+ * @param {{item: {title: string, time_added: string}}} props
+ */
+export default function CarouselItemHeader({ item }) {
   return (
     <View style={styles.container}>
       <Text h3 style={styles.title}>
@@ -13,6 +18,8 @@ export default function CardHeader({ item }) {
     </View>
   );
 }
+
+CarouselItemHeader.propTypes = { item: PostPropType };
 
 const styles = StyleSheet.create({
   container: {

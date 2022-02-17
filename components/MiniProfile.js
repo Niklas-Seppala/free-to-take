@@ -1,11 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Icon, Text } from 'react-native-elements';
+import PropTypes from 'prop-types';
+import { UserPropType } from '../utils/AppPropTypes';
 
 /**
  *
- * @param {{user:{email: string, user_id: number, username: string, full_name: string}}} _
- * @returns
+ * @param {{
+ * user:{
+ *   email: string,
+ *   user_id: number,
+ *   username: string,
+ *   full_name: string
+ *   }
+ * }} props
  */
 export default function MiniProfile({ user, style }) {
   return (
@@ -31,6 +39,11 @@ export default function MiniProfile({ user, style }) {
     </View>
   );
 }
+
+MiniProfile.propTypes = {
+  user: UserPropType,
+  style: PropTypes.object,
+};
 
 const styles = StyleSheet.create({
   container: {
