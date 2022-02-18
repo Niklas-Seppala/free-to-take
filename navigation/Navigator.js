@@ -20,12 +20,13 @@ const RootNavigator = () => {
     <Stack.Navigator>
       {loggedIn ? (
         <>
+        <Stack.Screen name="Single" component={SingleScreen} />
           <Stack.Screen
             name="Root"
             component={BottomTabNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Single" component={SingleScreen} />
+          
         </>
       ) : (
         <>
