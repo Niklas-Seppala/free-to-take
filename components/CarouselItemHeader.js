@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import DateTime from './DateTime';
-import { PostPropType } from '../utils/AppPropTypes';
+import { PostPropType } from '../utils/appPropTypes';
 
 /**
  * Header component for content carousel.

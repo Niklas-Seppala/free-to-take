@@ -4,7 +4,7 @@ import { Card, Text } from 'react-native-elements';
 import { routes } from '../utils/api';
 import CarouselItemHeader from './CarouselItemHeader';
 import MiniProfile from './MiniProfile';
-import { PostPropType } from '../utils/AppPropTypes';
+import { PostPropType } from '../utils/appPropTypes';
 
 /**
  * @param {{item: {
