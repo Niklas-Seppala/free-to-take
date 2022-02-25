@@ -1,8 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import { View, StyleSheet, Dimensions } from 'react-native';
 import { Button, Text, Card, Divider, Avatar, Icon } from 'react-native-elements';
 import useLogout from '../hooks/api/useLogout';
+
+import EditProfileForm  from '../components/EditProfileForm';
+import UserInfo  from '../components/UserInfo';
 
 import { GlobalContext } from '../context/GlobalContext';
 
@@ -10,7 +13,10 @@ import { GlobalContext } from '../context/GlobalContext';
 const ProfileScreen = () => {
   const logout = useLogout();
   const { user } = useContext(GlobalContext);
+  const [ isEditingProfile, setIsEditingProfile ] = useState(false);
+
   return (
+
     <View
       style={{
         width: '100%',
@@ -28,60 +34,31 @@ const ProfileScreen = () => {
       />
 
       {/* user info */}
-      <View style={{ width: '100%', flex: 1, alignItems: 'flex-start'}}>
-        <View style={styles.vertical}>
-          <Icon
-            name="user"
-            type="font-awesome"
-            color="#3f3f3f"
-            containerStyle={styles.iconContainerStyle}
-          />
-          <Text>{user.username}</Text>
-        </View>
+      {!isEditingProfile ? (<UserInfo user={user} />) : (<EditProfileForm onEditSuccess={() => {setIsEditingProfile(false)}}/>)}
 
-        <Divider />
-
-        <View style={styles.vertical}>
-          <Icon
-            name="envelope"
-            type="font-awesome"
-            color="#3f3f3f"
-            containerStyle={styles.iconContainerStyle}
-          />
-          <Text>{user.email}</Text>
-        </View>
-
-<<<<<<< HEAD
-
-      <Button title="Log out" onPress={() => logout()}></Button>
-=======
-        <Divider />
-
-        <View style={styles.vertical}>
-          <Icon
-            name="map-marker"
-            type="font-awesome"
-            color="#3f3f3f"
-            containerStyle={styles.iconContainerStyle}
-          />
-          <Text>742 Evergreen Terrace</Text>
-        </View>
-
-        <Divider />
-      </View>
-
-      <Button buttonStyle={styles.button} title="Edit profile"></Button>
       <Divider />
-      <Button
-        buttonStyle={styles.button}
-        title="Log out"
-        onPress={() => logout()}
-      ></Button>
->>>>>>> 25b9f5e (improve profile screen style)
+      {
+        !isEditingProfile ? (
+        <>
+          <Button 
+            buttonStyle={styles.button}
+            onPress={() => {setIsEditingProfile(!isEditingProfile)}}
+            title={"Edit profile"}
+          >
+          </Button>
+
+          <Button
+             buttonStyle={styles.button}
+             title="Log out"
+             onPress={() => logout()}
+           >
+           </Button>
+        </>
+        ) : (<></>)
+      }
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   vertical: {
     marginBottom: 10,
@@ -120,5 +97,6 @@ const styles = StyleSheet.create({
     top: -Dimensions.get('window').width * 1.6,
   },
 });
+
 
 export default ProfileScreen;
