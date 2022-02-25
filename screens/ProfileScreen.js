@@ -25,13 +25,6 @@ const ProfileScreen = () => {
         alignItems: 'center',
       }}
     >
-      <View style={styles.backgroundCircle}></View>
-      <Avatar
-        size={160}
-        source={{ uri: 'https://www.placecage.com/c/800/800' }}
-        containerStyle={{marginBottom: 20}}
-        rounded
-      />
 
       {/* user info */}
       {!isEditingProfile ? (<UserInfo user={user} />) : (<EditProfileForm onEditSuccess={() => {setIsEditingProfile(false)}}/>)}
@@ -86,15 +79,6 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold',
-  },
-  backgroundCircle: {
-    backgroundColor: '#6ab07c',
-    //backgroundColor: 'green',
-    height: Dimensions.get('window').width * 2,
-    width: Dimensions.get('window').width * 2,
-    borderRadius: 1200,
-    position: 'absolute',
-    top: -Dimensions.get('window').width * 1.6,
   },
 });
 

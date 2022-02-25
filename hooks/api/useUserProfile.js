@@ -8,26 +8,25 @@ import { getToken } from '../../utils/storage';
 
 export default function useUserProfile() {
   const { setUser, user } = useContext(GlobalContext);
+  const [userData, setUserData] = useState(null);
 
-  const updateUserData = async (userData) => {
-    const token = await getToken()
-    delete userData.address;
-    delete userData.password2;
-    if (token) {
-      console.log("Updating with userData", userData, token)
+  useEffect(async () => {
+    const token = user.token;
+    if (token && userData) {
       try {
-        const resp = await client.put(routes.user.modify, userData, {headers: setJWT(token)});
-        //const resp = await client.put(routes.user.modify, data, {'Content-Type': 'application/json', headers: setJWT(token) });
-        console.log(await resp.json())
+        delete userData.address
+        delete userData.password2
+        console.log("data", userData, "url", routes.user.modify())
+        const resp = await client.put(routes.user.modify(), userData, {headers: setJWT(token)}).catch(d => {console.log(d)});
+        return true
       } catch (error) {
         console.error(error.message, 'at useUserProfile hook');
         return false;
       }
-    }
-    else {
+    } else {
       return false;
     }
-  }
+  }, [userData]);
 
-  return updateUserData;
+  return setUserData;
 }

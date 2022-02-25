@@ -23,8 +23,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Toast from 'react-native-toast-message';
 
 const EditProfileForm = ({ navigation, onEditSuccess }) => {
-  const { user } = useContext(GlobalContext);
-  const updateUserData = useUserProfile();
+  const { setUser, user } = useContext(GlobalContext);
+  const setUserData = useUserProfile();
 
   //https://stackoverflow.com/a/201378
   const emailRegex =
@@ -47,7 +47,14 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
   });
 
   const onSubmit = async (data) => {
-    await updateUserData(data);
+
+    await setUserData(data);
+
+    // bad hack to change user data locally
+    user.username = data.username;
+    user.email = data.email;
+    setUser(user);
+
     console.log("SUBMITTING with data", data);
     Toast.show({
       type: 'success',
@@ -63,7 +70,7 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
   }, []);
 
   return (
-    <View style={{ width: '100%', height: '50%' }}>
+    <View style={{ width: '100%', height: '100%' }}>
       <TouchableOpacity
         style={{ flex: 1, width: '100%', justifyContent: 'flex-end' }}
         activeOpacity={1}

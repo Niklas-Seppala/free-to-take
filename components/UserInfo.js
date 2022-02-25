@@ -10,7 +10,15 @@ import { GlobalContext } from '../context/GlobalContext';
 const UserInfo = (props) => {
   const user = props.user;
   return (
+      <>
+      <View style={styles.backgroundCircle}></View>
 
+      <Avatar
+        size={160}
+        source={{ uri: 'https://www.placecage.com/c/800/800' }}
+        containerStyle={{marginBottom: 20}}
+        rounded
+      />
       <View style={{ width: '100%', flex: 1, alignItems: 'flex-start'}}>
         {/* user info */}
         <View style={styles.vertical}>
@@ -47,6 +55,7 @@ const UserInfo = (props) => {
           <Text>742 Evergreen Terrace</Text>
         </View>
       </View>
+      </>
   )
 
 };
