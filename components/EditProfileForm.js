@@ -3,7 +3,6 @@ import {
   Text,
   View,
   TextInput,
-
   Alert,
   Keyboard,
   TouchableOpacity,
@@ -11,8 +10,7 @@ import {
 } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { useForm, Controller } from 'react-hook-form';
-import useUserProfile from '../hooks/api/useUserProfile'
-
+import useUserProfile from '../hooks/api/useUserProfile';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -47,7 +45,6 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
   });
 
   const onSubmit = async (data) => {
-
     await setUserData(data);
 
     // bad hack to change user data locally
@@ -55,7 +52,7 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
     user.email = data.email;
     setUser(user);
 
-    console.log("SUBMITTING with data", data);
+    console.log('SUBMITTING with data', data);
     Toast.show({
       type: 'success',
       text1: 'The changes to your profile have been saved',
@@ -63,6 +60,12 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
     onEditSuccess();
   };
 
+  const showErrorMsg = () => {
+    Toast.show({
+      type: 'error',
+      text1: 'Please fill all the form fields',
+    });
+  };
 
   useEffect(() => {
     setValue('email', user.email);
@@ -72,7 +75,7 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
   return (
     <View style={{ width: '100%', height: '100%' }}>
       <TouchableOpacity
-        style={{ flex: 1, width: '100%', justifyContent: 'flex-end' }}
+        style={{ flex: 1, width: '100%', height: '90%', justifyContent: 'flex-end' }}
         activeOpacity={1}
       >
         <KeyboardAwareScrollView
@@ -180,8 +183,22 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
             )}
             name="password2"
           />
-        <Button buttonStyle={styles.button} title="Save changes" onPress={handleSubmit(onSubmit)}></Button>
-        <Button buttonStyle={styles.button} title="Cancel" onPress={() => {onEditSuccess()}}></Button>
+          <View style={styles.buttonContainer}>
+            <Button
+              containerStyle={{ width: '50%' }}
+              buttonStyle={styles.button}
+              title="Save changes"
+              onPress={() => (!errors ? handleSubmit(onSubmit) : showErrorMsg())}
+            ></Button>
+            <Button
+              containerStyle={{ width: '50%' }}
+              buttonStyle={styles.button}
+              title="Cancel"
+              onPress={() => {
+                onEditSuccess();
+              }}
+            ></Button>
+          </View>
         </KeyboardAwareScrollView>
       </TouchableOpacity>
     </View>
@@ -191,8 +208,16 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#5F9A3B',
-    marginTop: 10,
-    marginBottom: 10,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: '90%',
+  },
+  buttonContainer: {
+    flex: 1,
+    width: '100%',
+    height: '10%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
 });
 
