@@ -7,8 +7,25 @@ import useLogout from '../hooks/api/useLogout';
 
 import { GlobalContext } from '../context/GlobalContext';
 
+import Toast from 'react-native-toast-message';
+
 const UserInfo = (props) => {
   const user = props.user;
+
+  const showAvatarTapToast = () => {
+    Toast.show({
+      type: 'info',
+      text1: 'Tap and hold to change your profile picture',
+    });
+  }
+
+  const initiateProfilePictureChange = () => {
+    Toast.show({
+      type: 'info',
+      text1: 'TODO: implement profile picture change',
+    });
+  }
+
   return (
       <>
       <View style={styles.backgroundCircle}></View>
@@ -17,6 +34,8 @@ const UserInfo = (props) => {
         size={160}
         source={{ uri: 'https://www.placecage.com/c/800/800' }}
         containerStyle={{marginBottom: 20}}
+        onPress={showAvatarTapToast}
+        onLongPress={initiateProfilePictureChange}
         rounded
       />
       <View style={{ width: '100%', flex: 1, alignItems: 'flex-start'}}>
