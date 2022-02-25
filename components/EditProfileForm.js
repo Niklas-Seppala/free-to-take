@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { useForm, Controller } from 'react-hook-form';
+import useUserProfile from '../hooks/api/useUserProfile'
+
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -22,6 +24,7 @@ import Toast from 'react-native-toast-message';
 
 const EditProfileForm = ({ navigation, onEditSuccess }) => {
   const { user } = useContext(GlobalContext);
+  const updateUserData = useUserProfile();
 
   //https://stackoverflow.com/a/201378
   const emailRegex =
@@ -44,7 +47,7 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
   });
 
   const onSubmit = async (data) => {
-
+    await updateUserData(data);
     console.log("SUBMITTING with data", data);
     Toast.show({
       type: 'success',
