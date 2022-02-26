@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useContext, useEffect, useState , setState} from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import {
   Dimensions,
   StyleSheet,
@@ -11,119 +11,217 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import { Icon } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Icon, Input, Button } from 'react-native-elements';
+import { MessageList } from 'react-chat-elements';
+import { client, routes, setJWT } from '../utils/api';
+import { GlobalContext } from '../context/GlobalContext';
+
+// User input
+const comment = {
+  file_id: 541,
+};
+var id = '';
+var comment_id = '541';
 
 const ListItem = ({ item }) => {
+  const datetime = new Date(item.time_added);
   return (
-    <View style={styles.item}>
-      <Image
-        source={{
-          uri: item.uri,
-        }}
-        style={styles.itemPhoto}
-        resizeMode="cover"
-      />
-      <Text style={styles.itemText}>{item.text}</Text>
+    <View style={styles.commentContainer}>
+      {item.user_id == id ? (
+        <>
+          <View style={styles.commentLeft}>
+            <Text style={styles.commentText}>{item.comment}</Text>
+            <Text style={styles.commentTime}>{datetime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
+          </View>
+        </>
+      ) : (
+        <>
+          <View style={styles.commentRight}>
+            <Text style={styles.commentText}>{item.comment}</Text>
+            <Text style={styles.commentTime}>{datetime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</Text>
+          </View>
+        </>
+      )}
     </View>
   );
 };
 
+
 const SingleScreen = () => {
+  const { user } = useContext(GlobalContext);
+  id = user.user_id;
+  var initialElements = [] // incase just sample comments 
+  const [COMMENTS, setCOMMENTS] = useState(initialElements);
+
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      comment: '',
+      file_id: '',
+    },
+  });
+  const addComment = async () => {
+    try {
+      var newArray = ((await client.get(routes.comment.getByFile(comment_id), { headers: setJWT(user.token)})).data);
+      setCOMMENTS(newArray);
+    
+      console.log(COMMENTS)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const onSubmit = async (data) => {
+    try {
+      data.file_id = 541;
+      client
+        .post(routes.comment.post, data, { headers: setJWT(user.token) })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => console.error(e));
+      addComment();
+      console.log('hhhhh');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+
+  //addComment()
+
+
+  useEffect(async () => {
+    addComment()
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
-        <StatusBar translucent barStyle="light-content" />
-        <View
-          style={{
-            justifyContent: 'center',
-            flexDirection: 'row',
-            marginHorizontal: 100,
-          }}>
-          <Icon
-            name="angle-left"
-            type="font-awesome"
-            color="#FFFFFF"
-            size="20px"
-          />
-          <Icon
-            name="angle-right"
-            type="font-awesome"
-            color="#FFFFFF"
-            size="20px"
-          />
-        </View>
-
-        <FlatList
-          horizontal
-          data={SECTIONS}
-          renderItem={({ item }) => <ListItem item={item} />}
-          showsHorizontalScrollIndicator={false}
+        <Image
+          source={{
+            uri: 'https://picsum.photos/id/1/200',
+          }}
+          style={styles.imgCover}
+          resizeMode="cover"
         />
       </View>
       <View style={styles.contentContainer}>
         <View>
-          <Text style={styles.titleTextField}>
-            {'LoFrozen t-paita koko 98/104gin'}
-          </Text>
+          <Text style={styles.titleTextField}>{'LoFrozen t-paita koko 98/104gin'}</Text>
         </View>
         <View>
           <Text style={styles.locationTextField}>{'Helsinki'}</Text>
         </View>
-        <View
-          style={{
-            justifyContent: 'center',
-            flexDirection: 'row',
-            marginBottom: 30,
-            marginTop: 30,
-          }}
-        >
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonTextField}>{'Reserve'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonTextField}>{'Interested'}</Text>
-          </TouchableOpacity>
-        </View>
 
         <View style={styles.bottomContainer}>
-          <Text style={styles.descriTextField}>
-            Paidat ja bodyt, koko: 98/104 (2-4 vuotta), tyttöjen Frozen Elsa
-            t-paita koko 98/104. Muuten hyvässä kunnossa, mutta voikukan jälkiä
-            paidassa. Savuton kissatalous.
-          </Text>
+          <View
+            style={{
+              height: '80%',
+              marginBottom: 10,
+            }}
+          >
+            <Icon
+              styele={{ alignItems: 'flex-start' }}
+              name="user-circle-o"
+              type="font-awesome"
+              color="white"
+            />
+            <FlatList
+              data={COMMENTS}
+              renderItem={
+                ({ item }) => <ListItem item={item} />}
+              showsHorizontalScrollIndicator={true}
+              
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              flex: 1,
+              alignItems: 'center',
+              marginHorizontal: 15,
+              marginBottom: 20,
+            }}
+          >
+            <View
+              style={{
+                flex: 0.8,
+              }}
+            >
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Input
+                    leftIcon={{ type: 'font-awesome', name: 'comment' }}
+                    onBlur={onBlur}
+                    onChange={onChange}
+                    value={value}
+                    multiline
+                    autoCapitalize="none"
+                    placeholder="Commments"
+                    inputContainerStyle={{ borderBottomWidth: 0 }}
+                    inputStyle={{
+                      height: 40,
+                      backgroundColor: 'rgba(96, 162, 23, 0.3)',
+                      borderRadius: 24,
+                      paddingHorizontal: 0,
+                      fontSize: 20,
+                      paddingHorizontal: 10,
+                      marginTop: 8,
+                      color: 'rgba(0, 0, 0, 0.42)',
+                    }}
+                  />
+                )}
+                name="comment"
+              />
+
+              {errors.comments && (
+                <Text style={{ color: 'red', marginHorizontal: 18 }}>
+                  This is required.
+                </Text>
+              )}
+            </View>
+            <View
+              style={{
+                flex: 0.2,
+              }}
+            >
+              <Button
+                title="Send"
+                onPress={handleSubmit(onSubmit)}
+                loading={false}
+                loadingProps={{ size: 'small', color: 'white' }}
+                buttonStyle={{
+                  height: 40,
+                  backgroundColor: '#5F9A3B',
+                  borderRadius: 24,
+                  borderWidth: 0.1,
+                  borderColor: 'white',
+                  marginBottom: 0,
+                }}
+                containerStyle={{
+                  alignItems: 'center',
+                }}
+              />
+            </View>
+          </View>
         </View>
       </View>
     </View>
-  );
+  )
+            
 };
-const SECTIONS = [
-  {
-    key: '1',
-    text: 'Item text 1',
-    uri: 'https://picsum.photos/id/1/200',
-  },
-  {
-    key: '2',
-    text: 'Item text 2',
-    uri: 'https://picsum.photos/id/10/200',
-  },
 
-  {
-    key: '3',
-    text: 'Item text 3',
-    uri: 'https://picsum.photos/id/1002/200',
-  },
-  {
-    key: '4',
-    text: 'Item text 4',
-    uri: 'https://picsum.photos/id/1006/200',
-  },
-  {
-    key: '5',
-    text: 'Item text 5',
-    uri: 'https://picsum.photos/id/1008/200',
-  },
-];
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -145,9 +243,10 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flex: 5,
     backgroundColor: 'rgba(39, 102, 0, 0.7)',
-    borderTopStartRadius: 100,
-    borderTopEndRadius: 100,
+    borderTopStartRadius: 50,
+    borderTopEndRadius: 50,
     marginHorizontal: -20,
+    marginBottom: 0,
   },
   inputField: {
     width: 250,
@@ -162,7 +261,7 @@ const styles = StyleSheet.create({
   button: {
     width: 100,
     marginHorizontal: 30,
-    marginTop: 30,
+    marginTop: 40,
     backgroundColor: '#5F9A3B',
     borderborderRadius: 24,
     marginVertical: 9,
@@ -191,25 +290,38 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: ' rgba(0, 0, 0, 0.34)',
   },
-  descriTextField: {
-    textAlign: 'justify',
-    fontSize: 15,
-    marginTop: 50,
-    marginHorizontal: 40,
-    fontWeight: '500',
-    color: '#FFFFFF',
+  commentContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+    marginHorizontal: 30,
+    borderColor: '#00000',
+    boader: '2px',
+    marginTop: 5,
   },
-  item: {
-    margin: 0,
-  },
-  itemPhoto: {
+  imgCover: {
     width: Dimensions.get('window').width - 40,
     height: '100%',
     borderRadius: 40,
   },
-  itemText: {
+  commentLeft: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  commentRight: {
+    flex: 1,
+    alignItems: 'flex-start',
+  },
+  commentText: {
+    color: '#ffffff',
+    fontSize:20,
+  },
+  commentTime: {
     color: 'rgba(255, 255, 255, 0.5)',
-    marginTop: 5,
+  },
+  tinyLogo: {
+    width: 20,
+    height: 20,
   },
 });
 

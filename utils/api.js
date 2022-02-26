@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const BASE_URL = 'https://media.mw.metropolia.fi/wbma';
-export const TAG = '07A28F724E';
+export const TAG = '098fea725eb66a1';
 export const client = axios;
 
 /**
@@ -14,6 +14,14 @@ const urlBuilder = (route, param) => {
   let URL = `${BASE_URL}/${route}`;
   return param ? `${URL}/${param}` : URL;
 };
+
+/**
+ * Helper function for setting JWT to
+ * x-access-token header.
+ * @param {string} token
+ * @returns {{'x-access-token': string}} Header with JWT set.
+ */
+export const setJWT = (token) => ({ 'x-access-token': token });
 
 export const routes = {
   auth: {
