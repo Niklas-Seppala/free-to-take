@@ -25,7 +25,7 @@ export default function useFormLogin() {
    * @param {{token: string: user: object}} response Server response payload.
    */
   const login = async (response) => {
-    const {user, token} = response;
+    const { user, token } = response;
     const storage = storeToken(token); // Start IO.
     user.token = token;
     setUser(user);

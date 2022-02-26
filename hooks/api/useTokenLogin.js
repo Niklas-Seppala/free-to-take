@@ -16,7 +16,7 @@ export default function useTokenLogin() {
   const [onGoing, setOnGoing] = useState(true);
 
   useEffect(async () => {
-    const token = await getToken()
+    const token = await getToken();
     if (token) {
       try {
         const resp = await client.get(routes.user.myInfo, { headers: setJWT(token) });
