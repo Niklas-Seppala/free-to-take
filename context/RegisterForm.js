@@ -1,12 +1,10 @@
 import React from 'react';
 import {Alert, View, Dimensions, StyleSheet, ScrollView} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import {useUser} from '../hooks/api/useCommon';
 import {Input, Button} from 'react-native-elements';
+import {client, routes} from '../utils/api';
 
-const RegisterForm = ({setFormToggle}) => {
-  const {postUser, checkUsername} = useUser();
-
+const RegisterForm = () => {
   const {
     control,
     handleSubmit,
@@ -16,24 +14,22 @@ const RegisterForm = ({setFormToggle}) => {
     defaultValues: {
       username: '',
       password: '',
-      confirmPassword: '',
       email: '',
       full_name: '',
-      city: '',
     },
     mode: 'onBlur',
   });
 
   const onSubmit = async (data) => {
     console.log(data);
+    let available = false;
     try {
-      delete data.confirmPassword;
-      const userData = await postUser(data);
-      console.log('register onSubmit', userData);
-      if (userData) {
-        Alert.alert('Success', 'User created successfully.');
-        setFormToggle(true);
-      }
+      client
+        .post(routes.user.create, data)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((e) => console.error(e));
     } catch (error) {
       console.error(error);
     }
@@ -41,7 +37,7 @@ const RegisterForm = ({setFormToggle}) => {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
+      <View>
         <Controller
           control={control}
           rules={{
@@ -52,7 +48,10 @@ const RegisterForm = ({setFormToggle}) => {
             },
             validate: async (value) => {
               try {
-                const available = await checkUsername(value);
+                const available = (
+                  await client.get(routes.user.nameExists(value))
+                ).data.available;
+
                 if (available) {
                   return true;
                 } else {
@@ -65,13 +64,21 @@ const RegisterForm = ({setFormToggle}) => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
-              style={styles.inputField}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
               autoCapitalize="none"
               placeholder="Username"
               errorMessage={errors.username && errors.username.message}
+              inputStyle={{
+                width: 250,
+                height: 40,
+                backgroundColor: 'rgba(96, 162, 23, 0.3)',
+                borderRadius: 24,
+                paddingHorizontal: 15,
+                fontSize: 15,
+                color: 'rgba(0, 0, 0, 0.42)',
+              }}
             />
           )}
           name="username"
@@ -94,7 +101,6 @@ const RegisterForm = ({setFormToggle}) => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
-              style={styles.inputField}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -102,6 +108,15 @@ const RegisterForm = ({setFormToggle}) => {
               secureTextEntry={true}
               placeholder="Password"
               errorMessage={errors.password && errors.password.message}
+              inputStyle={{
+                width: 250,
+                height: 40,
+                backgroundColor: 'rgba(96, 162, 23, 0.3)',
+                borderRadius: 24,
+                paddingHorizontal: 15,
+                fontSize: 15,
+                color: 'rgba(0, 0, 0, 0.42)',
+              }}
             />
           )}
           name="password"
@@ -122,7 +137,6 @@ const RegisterForm = ({setFormToggle}) => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
-              style={styles.inputField}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -132,6 +146,15 @@ const RegisterForm = ({setFormToggle}) => {
               errorMessage={
                 errors.confirmPassword && errors.confirmPassword.message
               }
+              inputStyle={{
+                width: 250,
+                height: 40,
+                backgroundColor: 'rgba(96, 162, 23, 0.3)',
+                borderRadius: 24,
+                paddingHorizontal: 15,
+                fontSize: 15,
+                color: 'rgba(0, 0, 0, 0.42)',
+              }}
             />
           )}
           name="confirmPassword"
@@ -148,13 +171,21 @@ const RegisterForm = ({setFormToggle}) => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
-              style={styles.inputField}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
               autoCapitalize="none"
               placeholder="Email"
               errorMessage={errors.email && errors.email.message}
+              inputStyle={{
+                width: 250,
+                height: 40,
+                backgroundColor: 'rgba(96, 162, 23, 0.3)',
+                borderRadius: 24,
+                paddingHorizontal: 15,
+                fontSize: 15,
+                color: 'rgba(0, 0, 0, 0.42)',
+              }}
             />
           )}
           name="email"
@@ -170,37 +201,24 @@ const RegisterForm = ({setFormToggle}) => {
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
-              style={styles.inputField}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
               autoCapitalize="words"
               placeholder="Full name"
               errorMessage={errors.full_name && errors.full_name.message}
+              inputStyle={{
+                width: 250,
+                height: 40,
+                backgroundColor: 'rgba(96, 162, 23, 0.3)',
+                borderRadius: 24,
+                paddingHorizontal: 15,
+                fontSize: 15,
+                color: 'rgba(0, 0, 0, 0.42)',
+              }}
             />
           )}
           name="full_name"
-        />
-        <Controller
-          control={control}
-          rules={{
-            required: {value: true, message: 'This is required.'},
-            pattern: {
-              message: 'Has to be real city.',
-            },
-          }}
-          render={({field: {onChange, onBlur, value}}) => (
-            <Input
-              style={styles.inputField}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              autoCapitalize="none"
-              placeholder="City"
-              errorMessage={errors.email && errors.email.message}
-            />
-          )}
-          name="city"
         />
 
         <Button title="Submit" onPress={handleSubmit(onSubmit)} />
