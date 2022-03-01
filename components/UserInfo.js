@@ -28,7 +28,7 @@ const UserInfo = (props) => {
       <Avatar
         size={160}
         source={{ uri: 'https://www.placecage.com/c/800/800' }}
-        containerStyle={{ marginBottom: 20 }}
+        containerStyle={{ marginBottom: 50 }}
         onPress={showAvatarTapToast}
         onLongPress={initiateProfilePictureChange}
         rounded
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width * 2,
     borderRadius: 1200,
     position: 'absolute',
-    top: -Dimensions.get('window').width * 1.6,
+    top: -Dimensions.get('window').width * 1.55,
   },
 });
 

@@ -19,6 +19,7 @@ import { GlobalContext } from '../context/GlobalContext';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import Toast from 'react-native-toast-message';
+import colors from '../utils/colors';
 
 const EditProfileForm = ({ navigation, onEditSuccess }) => {
   const { setUser, user } = useContext(GlobalContext);
@@ -99,7 +100,6 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
     }
   }
   
-
   useEffect(() => {
     setValue('email', user.email);
     setValue('username', user.username);
@@ -226,7 +226,7 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#5F9A3B',
+    backgroundColor: colors.main,
     marginLeft: 'auto',
     marginRight: 'auto',
     width: '90%',
