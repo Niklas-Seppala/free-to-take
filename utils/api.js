@@ -4,6 +4,14 @@ export const BASE_URL = 'https://media.mw.metropolia.fi/wbma';
 export const TAG = '098fea725eb66a1';
 export const client = axios;
 
+export const CATEGORY_TAGS = {
+  KITCHEN: '897d7ed4',
+  SPORT: '5b03afa1',
+  CLOTHES: '50e76249',
+  FURNITURE: 'f6a462c9',
+  OTHER: '87e93b34',
+}
+
 /**
  * Helper function for building API URL routes.
  *
