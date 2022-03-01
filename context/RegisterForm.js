@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, View, Dimensions, StyleSheet, ScrollView} from 'react-native';
+import {View, Dimensions, StyleSheet, ScrollView} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {Input, Button} from 'react-native-elements';
 import {client, routes} from '../utils/api';
@@ -20,19 +20,15 @@ const RegisterForm = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
+    delete data.confirmPassword
     console.log(data);
-    let available = false;
-    try {
-      client
-        .post(routes.user.create, data)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((e) => console.error(e));
-    } catch (error) {
-      console.error(error);
-    }
+    client
+      .post(routes.user.create, data)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((e) => console.error(e));
   };
 
   return (
@@ -41,24 +37,17 @@ const RegisterForm = () => {
         <Controller
           control={control}
           rules={{
-            required: {value: true, message: 'This is required.'},
+            required: 'Please provide username.',
             minLength: {
               value: 3,
               message: 'Username has to be at least 3 characters.',
             },
             validate: async (value) => {
               try {
-                const available = (
-                  await client.get(routes.user.nameExists(value))
-                ).data.available;
-
-                if (available) {
-                  return true;
-                } else {
-                  return 'Username is already taken.';
-                }
+               const res = await client.get(routes.user.nameExists(value));
+               return res.data.available ? true : 'This username is taken.';
               } catch (error) {
-                throw new Error(error.message);
+                return true;
               }
             },
           }}
@@ -69,16 +58,8 @@ const RegisterForm = () => {
               value={value}
               autoCapitalize="none"
               placeholder="Username"
-              errorMessage={errors.username && errors.username.message}
-              inputStyle={{
-                width: 250,
-                height: 40,
-                backgroundColor: 'rgba(96, 162, 23, 0.3)',
-                borderRadius: 24,
-                paddingHorizontal: 15,
-                fontSize: 15,
-                color: 'rgba(0, 0, 0, 0.42)',
-              }}
+              errorMessage={errors.username?.message}
+              inputStyle={styles.inputField}
             />
           )}
           name="username"
@@ -92,12 +73,6 @@ const RegisterForm = () => {
               value: 5,
               message: 'Password has to be at least 5 characters.',
             },
-            /*
-          pattern: {
-            value: /(?=.*[\p{Lu}])(?=.*[0-9]).{8,}/u,
-            message: 'Min 8, Uppercase, Number',
-          },
-          */
           }}
           render={({field: {onChange, onBlur, value}}) => (
             <Input
@@ -108,15 +83,7 @@ const RegisterForm = () => {
               secureTextEntry={true}
               placeholder="Password"
               errorMessage={errors.password && errors.password.message}
-              inputStyle={{
-                width: 250,
-                height: 40,
-                backgroundColor: 'rgba(96, 162, 23, 0.3)',
-                borderRadius: 24,
-                paddingHorizontal: 15,
-                fontSize: 15,
-                color: 'rgba(0, 0, 0, 0.42)',
-              }}
+              inputStyle={styles.inputField}
             />
           )}
           name="password"
@@ -146,15 +113,7 @@ const RegisterForm = () => {
               errorMessage={
                 errors.confirmPassword && errors.confirmPassword.message
               }
-              inputStyle={{
-                width: 250,
-                height: 40,
-                backgroundColor: 'rgba(96, 162, 23, 0.3)',
-                borderRadius: 24,
-                paddingHorizontal: 15,
-                fontSize: 15,
-                color: 'rgba(0, 0, 0, 0.42)',
-              }}
+              inputStyle={styles.inputField}
             />
           )}
           name="confirmPassword"
@@ -177,15 +136,7 @@ const RegisterForm = () => {
               autoCapitalize="none"
               placeholder="Email"
               errorMessage={errors.email && errors.email.message}
-              inputStyle={{
-                width: 250,
-                height: 40,
-                backgroundColor: 'rgba(96, 162, 23, 0.3)',
-                borderRadius: 24,
-                paddingHorizontal: 15,
-                fontSize: 15,
-                color: 'rgba(0, 0, 0, 0.42)',
-              }}
+              inputStyle={styles.inputField}
             />
           )}
           name="email"
@@ -207,15 +158,7 @@ const RegisterForm = () => {
               autoCapitalize="words"
               placeholder="Full name"
               errorMessage={errors.full_name && errors.full_name.message}
-              inputStyle={{
-                width: 250,
-                height: 40,
-                backgroundColor: 'rgba(96, 162, 23, 0.3)',
-                borderRadius: 24,
-                paddingHorizontal: 15,
-                fontSize: 15,
-                color: 'rgba(0, 0, 0, 0.42)',
-              }}
+              inputStyle={styles.inputField}
             />
           )}
           name="full_name"
