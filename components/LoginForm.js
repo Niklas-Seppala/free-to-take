@@ -7,6 +7,7 @@ import { Input, Text, Button } from 'react-native-elements';
 
 const LoginForm = ({ navigation }) => {
   const loginWithForm = useFormLogin();
+
   const {
     control,
     handleSubmit,
@@ -19,7 +20,6 @@ const LoginForm = ({ navigation }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       loginWithForm(data);
     } catch (error) {
@@ -43,11 +43,12 @@ const LoginForm = ({ navigation }) => {
             placeholder="Username"
             inputContainerStyle={{ borderBottomWidth: 0 }}
             inputStyle={styles.inputField}
+            errorMessage={errors.username && 'Username is required.'}
+            errorStyle={styles.errorsField}
           />
         )}
         name="username"
       />
-      {errors.username && <Text style={styles.errorsField}>This is required.</Text>}
 
       <Controller
         control={control}
@@ -64,11 +65,12 @@ const LoginForm = ({ navigation }) => {
             placeholder="Password"
             inputContainerStyle={{ borderBottomWidth: 0 }}
             inputStyle={styles.inputField}
+            errorMessage={errors.password && 'Password is required.'}
+            errorStyle={styles.errorsField}
           />
         )}
         name="password"
       />
-      {errors.password && <Text style={styles.errorsField}>This is required.</Text>}
       <View>
         <Button
           title="Login"
@@ -81,7 +83,7 @@ const LoginForm = ({ navigation }) => {
           }}
         />
       </View>
-      <View style={styles.registerTextCont}>
+      <View style={styles.registerContainer}>
         <Text style={styles.registerText}>Not a User? </Text>
         <TouchableOpacity
           onPress={() => {
@@ -111,17 +113,22 @@ const styles = StyleSheet.create({
   },
   errorsField: {
     color: 'red',
-    marginHorizontal: 18,
+    marginHorizontal: 15,
+    marginTop:1,
   },
   buttonField: {
+    marginTop:5,
     backgroundColor: '#5F9A3B',
     borderRadius: 5,
     borderWidth: 2,
-    width: 100,
+    width: 150,
+    height:50,
     borderColor: 'white',
     borderRadius: 30,
+   
   },
-  registerTextCont: {
+  registerContainer: {
+    top:15,
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'flex-end',
