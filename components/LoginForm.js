@@ -28,7 +28,7 @@ const LoginForm = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Controller
         control={control}
         rules={{
@@ -47,9 +47,7 @@ const LoginForm = ({ navigation }) => {
         )}
         name="username"
       />
-      {errors.username && (
-        <Text style={styles.errorsField}>This is required.</Text>
-      )}
+      {errors.username && <Text style={styles.errorsField}>This is required.</Text>}
 
       <Controller
         control={control}
@@ -70,9 +68,7 @@ const LoginForm = ({ navigation }) => {
         )}
         name="password"
       />
-      {errors.password && (
-        <Text style={styles.errorsField}>This is required.</Text>
-      )}
+      {errors.password && <Text style={styles.errorsField}>This is required.</Text>}
       <View>
         <Button
           title="Login"
@@ -99,8 +95,13 @@ const LoginForm = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
+  container:{
+    top:'20%',
+    margin:40,
+    alignItems: 'center'
+  },
   inputField: {
-    width: 250,
+    width: 100,
     height: 40,
     backgroundColor: 'rgba(96, 162, 23, 0.3)',
     borderRadius: 24,
@@ -108,16 +109,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'rgba(0, 0, 0, 0.42)',
   },
-  errorsField: { 
-    color: 'red', 
-    marginHorizontal: 18 },
+  errorsField: {
+    color: 'red',
+    marginHorizontal: 18,
+  },
   buttonField: {
     backgroundColor: '#5F9A3B',
-            borderRadius: 5,
-            borderWidth: 2,
-            width: 100,
-            borderColor: 'white',
-            borderRadius: 30,
+    borderRadius: 5,
+    borderWidth: 2,
+    width: 100,
+    borderColor: 'white',
+    borderRadius: 30,
   },
   registerTextCont: {
     flexGrow: 1,
