@@ -60,7 +60,7 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
 
     console.log("onSubmit")
 
-    //await setUserData(data);
+    await setUserData(data);
     // bad hack to change user data locally
     user.username = data.username;
     user.email = data.email;
