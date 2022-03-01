@@ -1,11 +1,6 @@
-
-import { useContext, useState } from 'react';
-
 import { View, StyleSheet, Dimensions } from 'react-native';
-import { Button, Text, Card, Divider, Avatar, Icon } from 'react-native-elements';
-import useLogout from '../hooks/api/useLogout';
-
-import { GlobalContext } from '../context/GlobalContext';
+import { Text, Divider, Avatar, Icon } from 'react-native-elements';
+import colors from '../utils/colors'
 
 import Toast from 'react-native-toast-message';
 
@@ -17,28 +12,28 @@ const UserInfo = (props) => {
       type: 'info',
       text1: 'Tap and hold to change your profile picture',
     });
-  }
+  };
 
   const initiateProfilePictureChange = () => {
     Toast.show({
       type: 'info',
       text1: 'TODO: implement profile picture change',
     });
-  }
+  };
 
   return (
-      <>
+    <>
       <View style={styles.backgroundCircle}></View>
 
       <Avatar
         size={160}
         source={{ uri: 'https://www.placecage.com/c/800/800' }}
-        containerStyle={{marginBottom: 20}}
+        containerStyle={{ marginBottom: 50 }}
         onPress={showAvatarTapToast}
         onLongPress={initiateProfilePictureChange}
         rounded
       />
-      <View style={{ width: '100%', flex: 1, alignItems: 'flex-start'}}>
+      <View style={{ width: '100%', flex: 1, alignItems: 'flex-start' }}>
         {/* user info */}
         <View style={styles.vertical}>
           <Icon
@@ -74,9 +69,8 @@ const UserInfo = (props) => {
           <Text>742 Evergreen Terrace</Text>
         </View>
       </View>
-      </>
-  )
-
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -91,30 +85,17 @@ const styles = StyleSheet.create({
     width: '100%',
     color: '#3f3f3f',
   },
-  cardContainerStyle: {
-    width: '95%',
-    //backgroundColor: 'rgba(96, 162, 23, 0.5)',
-  },
-  button: {
-    backgroundColor: '#5F9A3B',
-    marginTop: 10,
-    marginBottom: 10,
-  },
   iconContainerStyle: {
     width: '15%',
     marginLeft: '20%',
   },
-  bold: {
-    fontWeight: 'bold',
-  },
   backgroundCircle: {
-    backgroundColor: '#6ab07c',
-    //backgroundColor: 'green',
+    backgroundColor: colors.main,
     height: Dimensions.get('window').width * 2,
     width: Dimensions.get('window').width * 2,
     borderRadius: 1200,
     position: 'absolute',
-    top: -Dimensions.get('window').width * 1.6,
+    top: -Dimensions.get('window').width * 1.55,
   },
 });
 
