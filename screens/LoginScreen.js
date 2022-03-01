@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import useFormLogin from '../hooks/api/useFormLogin';
 
-const formData = { username: 'nikke-nakke23', password: 'aaaaA11' }; //temporary until the login form is ready
+const formData = { username: 'leevipp', password: 'Kallekalle123' }; //temporary until the login form is ready
 
 const LoginScreen = () => {
   const loginWithForm = useFormLogin();

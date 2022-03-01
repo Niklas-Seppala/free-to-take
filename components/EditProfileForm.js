@@ -33,20 +33,33 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
     handleSubmit,
     getValues,
     setValue,
-    formState: { errors },
+    trigger,
+    formState: { errors, isDirty },
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
       username: '',
       password: '',
-      address: '',
+      password2: '',
       email: '',
     },
   });
 
-  const onSubmit = async (data) => {
-    await setUserData(data);
 
+  const onSubmit = async (data) => {
+
+    // trim out empty fields as we only want to submit the fields with content in them
+    data = Object.fromEntries(
+      Object.entries(data).filter(
+        ([k, v]) => {
+          return v != ''
+        }
+      )
+    );
+
+    console.log("onSubmit")
+
+    //await setUserData(data);
     // bad hack to change user data locally
     user.username = data.username;
     user.email = data.email;
@@ -66,6 +79,26 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
       text1: 'Please fill all the form fields',
     });
   };
+
+  const validatePassword = async (value) => {
+    // we need to allow the user to not change the password by leaving the fields empty
+    // but we also need to allow him to change the password, but not leave it empty/give invalid values
+    // tl;dr only validate the password field if its not empty
+    const passwordRegex = /(?=.*[A-Z])(?=.*[0-9]).*/;
+
+    if(value.length == 0) {
+      return true
+    }
+
+    if(value.length < 5) {
+      return 'Password must be at least 5 characters long'
+    }
+
+    if (!value.match(passwordRegex)) {
+      return 'Password must contain at least one number and one CAPITAL letter'
+    }
+  }
+  
 
   useEffect(() => {
     setValue('email', user.email);
@@ -125,29 +158,8 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
           />
           <Controller
             control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                placeholder="address"
-                style={styles.textInput}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-              />
-            )}
-            name="address"
-          />
-          <Controller
-            control={control}
             rules={{
-              minLength: {
-                value: 5,
-                message: 'Password must be at least 5 characters long',
-              },
-              pattern: {
-                value: /(?=.*[A-Z])(?=.*[0-9]).*/,
-                message:
-                  'Password must contain at least one number and one CAPITAL letter',
-              },
+              validate: async (value) => validatePassword(value),
             }}
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
@@ -157,46 +169,53 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
+                secureTextEntry={true}
                 errorMessage={errors.password && errors.password.message}
               />
             )}
             name="password"
           />
-          <Controller
-            control={control}
-            rules={{
-              required: true,
-              validate: (value) => {
-                console.log(value, getValues('password'));
-                return value == getValues('password') ? true : 'Passwords do not match';
-              },
-            }}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input
-                style={styles.textInput}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                placeholder="confirm password"
-                errorMessage={errors.password2 && errors.password2.message}
-              />
-            )}
-            name="password2"
-          />
+          {getValues('password') && !errors.password ? (<Controller
+              control={control}
+              rules={{
+                validate: (value) => {
+                  // only validate if the password is being changed
+                  if(getValues('password') && getValues('password').length > 0) {
+                    return value == getValues('password') ? true : 'Passwords do not match';
+                  }
+
+                  return true;
+                },
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input
+                  style={styles.textInput}
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                  secureTextEntry={true}
+                  placeholder="confirm password"
+                  errorMessage={errors.password2 && errors.password2.message}
+                />
+              )}
+              name="password2"
+            />
+            ) : (<></>)}
           <View style={styles.buttonContainer}>
             <Button
               containerStyle={{ width: '50%' }}
               buttonStyle={styles.button}
               title="Save changes"
-              onPress={() => (!errors ? handleSubmit(onSubmit) : showErrorMsg())}
+              disabled={Object.keys(errors).length > 0}
+              onPress={handleSubmit(onSubmit)}
             ></Button>
             <Button
               containerStyle={{ width: '50%' }}
               buttonStyle={styles.button}
               title="Cancel"
-              onPress={() => {
-                onEditSuccess();
-              }}
+              onPress={
+                () => onEditSuccess()
+              }
             ></Button>
           </View>
         </KeyboardAwareScrollView>
