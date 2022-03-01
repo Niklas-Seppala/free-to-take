@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const BASE_URL = 'https://media.mw.metropolia.fi/wbma';
+                        // https://media.mw.metropolia.fi/media
 export const TAG = '098fea725eb66a1';
 export const client = axios;
 

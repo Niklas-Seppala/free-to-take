@@ -75,7 +75,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Profile"
-        component={SingleScreen}
+        component={ProfileScreen}
         options={individualOptions('Profile')}
       />
     </BottomTab.Navigator>

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import useFormLogin from '../hooks/api/useFormLogin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input, Text, Button } from 'react-native-elements';
 
-const LoginForm = () => {
+const LoginForm = ({ navigation }) => {
   const loginWithForm = useFormLogin();
   const {
     control,
@@ -42,21 +42,13 @@ const LoginForm = () => {
             autoCapitalize="none"
             placeholder="Username"
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={{
-              width: 250,
-              height: 40,
-              backgroundColor: 'rgba(96, 162, 23, 0.3)',
-              borderRadius: 24,
-              paddingHorizontal: 15,
-              fontSize: 15,
-              color: 'rgba(0, 0, 0, 0.42)',
-            }}
+            inputStyle={styles.inputField}
           />
         )}
         name="username"
       />
       {errors.username && (
-        <Text style={{ color: 'red', marginHorizontal: 18,  }}>This is required.</Text>
+        <Text style={styles.errorsField}>This is required.</Text>
       )}
 
       <Controller
@@ -73,21 +65,13 @@ const LoginForm = () => {
             secureTextEntry={true}
             placeholder="Password"
             inputContainerStyle={{ borderBottomWidth: 0 }}
-            inputStyle={{
-              width: 250,
-              height: 40,
-              backgroundColor: 'rgba(96, 162, 23, 0.3)',
-              borderRadius: 24,
-              paddingHorizontal: 15,
-              fontSize: 15,
-              color: 'rgba(0, 0, 0, 0.42)',
-            }}
+            inputStyle={styles.inputField}
           />
         )}
         name="password"
       />
       {errors.password && (
-        <Text style={{ color: 'red', marginHorizontal: 18,  }}>This is required.</Text>
+        <Text style={styles.errorsField}>This is required.</Text>
       )}
       <View>
         <Button
@@ -95,21 +79,62 @@ const LoginForm = () => {
           onPress={handleSubmit(onSubmit)}
           loading={false}
           loadingProps={{ size: 'small', color: 'white' }}
-          buttonStyle={{
-            backgroundColor: '#5F9A3B',
-            borderRadius: 5,
-            borderWidth: 2,
-            width: 100,
-            borderColor: 'white',
-            borderRadius: 30,
-          }}
+          buttonStyle={styles.buttonField}
           containerStyle={{
             alignItems: 'center',
           }}
         />
       </View>
+      <View style={styles.registerTextCont}>
+        <Text style={styles.registerText}>Not a User? </Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Register');
+          }}
+        >
+          <Text style={styles.registerButton}>Register here</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+const styles = StyleSheet.create({
+  inputField: {
+    width: 250,
+    height: 40,
+    backgroundColor: 'rgba(96, 162, 23, 0.3)',
+    borderRadius: 24,
+    paddingHorizontal: 15,
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.42)',
+  },
+  errorsField: { 
+    color: 'red', 
+    marginHorizontal: 18 },
+  buttonField: {
+    backgroundColor: '#5F9A3B',
+            borderRadius: 5,
+            borderWidth: 2,
+            width: 100,
+            borderColor: 'white',
+            borderRadius: 30,
+  },
+  registerTextCont: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingVertical: 15,
+    flexDirection: 'row',
+  },
+  registerText: {
+    color: '#bd157a',
+    fontSize: 15,
+  },
+  registerButton: {
+    color: '#700d49',
+    fontSize: 15,
+    fontWeight: '500',
+  },
+});
 
 export default LoginForm;

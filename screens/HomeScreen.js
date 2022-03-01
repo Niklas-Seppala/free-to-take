@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import PostCarousel from '../components/PostCarousel';
 import useAllMedia from '../hooks/api/useAllMedia'
 import { View, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 
-
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const data = useAllMedia();
   const [ready, setReady] = useState(false);
 
@@ -17,7 +17,11 @@ const HomeScreen = () => {
       </View>
     )
   }
-  return <PostCarousel data={data} style={{flex: 1}}/>;
+  return <PostCarousel data={data} style={{flex: 1}} navigation={navigation}/>;
+};
+
+HomeScreen.propTypes = {
+  navigation: PropTypes.object,
 };
 
 export default HomeScreen;

@@ -4,10 +4,10 @@ import { Text, Button } from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
 import CarouselCard from './CarouselCard';
 
-const PostCarousel = ({ data, style }) => {
+const PostCarousel = ({ data, style , navigation}) => {
   const WINDOW_WIDTH = Dimensions.get('window').width;
   const carouselRef = React.createRef();
-
+  let i=0
   if (data.length === 0)  {
     return (
       <View style={[style, {alignItems: 'center', justifyContent: 'center'}]}>
@@ -32,16 +32,33 @@ const PostCarousel = ({ data, style }) => {
         <Button
           buttonStyle={styles.button}
           icon={{ name: 'chevron-left', size: 40, color: '#daf2d3' }}
-          onPress={() => carouselRef.current.snapToPrev()}
+          onPress={() => 
+            {
+              carouselRef.current.snapToPrev()
+              if(i>0){
+                i--
+              }
+              
+            }}
         ></Button>
         <Button
           buttonStyle={{ backgroundColor: '#6ab07c', paddingVertical: 10 }}
           title={<Text style={{color: '#daf2d3'}}>Reserve</Text>}
+          onPress={() => {
+            navigation.navigate('Single', {file:data[i]});
+          }}
         ></Button>
         <Button
           buttonStyle={styles.button}
           icon={{ name: 'chevron-right', size: 40, color: '#daf2d3' }}
-          onPress={() => carouselRef.current.snapToNext()}
+          onPress={() => 
+          {
+            carouselRef.current.snapToNext()
+            if(data.length>i+1){
+              i++
+              console.log(i)
+            }
+          }}
         ></Button>
       </View>
     </View>
