@@ -1,27 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import PostCarousel from '../components/PostCarousel';
-import useAllMedia from '../hooks/api/useAllMedia'
-import { View, ActivityIndicator } from 'react-native';
-import PropTypes from 'prop-types';
+import useAllMedia from '../hooks/api/useAllMedia';
+import { ScreenLoader } from '../components/ScreenLoader';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = () => {
   const data = useAllMedia();
   const [ready, setReady] = useState(false);
 
-  useEffect(() => setReady(Boolean(data)), [data])
+  useEffect(() => setReady(Boolean(data)), [data]);
 
-  if (!ready)  {
-    return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <ActivityIndicator size={120} color='green' />
-      </View>
-    )
-  }
-  return <PostCarousel data={data} style={{flex: 1}} navigation={navigation}/>;
-};
-
-HomeScreen.propTypes = {
-  navigation: PropTypes.object,
+  return (
+    <>{ready ? <PostCarousel data={data} style={{ flex: 1 }} /> : <ScreenLoader />}</>
+  );
 };
 
 export default HomeScreen;

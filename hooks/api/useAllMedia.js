@@ -28,7 +28,7 @@ export default function useAllMedia() {
         client.get(routes.user.all, { headers: setJWT(user.token) }),
         client.get(routes.tag.files(TAG)),
       ]);
-      const userMap = new Map(users.data.map(i => [i.user_id, i]));
+      const userMap = new Map(users.data.map((i) => [i.user_id, i]));
 
       const filesWithInfo = await Promise.all(
         posts.data.map(async (file) => {
