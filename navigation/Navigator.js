@@ -10,6 +10,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import SingleScreen from '../screens/SingleScreen';
 import useTokenLogin from '../hooks/api/useTokenLogin';
 import BottomNavIcon from '../components/BottomNavIcon';
+import { ScreenLoader } from '../components/ScreenLoader';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -17,7 +18,7 @@ const BottomTab = createBottomTabNavigator();
 const RootNavigator = () => {
   const options = {headerShown: false};
   const [onGoing, success] = useTokenLogin();
-  if (onGoing) return <></>;
+  if (onGoing) return <ScreenLoader />;
 
   return (
     <Stack.Navigator>

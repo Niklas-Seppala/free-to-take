@@ -4,7 +4,7 @@ import { GlobalProvider } from './context/GlobalContext';
 import Navigator from './navigation/Navigator';
 
 export default function App() {
-  console.log(' ---------------------- APP RENDER ----------------------')
+  console.log(' ---------------------- APP RENDER ----------------------');
   return (
     <GlobalProvider>
       <SafeAreaProvider>

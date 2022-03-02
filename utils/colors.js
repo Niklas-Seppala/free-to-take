@@ -3,5 +3,6 @@ export default {
   accent: '#8868b0',
   dark: '#242624',
   light: '#daf2d3',
-  active: '#e2f5dc'
-}
+  active: '#e2f5dc',
+  inactive: '#6ab07caa',
+};

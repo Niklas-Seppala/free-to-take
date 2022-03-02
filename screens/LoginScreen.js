@@ -8,7 +8,7 @@ const LoginScreen = () => {
   const loginWithForm = useFormLogin();
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Button title="Log in" onPress={() => loginWithForm(formData)}></Button>
     </View>
   );
