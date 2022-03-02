@@ -57,17 +57,6 @@ const UserInfo = (props) => {
           <Text>{user.email}</Text>
         </View>
 
-        <Divider />
-
-        <View style={styles.vertical}>
-          <Icon
-            name="map-marker"
-            type="font-awesome"
-            color="#3f3f3f"
-            containerStyle={styles.iconContainerStyle}
-          />
-          <Text>742 Evergreen Terrace</Text>
-        </View>
       </View>
     </>
   );
