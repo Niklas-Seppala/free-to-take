@@ -1,49 +1,30 @@
 import React, { useContext, useEffect, useState, setState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import {
   Dimensions,
   StyleSheet,
   Text,
   View,
-  SectionList,
-  SafeAreaView,
   Image,
-  FlatList,
-  TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Icon, Input, Button } from 'react-native-elements';
-import { MessageList } from 'react-chat-elements';
-import { client, routes, setJWT } from '../utils/api';
-import { GlobalContext } from '../context/GlobalContext';
+import { Icon } from 'react-native-elements';
+import { routes } from '../utils/api';
 import PropTypes from 'prop-types';
 
+/**
+ * 
+ * @route contained navigation and single file data 
+ */
 const SingleScreen = ({ route }) => {
-  const { user } = useContext(GlobalContext);
-  const { file } = route.params;
-  const uploadsUrl = 'https://media.mw.metropolia.fi/wbma/uploads/';
-  const datetime = new Date(file.time_added);
-  const addComment = async () => {
-    try {
-      console.log('kkkk');
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
-  const onSubmit = async (data) => {
-    try {
-      console.log('hhhhh');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const { file } = route.params; // get a single file info
+  const datetime = new Date(file.time_added); // convert the date string to Date format
 
   return (
     <View style={styles.container}>
       <View style={styles.slider}>
         <Image
-          source={{ uri: uploadsUrl + file.filename }}
+          source={{ uri: routes.uploads.file(file.thumbnails.w640) }}
           style={styles.imgCover}
           resizeMode="cover"
         />
@@ -152,10 +133,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width - 40,
     height: '100%',
     borderRadius: 40,
-  },
-  tinyLogo: {
-    width: 20,
-    height: 20,
   },
 });
 

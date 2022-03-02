@@ -1,13 +1,19 @@
-import React, { useContext } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import useFormLogin from '../hooks/api/useFormLogin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input, Text, Button } from 'react-native-elements';
 
+/**
+ * it contains login form and action that takes
+ * @navigation for navigate the screen back and front
+ */
 const LoginForm = ({ navigation }) => {
-  const loginWithForm = useFormLogin();
-
+  const loginWithForm = useFormLogin(); // user auth fuction expect JSON
+  /**
+   * login form init validation
+   */
   const {
     control,
     handleSubmit,
@@ -19,6 +25,10 @@ const LoginForm = ({ navigation }) => {
     },
   });
 
+  /**
+   * loginWithForm is a useFormLogin function components that authondicate the user
+   * @param {{username: string: password: string}} data send to sever.
+   */
   const onSubmit = async (data) => {
     try {
       loginWithForm(data);
@@ -71,6 +81,7 @@ const LoginForm = ({ navigation }) => {
         )}
         name="password"
       />
+     
       <View>
         <Button
           title="Login"
