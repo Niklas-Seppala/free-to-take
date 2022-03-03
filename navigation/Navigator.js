@@ -52,8 +52,8 @@ export default function Navigation() {
 function BottomTabNavigator() {
   const options = {
     headerShown: true,
-    headerStyle: {backgroundColor: '#6ab07c'},
-    tabBarStyle: {backgroundColor: '#6ab07c'},
+    headerStyle: { backgroundColor: '#6ab07c', shadowColor: 'transparent'},
+    tabBarStyle: { backgroundColor: '#6ab07c' },
     tabBarShowLabel: false,
   };
 
