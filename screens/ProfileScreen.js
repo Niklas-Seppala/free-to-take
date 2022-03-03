@@ -1,16 +1,67 @@
-import { View } from 'react-native';
-import { Button, Text } from 'react-native-elements';
+import { useContext, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Button, Divider } from 'react-native-elements';
 import useLogout from '../hooks/api/useLogout';
+import EditProfileForm from '../components/EditProfileForm';
+import UserInfo from '../components/UserInfo';
+import { GlobalContext } from '../context/GlobalContext';
+import colors from '../utils/colors'
 
 const ProfileScreen = () => {
   const logout = useLogout();
+  const { user } = useContext(GlobalContext);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 26 }}>Profile</Text>
-      <Button title="Log out" onPress={() => logout()}></Button>
+    <View
+      style={styles.container}
+    >
+      {/* user info */}
+      {!isEditingProfile ? (
+        <UserInfo user={user} />
+      ) : (
+        <EditProfileForm
+          onEditSuccess={() => {
+            setIsEditingProfile(false);
+          }}
+        />
+      )}
+
+      <Divider />
+      {!isEditingProfile ? (
+        <>
+          <Button
+            buttonStyle={styles.button}
+            onPress={() => {
+              setIsEditingProfile(!isEditingProfile);
+            }}
+            title={'Edit profile'}
+          ></Button>
+
+          <Button
+            buttonStyle={styles.button}
+            title="Log out"
+            onPress={() => logout()}
+          ></Button>
+        </>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: colors.main,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  container: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  }
+});
 
 export default ProfileScreen;
