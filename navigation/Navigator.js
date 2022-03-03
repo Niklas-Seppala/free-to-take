@@ -1,7 +1,7 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 const RootNavigator = () => {
-  const options = { headerShown: false };
+  const options = {headerShown: false};
   const [onGoing, success] = useTokenLogin();
   if (onGoing) return <ScreenLoader />;
 
@@ -24,7 +24,11 @@ const RootNavigator = () => {
     <Stack.Navigator>
       {success ? (
         <>
-          <Stack.Screen name="Root" component={BottomTabNavigator} options={options} />
+          <Stack.Screen
+            name="Root"
+            component={BottomTabNavigator}
+            options={options}
+          />
           <Stack.Screen name="Single" component={SingleScreen} />
         </>
       ) : (
@@ -58,8 +62,8 @@ function BottomTabNavigator() {
    */
   const individualOptions = (name) => ({
     title: name,
-    headerTitleStyle: { color: 'white' },
-    tabBarIcon: ({ focused }) => <BottomNavIcon focused={focused} name={name} />,
+    headerTitleStyle: {color: 'white'},
+    tabBarIcon: ({focused}) => <BottomNavIcon focused={focused} name={name} />,
   });
 
   return (
