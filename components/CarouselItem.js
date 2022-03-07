@@ -40,7 +40,7 @@ export default function CarouselItem({ item }) {
             <MiniProfile user={item.owner} />
           </TouchableOpacity>
         </Card.Divider>
-        <Text style={{ margin: 10 }}>{item.description}</Text>
+        <Text style={{ margin: 10, fontSize: 18 }}>{item.description}</Text>
       </View>
     </View>
   );
@@ -50,19 +50,14 @@ CarouselItem.propTypes = { item: PostPropType };
 
 const styles = StyleSheet.create({
   card: {
-    margin: 10,
-    overflow: 'hidden',
+    marginHorizontal: 10,
     flex: 1,
     borderRadius: 5,
   },
   image: {
     borderRadius: 5,
-    width: '100%',
-    height: 400,
+    height: 350,
   },
   details: {
-    flex: 1,
-    width: '100%',
-    marginBottom: 63,
   },
 });

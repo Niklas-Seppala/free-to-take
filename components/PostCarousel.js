@@ -8,15 +8,15 @@ import { EmptyResults } from './EmptyResults';
 
 /**
  * Carousel for browsing app content.
- * @param {{data: [any], style: any}} props
+ * @param {{data: [any]}} props
  */
-const PostCarousel = ({ data, style }) => {
+const PostCarousel = ({ data }) => {
   const WINDOW_WIDTH = Dimensions.get('window').width;
   const carouselRef = React.createRef();
 
-  if (data.length === 0) return <EmptyResults style={style} />;
+  if (data.length === 0) return <EmptyResults style={{flex: 1}} />;
   return (
-    <View style={style}>
+    <View style={{flex: 1}}>
       <Carousel
         scrollEnabled={false}
         ref={carouselRef}
@@ -38,7 +38,6 @@ const PostCarousel = ({ data, style }) => {
 
 PostCarousel.propTypes = {
   data: PropTypes.array.isRequired,
-  style: PropTypes.object,
 };
 
-export default PostCarousel;
+export default React.memo(PostCarousel);

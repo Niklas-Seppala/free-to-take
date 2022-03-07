@@ -23,7 +23,7 @@ CarouselItemHeader.propTypes = { item: PostPropType };
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
+    paddingBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

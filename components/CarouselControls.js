@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
+import colors from '../utils/colors';
 
 /**
  * Control buttons for moving carousel.
@@ -11,7 +12,7 @@ export function CarouselControls({ count, onLeft, onRight }) {
   const [index, setIndex] = useState(0);
 
   return (
-    <View style={styles.buttonContainer}>
+    <View style={styles.container}>
       <Button
         disabledStyle={{ backgroundColor: '#6ab07caa' }}
         disabled={index === 0}
@@ -22,15 +23,16 @@ export function CarouselControls({ count, onLeft, onRight }) {
           setIndex(Math.max(0, index - 1));
         }}
       ></Button>
+      <View style={{flexDirection: 'row'}}>
+      <Button
+        icon={{ name: 'delete-forever', color: '#daf2d3', size: 30 }}
+        buttonStyle={{backgroundColor: colors.negative, marginRight: 15}}
+      />
       <Button
         icon={{ name: 'add-shopping-cart', color: '#daf2d3', size: 30 }}
-        buttonStyle={{
-          backgroundColor: '#6ab07c',
-          paddingVertical: 10,
-          paddingHorizontal: 15,
-        }}
-        title={<Text style={{ color: '#daf2d3', fontSize: 20 }}>Reserve</Text>}
-      ></Button>
+        buttonStyle={{backgroundColor: '#6ab07c'}}
+        />
+      </View>
       <Button
         disabled={index === count - 1}
         disabledStyle={{ backgroundColor: '#6ab07caa' }}
@@ -52,11 +54,11 @@ CarouselControls.propTypes = {
 };
 
 export const styles = StyleSheet.create({
-  buttonContainer: {
-    marginVertical: 20,
+  container: {
     justifyContent: 'space-around',
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 15
   },
   button: {
     padding: 0,
