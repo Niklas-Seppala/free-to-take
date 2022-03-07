@@ -3,34 +3,24 @@ import PostCarousel from '../components/PostCarousel';
 import useAllMedia from '../hooks/api/useAllMedia';
 import { ScreenLoader } from '../components/ScreenLoader';
 import TagFilter from '../components/TagFilter';
-import { CATEGORY_TAGS } from '../utils/api';
-
-const reduceCategories = (categories, tag) => {
-  categories[tag.tag] = true;
-  return categories;
-};
-
-const toggleCategory = (state, tag, prev) => {
-  const copy = { ...prev };
-  copy[tag] = !state;
-  return copy;
-};
+import { useFilters } from '../hooks/useFilters';
+import { useCategories } from "../hooks/useCategories";
 
 const HomeScreen = () => {
-  const [ready, setReady] = useState(false);
+  const [filters, toggle] = useCategories();
   const data = useAllMedia();
-  const [filters, setFilters] = useState(CATEGORY_TAGS.reduce(reduceCategories, {}));
-  useEffect(() => {
-    console.log(filters);
-  }, [filters]);
-
+  const [ready, setReady] = useState(false);
+  const filteredData = useFilters(data, filters);
   useEffect(() => setReady(Boolean(data)), [data]);
+
+
   if (!ready) return <ScreenLoader></ScreenLoader>;
 
+  // TODO: Test filters when upload is ready.
   return (
     <>
       <TagFilter
-        onChange={(state, tag) => setFilters(toggleCategory(state, tag, filters))}
+        onChange={toggle}
       />
       <PostCarousel data={data} />
     </>
