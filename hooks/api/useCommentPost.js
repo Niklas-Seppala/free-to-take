@@ -17,9 +17,11 @@ export default function useCommentPost() {
   */
   const postComment = async (comment, item) => {
     try {
+      const header = JSON.stringify({rid:item.owner.user_id});
+
       const commentData = {
         file_id: item.file_id,
-        comment: `{rid:'${item.owner.user_id}',sid:'${user.user_id}'}${comment}`
+        comment: `${header}${comment}`
       }
       const resp = await client.post(routes.comment.post, commentData, {headers: setJWT(token)});
       console.log(commentData)
