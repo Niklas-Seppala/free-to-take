@@ -6,13 +6,12 @@ import TagFilter from '../components/TagFilter';
 import { useFilters } from '../hooks/useFilters';
 import { useCategories } from "../hooks/useCategories";
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [filters, toggle] = useCategories();
   const data = useAllMedia();
   const [ready, setReady] = useState(false);
   const filteredData = useFilters(data, filters);
   useEffect(() => setReady(Boolean(data)), [data]);
-
 
   if (!ready) return <ScreenLoader></ScreenLoader>;
 
@@ -22,7 +21,7 @@ const HomeScreen = () => {
       <TagFilter
         onChange={toggle}
       />
-      <PostCarousel data={data} />
+      <PostCarousel data={data} navigation={navigation} />
     </>
   );
 };

@@ -6,9 +6,9 @@ import colors from '../utils/colors';
 
 /**
  * Control buttons for moving carousel.
- * @param {{count: number, onLeft: () => void, onRight: () => void}} props
+ * @param {{count: number, onLeft: () => void, onRight: () => void, onSelect: (number) => void}} props
  */
-export function CarouselControls({ count, onLeft, onRight }) {
+export function CarouselControls({ count, onSelect, onLeft, onRight }) {
   const [index, setIndex] = useState(0);
 
   return (
@@ -31,6 +31,7 @@ export function CarouselControls({ count, onLeft, onRight }) {
       <Button
         icon={{ name: 'add-shopping-cart', color: '#daf2d3', size: 30 }}
         buttonStyle={{backgroundColor: '#6ab07c'}}
+        onPress={() => onSelect?.call(this, index)}
         />
       </View>
       <Button

@@ -10,7 +10,7 @@ import { EmptyResults } from './EmptyResults';
  * Carousel for browsing app content.
  * @param {{data: [any]}} props
  */
-const PostCarousel = ({ data }) => {
+const PostCarousel = ({ data, navigation }) => {
   const WINDOW_WIDTH = Dimensions.get('window').width;
   const carouselRef = React.createRef();
 
@@ -31,6 +31,7 @@ const PostCarousel = ({ data }) => {
         onRight={() => carouselRef.current.snapToNext()}
         onLeft={() => carouselRef.current.snapToPrev()}
         count={data.length}
+        onSelect={(index) => navigation.navigate('Single', {item: data[index]})}
       ></CarouselControls>
     </View>
   );

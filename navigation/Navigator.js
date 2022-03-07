@@ -10,10 +10,17 @@ import RegisterScreen from '../screens/RegisterScreen';
 import SingleScreen from '../screens/SingleScreen';
 import useTokenLogin from '../hooks/api/useTokenLogin';
 import BottomNavIcon from '../components/BottomNavIcon';
-import { ScreenLoader } from '../components/ScreenLoader';
+import {ScreenLoader} from '../components/ScreenLoader';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
+
+const stackOptions = {
+  headerShown: true,
+  headerStyle: {backgroundColor: '#6ab07c', shadowColor: 'transparent'},
+  tabBarStyle: {backgroundColor: '#6ab07c'},
+  tabBarShowLabel: false,
+};
 
 const RootNavigator = () => {
   const options = {headerShown: false};
@@ -29,7 +36,11 @@ const RootNavigator = () => {
             component={BottomTabNavigator}
             options={options}
           />
-          <Stack.Screen name="Single" component={SingleScreen} />
+          <Stack.Screen
+            name="Single"
+            component={SingleScreen}
+            options={stackOptions}
+          />
         </>
       ) : (
         <>
@@ -50,13 +61,6 @@ export default function Navigation() {
 }
 
 function BottomTabNavigator() {
-  const options = {
-    headerShown: true,
-    headerStyle: { backgroundColor: '#6ab07c', shadowColor: 'transparent'},
-    tabBarStyle: { backgroundColor: '#6ab07c' },
-    tabBarShowLabel: false,
-  };
-
   /**
    * @param {'Upload'|'Home'|'Profile'} name
    */
@@ -67,7 +71,7 @@ function BottomTabNavigator() {
   });
 
   return (
-    <BottomTab.Navigator screenOptions={options} initialRouteName="Home">
+    <BottomTab.Navigator screenOptions={stackOptions} initialRouteName="Home">
       <BottomTab.Screen
         name="Upload"
         component={UploadScreen}
