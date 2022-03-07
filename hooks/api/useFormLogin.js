@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { client, routes } from '../../utils/api';
 import { storeToken } from '../../utils/storage';
-import {  ToastAndroid } from "react-native";
 /**
  * Hook for logging in with form. Setting login values (username, password)
  * triggeres effect that attempts to authenticate with those values.
@@ -32,27 +31,13 @@ export default function useFormLogin() {
     await storage; // Sync IO.
   };
 
-  /**
-   * 
-   * @param {sting} text 
-   */
-  const showToast = (text) => {
-    ToastAndroid.showWithGravity(
-      text,
-      ToastAndroid.SHORT,
-      ToastAndroid.CENTER
-    );
-  };
-
   useEffect(async () => {
     if (loginData) {
       try {
         const resp = await client.post(routes.auth.login, loginData);
         await login(resp.data);
-        showToast('Welcome! '+loginData.username);
       } catch (error) {
-        showToast('Username or Password is wrong');
-        //console.error(error.message, 'at use FromLogin hook');
+        console.error(error.message, 'at use FromLogin hook');
       }
     }
   }, [loginData]); // re-run when username and password change.
