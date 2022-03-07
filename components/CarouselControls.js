@@ -30,6 +30,9 @@ export function CarouselControls({ count, onLeft, onRight }) {
           paddingHorizontal: 15,
         }}
         title={<Text style={{ color: '#daf2d3', fontSize: 20 }}>Reserve</Text>}
+        onPress={() => {
+          
+        }}
       ></Button>
       <Button
         disabled={index === count - 1}
