@@ -1,12 +1,48 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Card, Input, Text } from 'react-native-elements';
-import * as ImagePicker from 'expo-image-picker';
 import { extractFileExt, extractFilename } from '../utils/forms';
 import { StyleSheet, View } from 'react-native';
-import { client, routes } from '../utils/api';
+import { routes } from '../utils/api';
 import { getToken } from '../utils/storage';
 import { GlobalContext } from '../context/GlobalContext';
+import * as ImagePickerUtil from 'expo-image-picker';
+
+export function ImagePicker({selected, onSuccess}) {
+  const pickImage = async () => {
+    const res = await ImagePickerUtil.launchImageLibraryAsync({
+      mediaTypes: ImagePickerUtil.MediaTypeOptions.All,
+      allowsEditing: true,
+      quality: 0.7,
+    });
+
+    if (!res.cancelled) onSuccess?.call(this, res);
+  };
+
+  return (
+    <View>
+      {selected && (
+        <Image
+          resizeMode={'contain'}
+          source={{uri: selected.uri}}
+          containerStyle={{
+            height: 300,
+            width: '100%',
+          }}
+        />
+      )}
+      <Button
+        onPress={pickImage}
+        title="Select file"
+        icon={{
+          type: 'font-awesome',
+          name: 'file',
+          size: 16,
+        }}
+      />
+    </View>
+  );
+};
 
 export const UploadForm = ({ onSuccess }) => {
   const [img, setImg] = useState(null);
