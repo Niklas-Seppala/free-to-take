@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 5,
     padding: 5,
+    marginBottom: 2
   },
   icon: {
     marginHorizontal: 5,

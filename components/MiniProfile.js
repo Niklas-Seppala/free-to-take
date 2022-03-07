@@ -47,6 +47,7 @@ MiniProfile.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
+    paddingVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
   },
