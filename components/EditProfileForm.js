@@ -1,28 +1,15 @@
-import { useContext, useEffect, React } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  Alert,
-  Keyboard,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import { Input, Button } from 'react-native-elements';
-import { useForm, Controller } from 'react-hook-form';
+import {useContext, useEffect, React} from 'react';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {Input, Button} from 'react-native-elements';
+import {useForm, Controller} from 'react-hook-form';
 import useUserProfile from '../hooks/api/useUserProfile';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { GlobalContext } from '../context/GlobalContext';
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
+import {GlobalContext} from '../context/GlobalContext';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import colors from '../utils/colors';
 
-const EditProfileForm = ({ navigation, onEditSuccess }) => {
-  const { setUser, user } = useContext(GlobalContext);
+const EditProfileForm = ({navigation}) => {
+  const {setUser, user} = useContext(GlobalContext);
   const setUserData = useUserProfile();
 
   //https://stackoverflow.com/a/201378
@@ -34,8 +21,7 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
     handleSubmit,
     getValues,
     setValue,
-    trigger,
-    formState: { errors, isDirty },
+    formState: {errors},
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
@@ -46,39 +32,27 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
     },
   });
 
-
   const onSubmit = async (data) => {
-
     // trim out empty fields as we only want to submit the fields with content in them
     data = Object.fromEntries(
-      Object.entries(data).filter(
-        ([k, v]) => {
-          return v != ''
-        }
-      )
+      Object.entries(data).filter(([k, v]) => {
+        return v != '';
+      })
     );
 
-    console.log("onSubmit")
+    console.log('onSubmit');
 
-    await setUserData(data);
+    setUserData(data);
     // bad hack to change user data locally
     user.username = data.username;
     user.email = data.email;
     setUser(user);
 
-    console.log('SUBMITTING with data', data);
     Toast.show({
       type: 'success',
       text1: 'The changes to your profile have been saved',
     });
-    onEditSuccess();
-  };
-
-  const showErrorMsg = () => {
-    Toast.show({
-      type: 'error',
-      text1: 'Please fill all the form fields',
-    });
+    navigation.popToTop();
   };
 
   const validatePassword = async (value) => {
@@ -87,34 +61,38 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
     // tl;dr only validate the password field if its not empty
     const passwordRegex = /(?=.*[A-Z])(?=.*[0-9]).*/;
 
-    if(value.length == 0) {
-      return true
+    if (value.length == 0) {
+      return true;
     }
 
-    if(value.length < 5) {
-      return 'Password must be at least 5 characters long'
+    if (value.length < 5) {
+      return 'Password must be at least 5 characters long';
     }
 
     if (!value.match(passwordRegex)) {
-      return 'Password must contain at least one number and one CAPITAL letter'
+      return 'Password must contain at least one number and one CAPITAL letter';
     }
-  }
-  
+  };
+
   useEffect(() => {
     setValue('email', user.email);
     setValue('username', user.username);
   }, []);
 
   return (
-    <View style={{ width: '100%', height: '100%' }}>
+    <View style={{width: '100%', height: '100%'}}>
       <TouchableOpacity
-        style={{ flex: 1, width: '100%', height: '90%', justifyContent: 'flex-end' }}
+        style={{
+          flex: 1,
+          width: '100%',
+          height: '90%',
+          justifyContent: 'flex-end',
+        }}
         activeOpacity={1}
       >
         <KeyboardAwareScrollView
-          style={{ width: '75%' }}
+          style={{width: '75%', flex: 1, width: '100%'}}
           keyboardShouldPersistTaps={'always'}
-          style={{ flex: 1, width: '100%' }}
           showsVerticalScrollIndicator={false}
         >
           <Controller
@@ -126,10 +104,9 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
                 message: 'The username must be at least 3 characters long.',
               },
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({field: {onChange, onBlur, value}}) => (
               <Input
-                style={{ width: '100%' }}
-                style={styles.textInput}
+                style={{width: '100%'}}
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -142,12 +119,14 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
             control={control}
             rules={{
               required: true,
-              pattern: { value: emailRegex, message: 'Not a valid email address' },
+              pattern: {
+                value: emailRegex,
+                message: 'Not a valid email address',
+              },
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({field: {onChange, onBlur, value}}) => (
               <Input
                 placeholder="email"
-                style={styles.textInput}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -161,33 +140,37 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
             rules={{
               validate: async (value) => validatePassword(value),
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({field: {onChange, onBlur, value}}) => (
               <Input
                 placeholder="password"
-                style={styles.textInput}
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}
-                value={value}
                 secureTextEntry={true}
                 errorMessage={errors.password && errors.password.message}
               />
             )}
             name="password"
           />
-          {getValues('password') && !errors.password ? (<Controller
+          {getValues('password') && !errors.password ? (
+            <Controller
               control={control}
               rules={{
                 validate: (value) => {
                   // only validate if the password is being changed
-                  if(getValues('password') && getValues('password').length > 0) {
-                    return value == getValues('password') ? true : 'Passwords do not match';
+                  if (
+                    getValues('password') &&
+                    getValues('password').length > 0
+                  ) {
+                    return value == getValues('password')
+                      ? true
+                      : 'Passwords do not match';
                   }
 
                   return true;
                 },
               }}
-              render={({ field: { onChange, onBlur, value } }) => (
+              render={({field: {onChange, onBlur, value}}) => (
                 <Input
                   style={styles.textInput}
                   onBlur={onBlur}
@@ -200,22 +183,22 @@ const EditProfileForm = ({ navigation, onEditSuccess }) => {
               )}
               name="password2"
             />
-            ) : (<></>)}
+          ) : (
+            <></>
+          )}
           <View style={styles.buttonContainer}>
             <Button
-              containerStyle={{ width: '50%' }}
+              containerStyle={{width: '50%'}}
               buttonStyle={styles.button}
               title="Save changes"
               disabled={Object.keys(errors).length > 0}
               onPress={handleSubmit(onSubmit)}
             ></Button>
             <Button
-              containerStyle={{ width: '50%' }}
+              containerStyle={{width: '50%'}}
               buttonStyle={styles.button}
               title="Cancel"
-              onPress={
-                () => onEditSuccess()
-              }
+              onPress={() => navigation.popToTop()}
             ></Button>
           </View>
         </KeyboardAwareScrollView>

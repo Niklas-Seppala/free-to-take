@@ -1,52 +1,35 @@
-import { useContext, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Button, Divider } from 'react-native-elements';
+import {useContext} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {Button, Divider} from 'react-native-elements';
 import useLogout from '../hooks/api/useLogout';
-import EditProfileForm from '../components/EditProfileForm';
 import UserInfo from '../components/UserInfo';
-import { GlobalContext } from '../context/GlobalContext';
-import colors from '../utils/colors'
+import {GlobalContext} from '../context/GlobalContext';
+import colors from '../utils/colors';
+import useMyPosts from '../hooks/api/useMyPosts';
+import MiniContentList from '../components/MiniContentList';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
+  const {user} = useContext(GlobalContext);
+  const posts = useMyPosts();
   const logout = useLogout();
-  const { user } = useContext(GlobalContext);
-  const [isEditingProfile, setIsEditingProfile] = useState(false);
 
   return (
-    <View
-      style={styles.container}
-    >
-      {/* user info */}
-      {!isEditingProfile ? (
-        <UserInfo user={user} />
-      ) : (
-        <EditProfileForm
-          onEditSuccess={() => {
-            setIsEditingProfile(false);
-          }}
-        />
-      )}
-
+    <View style={styles.container}>
+      <UserInfo user={user} />
+      <MiniContentList style={{flex: 1}} navigation={navigation} data={posts} />
       <Divider />
-      {!isEditingProfile ? (
-        <>
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => {
-              setIsEditingProfile(!isEditingProfile);
-            }}
-            title={'Edit profile'}
-          ></Button>
-
-          <Button
-            buttonStyle={styles.button}
-            title="Log out"
-            onPress={() => logout()}
-          ></Button>
-        </>
-      ) : (
-        <></>
-      )}
+      <View style={{flexDirection: 'row'}}>
+        <Button
+          buttonStyle={[styles.button, {marginRight: 15}]}
+          onPress={() => navigation.navigate('EditProfile')}
+          title={'Edit profile'}
+        />
+        <Button
+          buttonStyle={styles.button}
+          title="Log out"
+          onPress={() => logout()}
+        />
+      </View>
     </View>
   );
 };
@@ -57,11 +40,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   container: {
-    width: '100%',
     flex: 1,
-    justifyContent: 'space-around',
     alignItems: 'center',
-  }
+  },
 });
 
 export default ProfileScreen;

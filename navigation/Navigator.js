@@ -11,6 +11,7 @@ import SingleScreen from '../screens/SingleScreen';
 import useTokenLogin from '../hooks/api/useTokenLogin';
 import BottomNavIcon from '../components/BottomNavIcon';
 import {ScreenLoader} from '../components/ScreenLoader';
+import EditProfile from '../screens/EditProfile';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -41,6 +42,8 @@ const RootNavigator = () => {
             component={SingleScreen}
             options={stackOptions}
           />
+          <Stack.Screen name='EditProfile' component={EditProfile} options={stackOptions}>
+          </Stack.Screen>
         </>
       ) : (
         <>
