@@ -29,7 +29,7 @@ export default function useMediaComments() {
 
             return comment
           } catch(error) {
-            //console.log(error)
+            console.log(error)
           }
 
         }

@@ -15,16 +15,17 @@ export default function useCommentPost() {
     and the recipient for a pseudo-"direct message" feature.
     Awful hack, you should never utilize an API like this for direct messages.
   */
-  const postComment = async (comment, item) => {
+  const postComment = async (comment, item, send_to_id=null) => {
     try {
-      const header = JSON.stringify({rid:item.owner.user_id});
+      const recipient_id = send_to_id != null ? send_to_id : item.owner.user_id;
+      const header = JSON.stringify({rid:recipient_id});
 
       const commentData = {
         file_id: item.file_id,
         comment: `${header}${comment}`
       }
-      const resp = await client.post(routes.comment.post, commentData, {headers: setJWT(token)});
-      console.log(commentData)
+      const resp = await client.post(routes.comment.post, commentData, {headers: setJWT(token)}).catch(x => console.log("error", x.data));
+      console.log("postComment", resp.data)
       return resp
     } catch (error) {
       console.error(error.message, error, 'at useCommentPost hook');

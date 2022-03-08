@@ -26,12 +26,18 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Toast from 'react-native-toast-message';
 import colors from '../utils/colors';
 
-const DirectMessageForm = ({ navigation, onEditSuccess, item }) => {
+const DirectMessageForm = ({ navigation, onMessageSent, item, send_to_id }) => {
   const { setUser, user } = useContext(GlobalContext);
+
+  let recipient = item.owner.user_id;
+  if(item.owner.user_id == user.user_id) {
+    recipient = send_to_id;
+  }
 
   const postComment = useCommentPost();
   const postTag = useTagPost();
   const getTagsByMedia = useTagPost();
+
 
   const {
     control,
@@ -51,9 +57,7 @@ const DirectMessageForm = ({ navigation, onEditSuccess, item }) => {
     Check if the user has already posted a comment on this item
   */
   const canPost = item => {
-    const userTag = `${TAG}${TAG_PART_RES}${user.user_id}`;
-    console.log("userTag", userTag, item.tags, item.tags.indexOf(userTag))
-    return item.tags.indexOf(userTag) == -1
+    return false
   };
 
   const onSubmit = async (data) => {
@@ -64,10 +68,10 @@ const DirectMessageForm = ({ navigation, onEditSuccess, item }) => {
           item
         );
       }
+    ).then(
+      onMessageSent()
     );
 
-    // post 
-    console.log("Comment resp",resp)
   };
 
   const showErrorMsg = () => {
@@ -81,7 +85,7 @@ const DirectMessageForm = ({ navigation, onEditSuccess, item }) => {
 
 
   return (
-    <View style={{ width: '100%', height: '100%' }}>
+    <View style={{ width: '100%', height: '50%', backgroundColor:'blue' }}>
       <TouchableOpacity
         style={{ flex: 1, width: '100%', height: '90%', justifyContent: 'flex-end' }}
         activeOpacity={1}

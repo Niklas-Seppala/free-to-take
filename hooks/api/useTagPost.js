@@ -24,7 +24,7 @@ export default function useTagPost() {
       }
       console.log("tagData", tagData)
       const resp = await client.post(routes.tag.create, tagData, {headers: setJWT(token)});
-      console.log("resp:",resp)
+
       return resp
     } catch (error) {
       console.error(error, 'at useCommentTag hook');

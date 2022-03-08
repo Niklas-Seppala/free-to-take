@@ -5,22 +5,21 @@ import {
   Text,
   View,
   Image,
+  Button
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from 'react-native-elements';
 import { routes } from '../utils/api';
 import PropTypes from 'prop-types';
-import DirectMessageForm from '../components/DirectMessageForm';
 
 /**
  * 
  * @route contained navigation and single file data 
  */
-const SingleScreen = ({ route }) => {
+const SingleScreen = ({ route, navigation }) => {
 
   const file = route.params.item; // get a single file info
   const datetime = new Date(file.time_added); // convert the date string to Date format
-
 
   return (
     <View style={styles.container}>
@@ -55,6 +54,7 @@ const SingleScreen = ({ route }) => {
               <Text style={styles.timestr}>{datetime.toLocaleTimeString()}</Text>
               <Text style={styles.timestr}>{datetime.toLocaleDateString()}</Text>
             </View>
+          <Button item={file} title="chat" onPress={() => {navigation.navigate('Chat', {item: file})}}></Button>
           </View>
         </View>
       </View>

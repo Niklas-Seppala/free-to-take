@@ -8,6 +8,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import { UploadScreen } from '../screens/UploadScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SingleScreen from '../screens/SingleScreen';
+import ChatScreen from '../screens/ChatScreen';
 import useTokenLogin from '../hooks/api/useTokenLogin';
 import BottomNavIcon from '../components/BottomNavIcon';
 import {ScreenLoader} from '../components/ScreenLoader';
@@ -51,6 +52,11 @@ const RootNavigator = () => {
           <Stack.Screen name='EditProfile' component={EditProfile} options={stackOptions} />
           <Stack.Screen name='EditPost' component={EditPost} options={stackOptions} />
           <Stack.Screen name='ProfileVisitor' component={ProfileVisitorScreen} options={stackOptions} />
+          <Stack.Screen
+            name="Chat"
+            component={ChatScreen}
+            options={stackOptions}
+          />
         </>
       ) : (
         <>
