@@ -33,6 +33,7 @@ const DirectMessageForm = ({ navigation, onMessageSent, item, send_to_id }) => {
   if(item.owner.user_id == user.user_id) {
     recipient = send_to_id;
   }
+  console.log(user.user_id, item.owner.user_id,"send_to_id",send_to_id,"Recipient", recipient)
 
   const postComment = useCommentPost();
   const postTag = useTagPost();
@@ -61,7 +62,7 @@ const DirectMessageForm = ({ navigation, onMessageSent, item, send_to_id }) => {
   };
 
   const onSubmit = async (data) => {
-    const resp = await postComment(data.commentText, item).then(
+    const resp = await postComment(data.commentText, item, recipient).then(
       r => {
         const resp = postTag(
           `${TAG_PART_RES}${user.user_id}`, // indicates the user is interested in the item

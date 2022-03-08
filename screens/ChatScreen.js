@@ -15,7 +15,6 @@ const ChatScreen = ({route, navigation}) => {
   const { item } = route.params;
 
   const send_to_id = 684; //placeholder
-  const chatMessageListFlatListRef = useRef();
 
   const [comments, setComments] = useState([]);
   const [lastMessageReloadTime, setLastMessageReloadTime] = useState(new Date().getTime());
@@ -31,17 +30,21 @@ const ChatScreen = ({route, navigation}) => {
       console.log("GETTING COMMENTS")
       console.log("comments:",comments)
       setComments(comments);
-      chatMessageListFlatListRef.current.scrollToEnd({animating: true});
+
     }, [lastMessageReloadTime, item]);
 
   return (
     <View style={{flex: 1, width: '100%', height:'100%', flexDirection:'column'}}>
-      <ChatMessageList style={{flex:1}} data={comments} flatListRef={chatMessageListFlatListRef} navigation={navigation}/>
-      <DirectMessageForm item={item} onMessageSent={
-        () => {
-          setLastMessageReloadTime(new Date().getTime());
+      <ChatMessageList style={{flex:1}} media={item} data={comments} navigation={navigation}/>
+      <DirectMessageForm
+        send_to_id={send_to_id}
+        item={item} 
+        onMessageSent={
+          () => {
+            setLastMessageReloadTime(new Date().getTime());
+          }
         }
-      }/>
+      />
     </View>
   );
 };

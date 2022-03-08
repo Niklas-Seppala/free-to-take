@@ -26,7 +26,7 @@ export default function useMediaComments() {
             console.log(`Recipient: ${header.rid} - text: ${commentText}`);
             comment.recipient_id = header.rid;
             comment.comment = commentText;
-
+            console.log(comment);
             return comment
           } catch(error) {
             console.log(error)

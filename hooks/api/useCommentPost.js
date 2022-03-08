@@ -17,8 +17,8 @@ export default function useCommentPost() {
   */
   const postComment = async (comment, item, send_to_id=null) => {
     try {
-      const recipient_id = send_to_id != null ? send_to_id : item.owner.user_id;
-      const header = JSON.stringify({rid:recipient_id});
+
+      const header = JSON.stringify({rid:send_to_id});
 
       const commentData = {
         file_id: item.file_id,
