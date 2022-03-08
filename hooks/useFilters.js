@@ -1,4 +1,13 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
+
+const itemTagged = (item, filters) => {
+  const keys = Object.keys(filters);
+  for (let i = 0; i < keys.length; i++) {
+    const tag = keys[i];
+    if (filters[tag] && item.tags.includes(tag)) return true;
+  }
+  return false;
+};
 
 /**
  * @param {Array<any>} data Posts in an array.
@@ -7,16 +16,8 @@ import { useEffect, useState } from 'react';
 export function useFilters(data, filters) {
   const [activeData, setActiveData] = useState([]);
   useEffect(() => {
-    if (!data)
-      return;
-    const filtered = data.filter((item) => {
-      Object.keys(filters).map((tag) => {
-        if (filters[tag] && item.tags.includes(tag))
-          return true;
-      });
-      return false;
-    });
-    setActiveData(filtered);
+    if (!data) return;
+    setActiveData(data.filter((item) => itemTagged(item, filters)));
   }, [data, filters]);
   return activeData;
 }
