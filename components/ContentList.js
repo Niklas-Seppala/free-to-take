@@ -24,6 +24,6 @@ export function ContentList({data, navigation}) {
 }
 
 ContentList.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired
 }

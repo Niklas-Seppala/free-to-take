@@ -58,7 +58,7 @@ export function ContentListItem({item, index, onFocus, onProfilePress}) {
           <Time ISOString={item.time_added}></Time>
         </View>
         <Card.Divider color={colors.main} style={styles.divider} />
-        <ListItem.Subtitle numberOfLines={3}>
+        <ListItem.Subtitle style={styles.desc} numberOfLines={3}>
           {item.description}
         </ListItem.Subtitle>
       </View>
@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
   divider: {
     marginBottom: 0,
   },
+  desc: {
+    marginTop: 5
+  }
 });
 
 ContentListItem.propTypes = {
