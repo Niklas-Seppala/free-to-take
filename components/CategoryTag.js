@@ -5,14 +5,17 @@ import colors from '../utils/colors';
 import PropTypes from 'prop-types';
 
 /**
- * @param {{onPress: (boolean) => void, tag: {tag: string, icon: string, name: string}}} props
+ * @param {{onPress: (boolean) => void, tag: {tag: string, icon: string, name: string}, enabled: boolean}} props
  */
-export default function CategoryTag({ onPress, tag }) {
-  const [active, setActive] = useState(true);
+export default function CategoryTag({ onPress, tag, enabled }) {
+  const [active, setActive] = useState(enabled);
   const [color, setColor] = useState(colors.light);
   useEffect(() => {
     setColor(active ? colors.light : colors.inactive);
   }, [active]);
+  useEffect(() => {
+    setActive(enabled);
+  }, [enabled])
 
   return (
     <TouchableOpacity

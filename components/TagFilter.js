@@ -13,6 +13,7 @@ export default function TagFilter({ onChange }) {
       <ScrollView persistentScrollbar horizontal style={{paddingBottom: 10}}>
         {CATEGORY_TAGS.map((tag) => (
           <CategoryTag
+            enabled
             key={tag.tag}
             tag={tag}
             onPress={(active) => onChange?.call(this, active, tag.tag)}

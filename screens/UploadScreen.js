@@ -1,12 +1,19 @@
+import React from 'react';
 import { View } from 'react-native';
-import { Button, Text } from 'react-native-elements';
+import PropTypes from 'prop-types';
+import { Card } from 'react-native-elements';
+import { UploadForm } from '../components/UploadForm';
 
-const RegisterScreen = () => {
+export const UploadScreen = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ fontSize: 26 }}>Upload</Text>
+    <View>
+      <Card>
+        <UploadForm onSuccess={() => navigation.navigate('Home')} />
+      </Card>
     </View>
   );
 };
 
-export default RegisterScreen;
+UploadScreen.propTypes = {
+  navigation: PropTypes.object,
+};

@@ -18,7 +18,6 @@ const GlobalProvider = (props) => {
 
   // User state and authentication
   const [user, setUser] = useState(null);
-
   return (
     <GlobalContext.Provider
       value={{
