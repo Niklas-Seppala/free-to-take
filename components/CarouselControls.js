@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import PropTypes from 'prop-types';
 import colors from '../utils/colors';
 
@@ -10,7 +10,6 @@ import colors from '../utils/colors';
  */
 export function CarouselControls({ count, onLeft, onRight }) {
   const [index, setIndex] = useState(0);
-
   return (
     <View style={styles.container}>
       <Button
