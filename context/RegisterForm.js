@@ -169,6 +169,7 @@ const RegisterForm = () => {
     </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     height: Dimensions.get('window').height,

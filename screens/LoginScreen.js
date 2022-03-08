@@ -1,15 +1,14 @@
-import {View} from 'react-native';
-import {Button} from 'react-native-elements';
-import useFormLogin from '../hooks/api/useFormLogin';
-
-const formData = { username: 'leevipp', password: 'Kallekalle123' }; //temporary until the login form is ready
-
-const LoginScreen = () => {
-  const loginWithForm = useFormLogin();
-  console.log("Logging in with ", formData)
+import { View } from 'react-native';
+import LoginForm from '../components/LoginForm';
+/**
+ * 
+ * @navigation for navigate the screen back and front
+ * @returns 
+ */
+const LoginScreen = ({navigation}) => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title="Log in" onPress={() => loginWithForm(formData)}></Button>
+    <View style={{flex: 1,}}>
+      <LoginForm navigation={navigation}/>
     </View>
   );
 };
