@@ -19,7 +19,6 @@ const HomeScreen = ({navigation}) => {
     <>
       <TagFilter onChange={toggle} />
       <ContentList data={filteredData} navigation={navigation}/>
-      {/* <PostCarousel data={data} /> */}
     </>
   );
 };

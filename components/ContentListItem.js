@@ -7,6 +7,7 @@ import Time from './DateTime';
 import MiniProfile from './MiniProfile';
 import colors from '../utils/colors';
 import {TouchableOpacity} from 'react-native';
+import PropTypes from 'prop-types'
 
 /**
  * @param {{
@@ -96,3 +97,10 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
 });
+
+ContentListItem.propTypes = {
+  item: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  onFocus: PropTypes.func.isRequired,
+  onProfilePress: PropTypes.func.isRequired
+}

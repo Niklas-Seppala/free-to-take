@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
-import {Icon, Text} from 'react-native-elements';
+import {Text} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {UserPropType} from '../utils/appPropTypes';
 
