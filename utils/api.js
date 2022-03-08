@@ -115,7 +115,7 @@ export const routes = {
      * @param {number} id
      * @see https://media.mw.metropolia.fi/wbma/docs/#api-User-PutUser
      */
-    modify: (id) => urlBuilder('users', id),
+    modify: urlBuilder('users'),
 
     /**
      * PERMISSION - TOKEN

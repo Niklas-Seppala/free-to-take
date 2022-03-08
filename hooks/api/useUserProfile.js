@@ -17,6 +17,7 @@ export default function useUserProfile() {
         delete userData.password2
         console.log("data", userData, "url", routes.user.modify())
         const resp = await client.put(routes.user.modify(), userData, {headers: setJWT(token)}).catch(d => {console.log(d)});
+        console.log(resp.da)
         return true
       } catch (error) {
         return false;
