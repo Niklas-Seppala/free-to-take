@@ -105,35 +105,15 @@ export const UploadForm = ({onSuccess}) => {
           tag: tag
         };
 
-        await Promise.all([
+        const [appTagRes, categoryTagRes] =  await Promise.all([
           client.post(routes.tag.create, appTag, options),
           client.post(routes.tag.create, categoryTag, options)
         ]);
-        onSuccess?.call();
-        apiActionComplete();
 
-        // let req_data = {};
-        // req_data.file_id = result.file_id;
-        // req_data.tag = TAG;
-        // client
-        //   .post(routes.tag.create, req_data, {
-        //     headers: {'x-access-token': token},
-        //   })
-        //   .then(async (response) => {
-        //     if (Object.hasOwnProperty.call(response.data, 'tag_id')) {
-        //       const asd = await client.post(
-        //         routes.tag.create,
-        //         {file_id: result.file_id, tag: tag},
-        //         {headers: setJWT(token)}
-        //       );
-        //       if (asd.status === 200) {
-        //         onSuccess?.call();
-        //         apiActionComplete();
-        //       }
-        //     }
-        //     console.log(response.data);
-          // })
-          // .catch((e) => console.log(e));
+        if (appTagRes.status === 201 && categoryTagRes.status === 201) {
+          apiActionComplete();
+          onSuccess?.call();
+        }
       }
     } catch (error) {
       console.error(error);
