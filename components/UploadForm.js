@@ -34,6 +34,7 @@ export function ImagePicker({ selected, onSuccess }) {
       <Button
         onPress={pickImage}
         title="Select file"
+        buttonStyle={styles.pickButton}
         icon={{
           type: 'font-awesome',
           name: 'file',
@@ -130,6 +131,8 @@ export const UploadForm = ({ onSuccess }) => {
             onChangeText={onChange}
             value={value}
             errorMessage={errors.title?.message}
+            inputStyle={styles.inputField}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
           />
         )}
       />
@@ -145,6 +148,8 @@ export const UploadForm = ({ onSuccess }) => {
             onChangeText={onChange}
             value={value}
             errorMessage={errors.description?.message}
+            inputStyle={styles.inputField}
+            inputContainerStyle={{ borderBottomWidth: 0 }}
           />
         )}
       />
@@ -164,11 +169,13 @@ export const UploadForm = ({ onSuccess }) => {
             setImg(null);
           }}
           title="Reset"
+          buttonStyle={styles.button}
         ></Button>
         <Button
           disabled={!inputIsValid}
           title="Upload"
           onPress={handleSubmit(onSubmit)}
+          buttonStyle={styles.button}
         />
       </View>
     </>
@@ -179,5 +186,32 @@ const styles = StyleSheet.create({
   horizontal: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+  },
+
+  inputField: {
+    width: 250,
+    height: 30,
+    backgroundColor: 'rgba(96, 162, 23, 0.3)',
+    borderRadius: 24,
+    paddingHorizontal: 15,
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.42)',
+    marginVertical: 9,
+  },
+  button: {
+    width: 150,
+    backgroundColor: '#5F9A3B',
+    borderRadius: 24,
+    marginVertical: 9,
+    paddingVertical: 11,
+  },
+  pickButton: {
+    width: '100%',
+    backgroundColor: '#5F9A3B',
+    borderRadius: 24,
+    marginVertical: 9,
+    paddingVertical: 11,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
