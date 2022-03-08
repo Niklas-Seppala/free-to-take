@@ -12,7 +12,6 @@ export default function useMediaComments() {
       const resp = await client.get(routes.comment.getByFile(id), { headers: setJWT(user.token) })
       const comments = resp.data
 
-      // TODO: read the JSON header
       const headerRegex = /\{.*?\}/;
       const parsedComments = comments.map(comment => {
         const headerMatch = comment.comment.match(headerRegex);

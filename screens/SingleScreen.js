@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon } from 'react-native-elements';
 import { routes } from '../utils/api';
 import PropTypes from 'prop-types';
+import DirectMessageForm from '../components/DirectMessageForm';
 
 /**
  * 
@@ -19,6 +20,7 @@ const SingleScreen = ({ route }) => {
 
   const file = route.params.item; // get a single file info
   const datetime = new Date(file.time_added); // convert the date string to Date format
+
 
   return (
     <View style={styles.container}>

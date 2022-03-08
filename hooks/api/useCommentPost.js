@@ -25,8 +25,9 @@ export default function useCommentPost() {
       }
       const resp = await client.post(routes.comment.post, commentData, {headers: setJWT(token)});
       console.log(commentData)
+      return resp
     } catch (error) {
-      console.error(error.message, 'at useCommentPost hook');
+      console.error(error.message, error, 'at useCommentPost hook');
     }
   };
 
