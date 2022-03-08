@@ -3,7 +3,5 @@
   "singleQuote": true,
   "tabWidth": 2,
   "useTabs": false,
-  "bracketSpacing": true,
-  "arrowParens": "always",
-  "printWidth": 90
+  "bracketSpacing": false
 }
