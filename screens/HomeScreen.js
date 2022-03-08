@@ -4,7 +4,7 @@ import {ScreenLoader} from '../components/ScreenLoader';
 import TagFilter from '../components/TagFilter';
 import {useFilters} from '../hooks/useFilters';
 import {useCategories} from '../hooks/useCategories';
-import { ContentList } from '../components/ContentList';
+import ContentList from '../components/ContentList';
 
 const HomeScreen = ({navigation}) => {
   const [filters, toggle] = useCategories();

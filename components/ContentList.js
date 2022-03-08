@@ -4,7 +4,7 @@ import {ContentListItem} from './ContentListItem';
 import PropTypes from 'prop-types';
 import {EmptyResults} from './EmptyResults';
 
-export function ContentList({data, navigation}) {
+export default function ContentList({data, navigation}) {
   if (data.length === 0) return <EmptyResults />;
   return (
     <FlatList
