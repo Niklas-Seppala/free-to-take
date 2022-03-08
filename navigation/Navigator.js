@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import UploadScreen from '../screens/UploadScreen';
+import { UploadScreen } from '../screens/UploadScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SingleScreen from '../screens/SingleScreen';
 import useTokenLogin from '../hooks/api/useTokenLogin';
