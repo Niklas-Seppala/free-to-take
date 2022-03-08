@@ -51,6 +51,7 @@ export const UploadForm = ({onSuccess}) => {
   const [inputIsValid, setInputIsValid] = useState(false);
   const {apiActionComplete} = useContext(GlobalContext);
   const [tag, setTag] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setInputIsValid(tag && img)
@@ -71,6 +72,7 @@ export const UploadForm = ({onSuccess}) => {
 
   const onSubmit = async (data) => {
     try {
+      setLoading(true);
       const formData = new FormData();
       const filename = extractFilename(img.uri);
       const fExtension = extractFileExt(filename);
@@ -117,17 +119,19 @@ export const UploadForm = ({onSuccess}) => {
         if (appTagRes.status === 201 && categoryTagRes.status === 201) {
           apiActionComplete();
           onSuccess?.call();
+          setLoading(false);
         }
       }
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
 
   return (
     <>
       <Card.Divider>
-        <Text h4>Upload file</Text>
+        <Text h4>Make a post</Text>
       </Card.Divider>
 
       <Controller
@@ -179,12 +183,13 @@ export const UploadForm = ({onSuccess}) => {
             reset();
             setImg(null);
           }}
-          title="Reset"
+          title="Reset fields"
           buttonStyle={styles.button}
         ></Button>
         <Button
+          loading={loading}
           disabled={!inputIsValid}
-          title="Upload"
+          title="Send"
           onPress={handleSubmit(onSubmit)}
           buttonStyle={styles.button}
         />

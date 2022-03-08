@@ -8,12 +8,12 @@ import ContentList from '../components/ContentList';
 
 const HomeScreen = ({navigation}) => {
   const [filters, toggle] = useCategories();
-  const data = useAllMedia();
+  const [data, loading] = useAllMedia();
   const [ready, setReady] = useState(false);
   const filteredData = useFilters(data, filters);
   useEffect(() => setReady(Boolean(data)), [data]);
 
-  if (!ready) return <ScreenLoader />;
+  if (loading) return <ScreenLoader />;
 
   return (
     <>

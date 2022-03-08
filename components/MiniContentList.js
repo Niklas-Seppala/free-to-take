@@ -20,6 +20,7 @@ export default function MiniContentList({data, navigation}) {
         renderItem={({item, index}) => (
           <MiniContentListItem
             item={item}
+            navigation={navigation}
             index={index}
             onFocus={(item) => navigation.navigate('Single', {item: item, owner: true})}
           />
