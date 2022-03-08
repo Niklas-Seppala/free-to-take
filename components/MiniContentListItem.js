@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {StyleSheet} from 'react-native';
 import {Text, Button, Avatar} from 'react-native-elements';
-import {routes} from '../utils/api';
+import {client, routes, setJWT} from '../utils/api';
 import {View} from 'react-native';
 import Time from './DateTime';
 import colors from '../utils/colors';
 import PropTypes from 'prop-types';
+import { getToken } from '../utils/storage';
+import { GlobalContext } from '../context/GlobalContext';
 
 /**
  * @param {{
@@ -32,6 +34,9 @@ import PropTypes from 'prop-types';
  *  title: string}}} props
  */
 export default function MiniContentListItem({item, index, onFocus}) {
+  const {apiActionComplete} = useContext(GlobalContext);
+  const [delAction, setDelAction] = useState(false);
+
   return (
     <View style={{marginTop: index === 0 ? 0 : 10, borderWidth: 1, borderColor: colors.main, borderRadius: 5, overflow: 'hidden'}}>
       <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
@@ -56,10 +61,23 @@ export default function MiniContentListItem({item, index, onFocus}) {
               onPress={() => console.log('EDIT')}
             />
             <Button
+              loadingProps={{size: 15}}
+              loading={delAction}
               containerStyle={{marginRight: 10}}
               buttonStyle={styles.button}
               icon={{name: 'delete', size: 20, color: colors.light}}
-              onPress={() => console.log('DELETE')}
+              onPress={async () => {
+                try {
+                  setDelAction(true);
+                  const token = await getToken();
+                  const resp = await client.delete(routes.media.delete(item.file_id), {headers: setJWT(token)});
+                  apiActionComplete();
+                  setDelAction(false);
+                } catch (error) {
+                  setDelAction(false);
+                  console.error(error);
+                }
+              }}
             />
             <Button
               containerStyle={{marginRight: 10}}

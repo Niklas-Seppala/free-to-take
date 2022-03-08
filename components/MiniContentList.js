@@ -10,7 +10,7 @@ export default function MiniContentList({data, navigation}) {
 
   if (!data) return <ScreenLoader />;
 
-  if (data.length === 0) return <EmptyResults />;
+  if (data.length === 0) return <EmptyResults style={{flex: 3}} />;
   return (
     <View style={{width: '100%', flex: 3}}>
       <FlatList
