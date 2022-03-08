@@ -8,7 +8,7 @@ export const UploadScreen = ({ navigation }) => {
   return (
     <View>
       <Card>
-        <UploadForm onSuccess={() => navigation.navigate('HomeScreen')} />
+        <UploadForm onSuccess={() => navigation.navigate('Home')} />
       </Card>
     </View>
   );

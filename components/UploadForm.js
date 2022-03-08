@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Button, Card, Input, Text } from 'react-native-elements';
-import { extractFileExt, extractFilename } from '../utils/forms';
+import { extractFileExt, extractFilename, handleFetch } from '../utils/forms';
 import { StyleSheet, View } from 'react-native';
-import { routes } from '../utils/api';
+import { TAG, client, routes } from '../utils/api';
 import { getToken } from '../utils/storage';
 import { GlobalContext } from '../context/GlobalContext';
 import * as ImagePickerUtil from 'expo-image-picker';
 
-export function ImagePicker({selected, onSuccess}) {
+export function ImagePicker({ selected, onSuccess }) {
   const pickImage = async () => {
     const res = await ImagePickerUtil.launchImageLibraryAsync({
       mediaTypes: ImagePickerUtil.MediaTypeOptions.All,
@@ -22,9 +22,9 @@ export function ImagePicker({selected, onSuccess}) {
   return (
     <View>
       {selected && (
-        <Image
+        <Card.Image
           resizeMode={'contain'}
-          source={{uri: selected.uri}}
+          source={{ uri: selected.uri }}
           containerStyle={{
             height: 300,
             width: '100%',
@@ -42,7 +42,7 @@ export function ImagePicker({selected, onSuccess}) {
       />
     </View>
   );
-};
+}
 
 export const UploadForm = ({ onSuccess }) => {
   const [img, setImg] = useState(null);
@@ -88,18 +88,24 @@ export const UploadForm = ({ onSuccess }) => {
         body: formData,
       };
 
-      const response = await fetch(routes.media.uploads, options);
-      if (response.ok) {
-        onSuccess?.call();
-        apiActionComplete();
+      const result = await handleFetch(routes.media.uploads, options);
+      if (Object.hasOwnProperty.call(result, 'file_id')) {
+        let req_data = {};
+        req_data.file_id = result.file_id;
+        req_data.tag = TAG;
+        client
+          .post(routes.tag.create, req_data, {
+            headers: { 'x-access-token': token },
+          })
+          .then((response) => {
+            if (Object.hasOwnProperty.call(response.data, 'tag_id')) {
+              onSuccess?.call();
+              apiActionComplete();
+            }
+            console.log(response.data);
+          })
+          .catch((e) => console.log(e));
       }
-      //   setUpload(true);
-      //   const uploadResp = await postMedia(formData, token);
-      //   await postTag(uploadResp.file_id, token);
-      //   setTimeout(() => {
-      //     onSuccess?.call();
-      //     setUpload(false);
-      //   }, 2000);
     } catch (error) {
       console.error(error);
       setUpload(false);
