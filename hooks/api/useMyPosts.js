@@ -11,8 +11,11 @@ export default function useMyPosts() {
       const postResponse = await client.get(routes.media.currentUsersFiles, {
         headers: setJWT(user.token),
       });
-      console.log(postResponse.data);
-      setPosts(postResponse.data);
+      const asd = await Promise.all(postResponse.data.map(async post => {
+        const deets = await client.get(routes.media.file(post.file_id));
+        return {...deets.data, owner: user};
+      }))
+      setPosts(asd);
     } catch (error) {
       console.error(error);
     }

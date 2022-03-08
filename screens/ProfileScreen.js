@@ -1,6 +1,6 @@
 import {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Button, Divider} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import useLogout from '../hooks/api/useLogout';
 import UserInfo from '../components/UserInfo';
 import {GlobalContext} from '../context/GlobalContext';
@@ -16,8 +16,7 @@ const ProfileScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <UserInfo user={user} />
-      <MiniContentList style={{flex: 1}} navigation={navigation} data={posts} />
-      <Divider />
+      <MiniContentList style={{}} navigation={navigation} data={posts} />
       <View style={{flexDirection: 'row'}}>
         <Button
           buttonStyle={[styles.button, {marginRight: 15}]}

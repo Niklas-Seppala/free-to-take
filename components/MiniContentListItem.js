@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
-import {Card, ListItem, Text, Button, Avatar, Icon} from 'react-native-elements';
+import {StyleSheet} from 'react-native';
+import {Text, Button, Avatar} from 'react-native-elements';
 import {routes} from '../utils/api';
 import {View} from 'react-native';
 import Time from './DateTime';
 import colors from '../utils/colors';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 /**
  * @param {{
@@ -33,65 +33,71 @@ import PropTypes from 'prop-types'
  */
 export default function MiniContentListItem({item, index, onFocus}) {
   return (
-    <View>
-      <View style={{width: '100%', flexDirection: 'row'}}>
-      <Avatar size={80} source={{uri: routes.uploads.file(item.filename)}}></Avatar>
+    <View style={{marginTop: index === 0 ? 0 : 10, borderWidth: 1, borderColor: colors.main, borderRadius: 5, overflow: 'hidden'}}>
+      <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
+        <Avatar size={130} source={{uri: routes.uploads.file(item.filename)}} />
 
-      <View style={{flex: 1}}>
+        <View style={{flex: 1}}>
+          <Text style={{fontSize: 20, marginLeft: 10}}>{item.title}</Text>
 
-      <View style={{flexDirection: 'row',  flex: 1, paddingHorizontal: 5, justifyContent: 'space-between', alignSelf: 'flex-start', alignItems: 'center'}}>
-        <Text style={{fontSize: 22}}>{item.title}</Text>
-        <Time ISOString={item.time_added}></Time>
-      </View>
-
-      <View style={{flexDirection: 'row', paddingHorizontal: 5, marginTop: 15, justifyContent: 'flex-end', alignItems: 'center'}}>
-        <Icon name='comment' size={30}></Icon>
-        <Icon name='home' size={30}></Icon>
-      </View>
-
-      </View>
+          <View style={styles.panel}>
+            <Button
+              containerStyle={{marginRight: 10}}
+              buttonStyle={styles.button}
+              icon={{name: 'comment', size: 20, color: colors.light}}
+              onPress={() => {
+                console.log('COMMENTS');
+              }}
+            />
+            <Button
+              containerStyle={{marginRight: 10}}
+              buttonStyle={styles.button}
+              icon={{name: 'edit', size: 20, color: colors.light}}
+              onPress={() => console.log('EDIT')}
+            />
+            <Button
+              containerStyle={{marginRight: 10}}
+              buttonStyle={styles.button}
+              icon={{name: 'delete', size: 20, color: colors.light}}
+              onPress={() => console.log('DELETE')}
+            />
+            <Button
+              containerStyle={{marginRight: 10}}
+              buttonStyle={styles.button}
+              icon={{name: 'chevron-right', size: 20, color: colors.light}}
+              onPress={() => onFocus?.call(this, item)}
+            />
+          </View>
+          <View style={{alignSelf: 'flex-end', marginTop: 10, marginRight: 10}}>
+            <Time ISOString={item.time_added}></Time>
+          </View>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    borderRadius: 5,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: colors.main,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  button: {
     backgroundColor: colors.main,
-    padding: 5,
-  },
-  title: {
-    fontSize: 24,
-    color: colors.light,
   },
   panel: {
+    flexDirection: 'row',
+    paddingHorizontal: 5,
+    marginTop: 15,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  info: {
+    flexDirection: 'row',
+    paddingHorizontal: 5,
     justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'row',
-    paddingVertical: 5,
   },
-  img: {
-    width: '100%',
-    height: 300,
-  },
-  divider: {
-    marginBottom: 0,
-  },
-  desc: {
-    marginTop: 5
-  }
 });
 
 MiniContentListItem.propTypes = {
   item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
   onFocus: PropTypes.func.isRequired,
-}
+};

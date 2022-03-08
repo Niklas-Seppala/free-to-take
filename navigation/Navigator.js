@@ -12,6 +12,7 @@ import useTokenLogin from '../hooks/api/useTokenLogin';
 import BottomNavIcon from '../components/BottomNavIcon';
 import {ScreenLoader} from '../components/ScreenLoader';
 import EditProfile from '../screens/EditProfile';
+import colors from '../utils/colors';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -20,6 +21,8 @@ const stackOptions = {
   headerShown: true,
   headerStyle: {backgroundColor: '#6ab07c', shadowColor: 'transparent'},
   tabBarStyle: {backgroundColor: '#6ab07c'},
+  headerTitleStyle: {color: colors.light},
+  headerTintColor: colors.light,
   tabBarShowLabel: false,
 };
 
@@ -69,7 +72,7 @@ function BottomTabNavigator() {
    */
   const individualOptions = (name) => ({
     title: name,
-    headerTitleStyle: {color: 'white'},
+    headerTitleStyle: {color: colors.light},
     tabBarIcon: ({focused}) => <BottomNavIcon focused={focused} name={name} />,
   });
 

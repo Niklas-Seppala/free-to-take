@@ -8,11 +8,11 @@ import { View } from 'react-native';
 
 export default function MiniContentList({data, navigation, style}) {
 
-  if (!data) return <ScreenLoader></ScreenLoader>;
+  if (!data) return <ScreenLoader />;
 
   if (data.length === 0) return <EmptyResults />;
   return (
-    <View style={{flex: 1, width: '100%'}}>
+    <View style={{width: '100%', flex: 3}}>
       <FlatList
         style={{margin: 10, marginTop: 5}}
         keyExtractor={(item) => item.file_id.toString()}
