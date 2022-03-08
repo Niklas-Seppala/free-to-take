@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet} from 'react-native';
-import {Card, ListItem, Avatar, Text, Button} from 'react-native-elements';
+import {Card, ListItem, Avatar, Text, Button, Icon} from 'react-native-elements';
 import {routes} from '../utils/api';
 import {View} from 'react-native';
 import Time from './DateTime';
@@ -12,7 +12,8 @@ import PropTypes from 'prop-types'
 
 export function ChatMessageListItem({item, user, media, index, onFocus, onProfilePress}) {
   const isOwnComment = item.user_id == user.user_id;
-  console.log("Comment", item.recipient_id, "user", user.user_id, "isOwnComment", isOwnComment)
+  const isItemOwnerComment = item.user_id == media.owner.user_id;
+  console.log("Comment recipient", item.recipient_id, "poster", user.user_id, "isOwnComment", isOwnComment, "owner_id", media.owner.user_id)
   const otherUserName = !isOwnComment ? media.owner.username : 'recipient'
 
   const date = new Date(item.time_added);
@@ -24,11 +25,12 @@ export function ChatMessageListItem({item, user, media, index, onFocus, onProfil
       <ListItem key={index}>
         <ListItem.Content>
           <View style={{flex: 1, width:'100%', backgroundColor: isOwnComment ? colors.active : colors.inactive }}>
-            <View>
-              <Avatar rounded source={{uri: 'https://www.placecage.com/c/64/64'}}/>
+            <View style={{flex: 1, flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+              <Avatar rounded containerStyle={{marginRight: 5}} source={{uri: 'https://www.placecage.com/c/64/64'}}/>
+              {isItemOwnerComment ? <Icon type="font-awesome" name="gift"/> : <></>}
             </View>
             <View>
-              <Text style={{fontWeight: 'bold'}}>{!isOwnComment ? otherUserName : 'Me'} </Text>
+              <Text style={{fontWeight: 'bold'}}>{!isOwnComment ? otherUserName : 'Me'}</Text>
               <Text>{item.comment}</Text>
               <Time ISOString={item.time_added} />
             </View>

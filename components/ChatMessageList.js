@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 import {ChatMessageListItem} from './ChatMessageListItem';
 import PropTypes from 'prop-types';
 import {EmptyResults} from './EmptyResults';
@@ -9,13 +9,18 @@ export default function ChatMessageList({data, media, navigation}) {
   const { user } = useContext(GlobalContext);
   console.log("data", data)
   console.log("comments", )
-  if (data.length === 0) return <EmptyResults />;
+  if (data.length === 0) return (
+    <View style={{width: '100%', flex:1, alignItems: 'center'}}>
+      <Text style={{fontWeight: 'bold'}}>Loading comments</Text>
+    </View>
+  );
+
   return (
     <FlatList
+      reversed
       style={{marginTop: 5, width:'100%', height: '100%'}}
       keyExtractor={(item) => item.comment_id.toString()}
-      data={data}
-      initialScrollIndex={data.length-1}
+      data={data.reverse()}
       ListFooterComponent={<View style={{height: 20}}/>}
       renderItem={({item, index}) => (
         <ChatMessageListItem

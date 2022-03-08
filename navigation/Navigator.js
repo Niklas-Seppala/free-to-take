@@ -53,7 +53,7 @@ const RootNavigator = () => {
           <Stack.Screen name='EditPost' component={EditPost} options={stackOptions} />
           <Stack.Screen name='ProfileVisitor' component={ProfileVisitorScreen} options={stackOptions} />
           <Stack.Screen
-            name="Chat"
+            name="Comments"
             component={ChatScreen}
             options={stackOptions}
           />
