@@ -30,7 +30,6 @@ export default function UserInfo({user}) {
         size={100}
         onPress={showAvatarTapToast}
         onLongPress={initiateProfilePictureChange}
-        // source={{uri: 'https://www.placecage.com/c/800/800'}}
         source={avatar}
       />
 
@@ -48,64 +47,6 @@ export default function UserInfo({user}) {
     </View>
   );
 }
-
-// const UserInfo = (props) => {
-//   const user = props.user;
-
-//   const showAvatarTapToast = () => {
-//     Toast.show({
-//       type: 'info',
-//       text1: 'Tap and hold to change your profile picture',
-//     });
-//   };
-
-//   const initiateProfilePictureChange = () => {
-//     Toast.show({
-//       type: 'info',
-//       text1: 'TODO: implement profile picture change',
-//     });
-//   };
-
-//   return (
-//     <>
-//       <View style={styles.backgroundCircle}></View>
-
-//       <Avatar
-//         size={160}
-//         source={{ uri: 'https://www.placecage.com/c/800/800' }}
-//         containerStyle={{ marginBottom: 50 }}
-//         onPress={showAvatarTapToast}
-//         onLongPress={initiateProfilePictureChange}
-//         rounded
-//       />
-//       <View style={{ width: '100%', flex: 1, alignItems: 'flex-start' }}>
-//         {/* user info */}
-//         <View style={styles.vertical}>
-//           <Icon
-//             name="user"
-//             type="font-awesome"
-//             color="#3f3f3f"
-//             containerStyle={styles.iconContainerStyle}
-//           />
-//           <Text>{user.username}</Text>
-//         </View>
-
-//         <Divider />
-
-//         <View style={styles.vertical}>
-//           <Icon
-//             name="envelope"
-//             type="font-awesome"
-//             color="#3f3f3f"
-//             containerStyle={styles.iconContainerStyle}
-//           />
-//           <Text>{user.email}</Text>
-//         </View>
-
-//       </View>
-//     </>
-//   );
-// };
 
 const styles = StyleSheet.create({
   infoTextContainer: {
@@ -143,5 +84,3 @@ const styles = StyleSheet.create({
     top: -Dimensions.get('window').width * 1.53,
   },
 });
-
-// export default UserInfo;

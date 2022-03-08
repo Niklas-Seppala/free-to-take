@@ -9,14 +9,14 @@ import useMyPosts from '../hooks/api/useMyPosts';
 import MiniContentList from '../components/MiniContentList';
 
 const ProfileScreen = ({navigation}) => {
-  const {user} = useContext(GlobalContext);
-  const posts = useMyPosts();
+  const user = useContext(GlobalContext).user
+  const [posts, loading] = useMyPosts();
   const logout = useLogout();
 
   return (
     <View style={styles.container}>
       <UserInfo user={user} />
-      <MiniContentList style={{}} navigation={navigation} data={posts} />
+      <MiniContentList navigation={navigation} loading={loading} data={posts} />
       <View style={{flexDirection: 'row'}}>
         <Button
           buttonStyle={[styles.button, {marginRight: 15}]}
@@ -32,6 +32,7 @@ const ProfileScreen = ({navigation}) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.main,

@@ -35,6 +35,7 @@ import {GlobalContext} from '../context/GlobalContext';
  *  title: string}}} props
  */
 export default function MiniContentListItem({
+  visitor,
   item,
   index,
   onFocus,
@@ -68,14 +69,15 @@ export default function MiniContentListItem({
                 console.log('COMMENTS');
               }}
             />
-            <Button
+            { !visitor && <Button
               containerStyle={{marginRight: 10}}
               buttonStyle={styles.button}
               icon={{name: 'edit', size: 20, color: colors.light}}
               onPress={() => {
                 navigation.navigate('EditPost', {item: item});
               }}
-            />
+            />}
+            {!visitor && 
             <Button
               loadingProps={{size: 20}}
               loading={delAction}
@@ -110,7 +112,7 @@ export default function MiniContentListItem({
                   ]
                 );
               }}
-            />
+            /> }
             <Button
               containerStyle={{marginRight: 10}}
               buttonStyle={styles.button}
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 5,
     marginTop: 15,
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   info: {
