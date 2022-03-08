@@ -10,13 +10,16 @@ import LottieView from "lottie-react-native";
 const LoginScreen = ({navigation}) => {
   return (
     <View style={{flex: 1,}}>
-      <LoginForm navigation={navigation}/>
-      <LottieView
+      <View style={{flex: 1,}}>
+        <LoginForm navigation={navigation}/>
+      </View>
+      <View style={{flex: 1,}}>
+        <LottieView
           source={require('../assets/animation.json')}
-          style={{marginTop:190, alignItems:'center'}}
           autoPlay
-          loop
+          loops
         />
+      </View>
     </View>
   );
 };
