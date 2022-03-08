@@ -4,6 +4,7 @@ import {Text} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {UserPropType} from '../utils/appPropTypes';
 import { client, routes } from '../utils/api';
+import defaultAvatar from '../assets/user.png'
 
 /**
  *
@@ -17,21 +18,19 @@ import { client, routes } from '../utils/api';
  * }} props
  */
 export default function MiniProfile({user, style}) {
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState(defaultAvatar);
   useEffect(async () => {
-    const file = await client.get(routes.tag.files(`avatar_${user.user_id}`));
-    let result = '';
-    if (file.data?.length > 0) {
-      result = routes.uploads.file(file.data[0].filename);
+    const avatarResponse = await client.get(routes.tag.files(`avatar_${user.user_id}`));
+    if (avatarResponse.data?.length > 0) {
+      setAvatar({uri: routes.uploads.file(avatarResponse.data[0].filename)})
     }
-    setAvatar(result);
   }, [user])
 
   return (
     <View style={[style, styles.container]}>
       <Image
         style={{width: 40, height: 40, borderRadius: 25}}
-        source={{uri: avatar}}
+        source={avatar}
       />
       <View style={{alignItems: 'flex-start', marginLeft: 5}}>
         <Text style={styles.name}>{user.username}</Text>
