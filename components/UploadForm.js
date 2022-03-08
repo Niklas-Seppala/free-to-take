@@ -50,7 +50,11 @@ export const UploadForm = ({onSuccess}) => {
   const [img, setImg] = useState(null);
   const [inputIsValid, setInputIsValid] = useState(false);
   const {apiActionComplete} = useContext(GlobalContext);
-  const [tag, setTag] = useState('');
+  const [tag, setTag] = useState(null);
+
+  useEffect(() => {
+    setInputIsValid(tag && img)
+  }, [img, tag])
 
   const {
     control,
@@ -165,7 +169,6 @@ export const UploadForm = ({onSuccess}) => {
           selected={img}
           onSuccess={(img) => {
             setImg(img);
-            setInputIsValid(true);
           }}
         />
       </Card.Divider>
