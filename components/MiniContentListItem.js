@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 import React, {useContext, useState} from 'react';
 import {Alert, StyleSheet} from 'react-native';
+=======
+import React, { useContext, useState } from 'react';
+import {StyleSheet} from 'react-native';
+>>>>>>> master
 import {Text, Button, Avatar} from 'react-native-elements';
 import {client, routes, setJWT} from '../utils/api';
 import {View} from 'react-native';
 import Time from './DateTime';
 import colors from '../utils/colors';
 import PropTypes from 'prop-types';
+<<<<<<< HEAD
 import {getToken} from '../utils/storage';
 import {GlobalContext} from '../context/GlobalContext';
+=======
+import { getToken } from '../utils/storage';
+import { GlobalContext } from '../context/GlobalContext';
+>>>>>>> master
 
 /**
  * @param {{
