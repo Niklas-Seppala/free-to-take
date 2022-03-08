@@ -3,8 +3,10 @@ import {Text, Avatar, Icon} from 'react-native-elements';
 import colors from '../utils/colors';
 
 import Toast from 'react-native-toast-message';
+import useAvatar from '../hooks/api/useAvatar';
 
 export default function UserInfo({user}) {
+  const avatar = useAvatar(user);
   const showAvatarTapToast = () => {
     Toast.show({
       type: 'info',
@@ -22,13 +24,14 @@ export default function UserInfo({user}) {
   return (
     <View style={{alignItems: 'center', width: '100%', marginBottom: 80, flex:1}}>
       <View style={styles.backgroundCircle}></View>
-
       <Avatar
+        containerStyle={{backgroundColor: 'white'}}
         rounded
         size={100}
         onPress={showAvatarTapToast}
         onLongPress={initiateProfilePictureChange}
-        source={{uri: 'https://www.placecage.com/c/800/800'}}
+        // source={{uri: 'https://www.placecage.com/c/800/800'}}
+        source={avatar}
       />
 
       <View style={{width:'100%'}}>

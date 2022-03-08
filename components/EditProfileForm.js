@@ -2,15 +2,14 @@ import {useContext, useEffect, React} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import {useForm, Controller} from 'react-hook-form';
-import useUserProfile from '../hooks/api/useUserProfile';
 import {GlobalContext} from '../context/GlobalContext';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import colors from '../utils/colors';
+import { client, routes, setJWT } from '../utils/api';
 
 const EditProfileForm = ({navigation}) => {
   const {setUser, user} = useContext(GlobalContext);
-  const setUserData = useUserProfile();
 
   //https://stackoverflow.com/a/201378
   const emailRegex =
@@ -40,19 +39,17 @@ const EditProfileForm = ({navigation}) => {
       })
     );
 
-    console.log('onSubmit');
-
-    setUserData(data);
-    // bad hack to change user data locally
-    user.username = data.username;
-    user.email = data.email;
-    setUser(user);
-
-    Toast.show({
-      type: 'success',
-      text1: 'The changes to your profile have been saved',
-    });
-    navigation.popToTop();
+      try {
+        await client.put(routes.user.modify, data, {headers: setJWT(user.token)});
+        setUser({...user, email: data.email, username: data.username});
+        Toast.show({
+          type: 'success',
+          text1: 'The changes to your profile have been saved',
+        });
+        navigation.popToTop();
+      } catch (error) {
+        console.error(error);
+      }
   };
 
   const validatePassword = async (value) => {

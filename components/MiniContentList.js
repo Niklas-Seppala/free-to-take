@@ -6,7 +6,7 @@ import MiniContentListItem from './MiniContentListItem';
 import { ScreenLoader } from './ScreenLoader';
 import { View } from 'react-native';
 
-export default function MiniContentList({data, navigation, style}) {
+export default function MiniContentList({data, navigation}) {
 
   if (!data) return <ScreenLoader />;
 
@@ -30,6 +30,6 @@ export default function MiniContentList({data, navigation, style}) {
 }
 
 MiniContentList.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array,
   navigation: PropTypes.object.isRequired,
 };

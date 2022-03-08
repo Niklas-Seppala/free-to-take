@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
+import { client, routes } from "../../utils/api";
+import defaultAvatar from '../../assets/user.png'
 
 export default function useAvatar(user) {
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState(defaultAvatar);
   useEffect(async () => {
-    const file = await client.get(routes.tag.files(`avatar_${user.user_id}`));
-    let result = '';
-    if (file.data?.length > 0) {
-      result = routes.uploads.file(file.data[0].filename);
+    const avatarResponse = await client.get(routes.tag.files(`avatar_${user.user_id}`));
+    if (avatarResponse.data?.length > 0) {
+      setAvatar({uri: routes.uploads.file(avatarResponse.data[0].filename)})
     }
-    setAvatar(result);
-  }, [user])
+  }, [user]);
 
   return avatar;
 }
