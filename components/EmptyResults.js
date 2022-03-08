@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import empty from '../assets/empty.png';
 import PropTypes from 'prop-types';
+import colors from '../utils/colors';
 
 /**
  *
@@ -14,10 +15,9 @@ export function EmptyResults({ style }) {
     <View style={[style, { alignItems: 'center', justifyContent: 'center' }]}>
       <Image
         source={empty}
-        style={{ height: 100, width: 100, marginVertical: 10 }}
+        style={{ height: 80, width: 80, marginVertical: 10 }}
       ></Image>
-      <Text h2>Nothing here</Text>
-      <Text h4>404</Text>
+      <Text h4 style={{color: colors.main}}>Nothing here</Text>
     </View>
   );
 }
