@@ -22,6 +22,7 @@ export default function MiniContentList({data, visitor, navigation, loading, sty
             item={item}
             navigation={navigation}
             index={index}
+            navigation={navigation}
             onFocus={(item) => navigation.navigate('Single', {item: item, owner: true})}
           />
         )}

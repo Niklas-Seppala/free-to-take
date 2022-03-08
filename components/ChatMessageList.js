@@ -12,7 +12,7 @@ export default function ChatMessageList({data, media, navigation}) {
   if (data.length === 0) return <EmptyResults />;
   return (
     <FlatList
-      style={{marginTop: 5, width:'100%', height: '100%', backgroundColor:'green'}}
+      style={{marginTop: 5, width:'100%', height: '100%'}}
       keyExtractor={(item) => item.comment_id.toString()}
       data={data}
       initialScrollIndex={data.length-1}
