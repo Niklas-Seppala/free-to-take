@@ -1,13 +1,14 @@
-import React, { useContext, useState } from 'react';
-import {StyleSheet} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {Alert, StyleSheet} from 'react-native';
 import {Text, Button, Avatar} from 'react-native-elements';
 import {client, routes, setJWT} from '../utils/api';
 import {View} from 'react-native';
 import Time from './DateTime';
 import colors from '../utils/colors';
 import PropTypes from 'prop-types';
-import { getToken } from '../utils/storage';
-import { GlobalContext } from '../context/GlobalContext';
+import {getToken} from '../utils/storage';
+import {GlobalContext} from '../context/GlobalContext';
+
 
 /**
  * @param {{
@@ -33,12 +34,25 @@ import { GlobalContext } from '../context/GlobalContext';
  *  time_added: string,
  *  title: string}}} props
  */
-export default function MiniContentListItem({item, index, onFocus}) {
+export default function MiniContentListItem({
+  item,
+  index,
+  onFocus,
+  navigation,
+}) {
   const {apiActionComplete} = useContext(GlobalContext);
   const [delAction, setDelAction] = useState(false);
-
+  
   return (
-    <View style={{marginTop: index === 0 ? 0 : 10, borderWidth: 1, borderColor: colors.main, borderRadius: 5, overflow: 'hidden'}}>
+    <View
+      style={{
+        marginTop: index === 0 ? 0 : 10,
+        borderWidth: 1,
+        borderColor: colors.main,
+        borderRadius: 5,
+        overflow: 'hidden',
+      }}
+    >
       <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
         <Avatar size={130} source={{uri: routes.uploads.file(item.filename)}} />
 
@@ -58,25 +72,43 @@ export default function MiniContentListItem({item, index, onFocus}) {
               containerStyle={{marginRight: 10}}
               buttonStyle={styles.button}
               icon={{name: 'edit', size: 20, color: colors.light}}
-              onPress={() => console.log('EDIT')}
+              onPress={() => {
+                navigation.navigate('EditPost', {item: item});
+              }}
             />
             <Button
-              loadingProps={{size: 15}}
+              loadingProps={{size: 20}}
               loading={delAction}
               containerStyle={{marginRight: 10}}
               buttonStyle={styles.button}
               icon={{name: 'delete', size: 20, color: colors.light}}
-              onPress={async () => {
-                try {
-                  setDelAction(true);
-                  const token = await getToken();
-                  const resp = await client.delete(routes.media.delete(item.file_id), {headers: setJWT(token)});
-                  apiActionComplete();
-                  setDelAction(false);
-                } catch (error) {
-                  setDelAction(false);
-                  console.error(error);
-                }
+              onPress={() => {
+                Alert.alert(
+                  'Warning',
+                  'Are you sure you want to delete this post?',
+                  [
+                    {text: 'cancel', style: 'cancel'},
+                    {
+                      text: 'ok',
+                      onPress: async () => {
+                        try {
+                          setDelAction(true);
+                          const token = await getToken();
+                          await client.delete(
+                            routes.media.delete(item.file_id),
+                            {headers: setJWT(token)}
+                          );
+                          apiActionComplete();
+                          setDelAction(false);
+                        } catch (error) {
+                          setDelAction(false);
+                          console.error(error);
+                        }
+                      },
+                      style: 'cancel',
+                    },
+                  ]
+                );
               }}
             />
             <Button
@@ -118,4 +150,5 @@ MiniContentListItem.propTypes = {
   item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
   onFocus: PropTypes.func.isRequired,
+  navigation: PropTypes.object.isRequired,
 };

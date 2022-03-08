@@ -13,6 +13,7 @@ import BottomNavIcon from '../components/BottomNavIcon';
 import {ScreenLoader} from '../components/ScreenLoader';
 import EditProfile from '../screens/EditProfile';
 import colors from '../utils/colors';
+import { EditPost } from '../screens/EditPost';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -45,8 +46,8 @@ const RootNavigator = () => {
             component={SingleScreen}
             options={stackOptions}
           />
-          <Stack.Screen name='EditProfile' component={EditProfile} options={stackOptions}>
-          </Stack.Screen>
+          <Stack.Screen name='EditProfile' component={EditProfile} options={stackOptions} />
+          <Stack.Screen name='EditPost' component={EditPost} options={stackOptions} />
         </>
       ) : (
         <>
