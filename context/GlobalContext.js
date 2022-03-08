@@ -18,7 +18,6 @@ const GlobalProvider = (props) => {
 
   // User state and authentication
   const [user, setUser] = useState(null);
-  const [upload, setUpload] = useState(null);
   return (
     <GlobalContext.Provider
       value={{
@@ -26,8 +25,6 @@ const GlobalProvider = (props) => {
         setUser,
         apiAction,
         apiActionComplete,
-        upload,
-        setUpload,
       }}
     >
       {props.children}
