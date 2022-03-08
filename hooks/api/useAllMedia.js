@@ -2,7 +2,6 @@ import { useContext, useState, useEffect } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { TAG, client, routes, setJWT } from '../../utils/api';
 
-
 /**
  * Get all of the latest media uploads by tag unique to this app.
  * @see https://media.mw.metropolia.fi/wbma/docs/#api-Tag-GetTagFiles
@@ -30,7 +29,6 @@ export default function useAllMedia() {
         client.get(routes.tag.files(TAG)),
       ]);
       const userMap = new Map(users.data.map((i) => [i.user_id, i]));
-
       const filesWithInfo = await Promise.all(
         posts.data.map(async (file) => {
           const [tags, details] = await Promise.all([

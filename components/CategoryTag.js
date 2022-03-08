@@ -29,7 +29,7 @@ export default function CategoryTag({ onPress, tag, enabled }) {
         setActive(!active);
       }}
     >
-      <Icon style={styles.icon} name={tag.icon} size={20} color={color}></Icon>
+      <Icon style={styles.icon} name={tag.icon} size={23} color={color}></Icon>
       <Text style={[styles.text, { color: color }]}>{tag.name}</Text>
     </TouchableOpacity>
   );
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   text: {
+    fontSize:17,
     marginRight: 5,
   },
 });
