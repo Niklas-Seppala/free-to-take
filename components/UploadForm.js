@@ -100,7 +100,7 @@ export const UploadForm = ({onSuccess}) => {
           file_id: result.file_id,
           tag: TAG
         };
-        categoryTag = {
+        const categoryTag = {
           file_id: result.file_id,
           tag: tag
         };
