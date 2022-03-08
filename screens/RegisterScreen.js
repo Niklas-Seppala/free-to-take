@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import RegisterForm from '../context/RegisterForm';
+import RegisterForm from '../components/RegisterForm';
 import {Card} from 'react-native-elements';
 
 const RegisterScreen = () => {

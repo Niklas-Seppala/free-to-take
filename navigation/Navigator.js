@@ -5,20 +5,21 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import { UploadScreen } from '../screens/UploadScreen';
+import {UploadScreen} from '../screens/UploadScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SingleScreen from '../screens/SingleScreen';
 import useTokenLogin from '../hooks/api/useTokenLogin';
 import BottomNavIcon from '../components/BottomNavIcon';
 import {ScreenLoader} from '../components/ScreenLoader';
+import colors from '../utils/colors';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 const stackOptions = {
   headerShown: true,
-  headerStyle: {backgroundColor: '#6ab07c', shadowColor: 'transparent'},
-  tabBarStyle: {backgroundColor: '#6ab07c'},
+  headerStyle: {backgroundColor: colors.main, shadowColor: 'transparent'},
+  tabBarStyle: {backgroundColor: colors.main},
   tabBarShowLabel: false,
 };
 

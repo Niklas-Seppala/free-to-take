@@ -7,7 +7,7 @@ import Time from './DateTime';
 import MiniProfile from './MiniProfile';
 import colors from '../utils/colors';
 import {TouchableOpacity} from 'react-native';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 /**
  * @param {{
@@ -43,7 +43,7 @@ export function ContentListItem({item, index, onFocus, onProfilePress}) {
         <Button
           onPress={() => onFocus?.call(this, item)}
           icon={{name: 'chevron-right', color: '#daf2d3', size: 30}}
-          buttonStyle={{backgroundColor: '#6ab07c', padding: 0}}
+          buttonStyle={{backgroundColor: colors.main, padding: 0}}
         />
       </View>
       <Image
@@ -52,7 +52,9 @@ export function ContentListItem({item, index, onFocus, onProfilePress}) {
       />
       <View style={{flex: 1, padding: 5, paddingTop: 0}}>
         <View style={styles.panel}>
-          <TouchableOpacity onPress={() => onProfilePress?.call(this, item.owner)}>
+          <TouchableOpacity
+            onPress={() => onProfilePress?.call(this, item.owner)}
+          >
             <MiniProfile user={item.owner} />
           </TouchableOpacity>
           <Time ISOString={item.time_added}></Time>
@@ -97,13 +99,13 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   desc: {
-    marginTop: 5
-  }
+    marginTop: 5,
+  },
 });
 
 ContentListItem.propTypes = {
   item: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
   onFocus: PropTypes.func.isRequired,
-  onProfilePress: PropTypes.func.isRequired
-}
+  onProfilePress: PropTypes.func.isRequired,
+};
