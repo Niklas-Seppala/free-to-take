@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import {getToken} from '../utils/storage';
 import {GlobalContext} from '../context/GlobalContext';
 
+
 /**
  * @param {{
  * index: number,
