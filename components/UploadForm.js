@@ -1,14 +1,15 @@
-import React, { useState, useContext } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { Button, Card, Input, Text } from 'react-native-elements';
-import { extractFileExt, extractFilename, handleFetch } from '../utils/forms';
-import { StyleSheet, View } from 'react-native';
-import { TAG, client, routes } from '../utils/api';
-import { getToken } from '../utils/storage';
-import { GlobalContext } from '../context/GlobalContext';
+import React, {useState, useContext, useEffect} from 'react';
+import {useForm, Controller} from 'react-hook-form';
+import {Button, Card, Input, Text} from 'react-native-elements';
+import {extractFileExt, extractFilename, handleFetch} from '../utils/forms';
+import {StyleSheet, View} from 'react-native';
+import {TAG, client, routes, setJWT} from '../utils/api';
+import {getToken} from '../utils/storage';
+import {GlobalContext} from '../context/GlobalContext';
 import * as ImagePickerUtil from 'expo-image-picker';
+import TagSelector from './TagSelector';
 
-export function ImagePicker({ selected, onSuccess }) {
+export function ImagePicker({selected, onSuccess}) {
   const pickImage = async () => {
     const res = await ImagePickerUtil.launchImageLibraryAsync({
       mediaTypes: ImagePickerUtil.MediaTypeOptions.All,
@@ -24,7 +25,7 @@ export function ImagePicker({ selected, onSuccess }) {
       {selected && (
         <Card.Image
           resizeMode={'contain'}
-          source={{ uri: selected.uri }}
+          source={{uri: selected.uri}}
           containerStyle={{
             height: 300,
             width: '100%',
@@ -45,16 +46,17 @@ export function ImagePicker({ selected, onSuccess }) {
   );
 }
 
-export const UploadForm = ({ onSuccess }) => {
+export const UploadForm = ({onSuccess}) => {
   const [img, setImg] = useState(null);
   const [inputIsValid, setInputIsValid] = useState(false);
-  const { apiActionComplete } = useContext(GlobalContext);
+  const {apiActionComplete} = useContext(GlobalContext);
+  const [tag, setTag] = useState('');
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       title: '',
@@ -68,7 +70,9 @@ export const UploadForm = ({ onSuccess }) => {
       const formData = new FormData();
       const filename = extractFilename(img.uri);
       const fExtension = extractFileExt(filename);
-      const mimetype = `${img.type}/${fExtension === 'jpg' ? 'jpeg' : fExtension}`;
+      const mimetype = `${img.type}/${
+        fExtension === 'jpg' ? 'jpeg' : fExtension
+      }`;
 
       const upload = {
         uri: img.uri,
@@ -91,25 +95,28 @@ export const UploadForm = ({ onSuccess }) => {
 
       const result = await handleFetch(routes.media.uploads, options);
       if (Object.hasOwnProperty.call(result, 'file_id')) {
-        let req_data = {};
-        req_data.file_id = result.file_id;
-        req_data.tag = TAG;
-        client
-          .post(routes.tag.create, req_data, {
-            headers: { 'x-access-token': token },
-          })
-          .then((response) => {
-            if (Object.hasOwnProperty.call(response.data, 'tag_id')) {
-              onSuccess?.call();
-              apiActionComplete();
-            }
-            console.log(response.data);
-          })
-          .catch((e) => console.log(e));
+        const options = {headers: setJWT(token)};
+        const appTag = {
+          file_id: result.file_id,
+          tag: TAG
+        };
+        categoryTag = {
+          file_id: result.file_id,
+          tag: tag
+        };
+
+        const [appTagRes, categoryTagRes] =  await Promise.all([
+          client.post(routes.tag.create, appTag, options),
+          client.post(routes.tag.create, categoryTag, options)
+        ]);
+
+        if (appTagRes.status === 201 && categoryTagRes.status === 201) {
+          apiActionComplete();
+          onSuccess?.call();
+        }
       }
     } catch (error) {
       console.error(error);
-      setUpload(false);
     }
   };
 
@@ -122,8 +129,8 @@ export const UploadForm = ({ onSuccess }) => {
       <Controller
         name="title"
         control={control}
-        rules={{ required: 'Please provide title for upload.' }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        rules={{required: 'Please provide title for upload.'}}
+        render={({field: {onChange, onBlur, value}}) => (
           <Input
             autoCapitalize="none"
             placeholder="Title"
@@ -132,7 +139,7 @@ export const UploadForm = ({ onSuccess }) => {
             value={value}
             errorMessage={errors.title?.message}
             inputStyle={styles.inputField}
-            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputContainerStyle={{borderBottomWidth: 0}}
           />
         )}
       />
@@ -140,7 +147,7 @@ export const UploadForm = ({ onSuccess }) => {
       <Controller
         name="description"
         control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <Input
             autoCapitalize="none"
             placeholder="Description"
@@ -149,7 +156,7 @@ export const UploadForm = ({ onSuccess }) => {
             value={value}
             errorMessage={errors.description?.message}
             inputStyle={styles.inputField}
-            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputContainerStyle={{borderBottomWidth: 0}}
           />
         )}
       />
@@ -162,6 +169,7 @@ export const UploadForm = ({ onSuccess }) => {
           }}
         />
       </Card.Divider>
+      <TagSelector onChange={(_, t) => setTag(tag !== t ? t : '')} />
       <View style={styles.horizontal}>
         <Button
           onPress={() => {
