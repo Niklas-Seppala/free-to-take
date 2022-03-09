@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import * as ImagePickerUtil from 'expo-image-picker';
 import { styles } from './UploadForm';
 
-
 export function ImagePicker({ selected, onSuccess }) {
   const pickImage = async () => {
     const res = await ImagePickerUtil.launchImageLibraryAsync({
