@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import {Button, Card, Input, Text} from 'react-native-elements';
 import {extractFileExt, extractFilename, handleFetch} from '../utils/forms';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {TAG, client, routes, setJWT} from '../utils/api';
 import {getToken} from '../utils/storage';
 import {GlobalContext} from '../context/GlobalContext';
@@ -21,13 +21,13 @@ export function ImagePicker({selected, onSuccess}) {
   };
 
   return (
-    <View>
+    <View style={{}}>
       {selected && (
-        <Card.Image
-          resizeMode={'contain'}
+        <Image
+          resizeMode={'cover'}
           source={{uri: selected.uri}}
-          containerStyle={{
-            height: 300,
+          style={{
+            height: 250,
             width: '100%',
           }}
         />
@@ -168,6 +168,7 @@ export const UploadForm = ({onSuccess}) => {
           />
         )}
       />
+      <TagSelector onChange={(_, t) => setTag(tag !== t ? t : '')} />
       <Card.Divider>
         <ImagePicker
           selected={img}
@@ -176,7 +177,6 @@ export const UploadForm = ({onSuccess}) => {
           }}
         />
       </Card.Divider>
-      <TagSelector onChange={(_, t) => setTag(tag !== t ? t : '')} />
       <View style={styles.horizontal}>
         <Button
           onPress={() => {

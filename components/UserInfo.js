@@ -4,14 +4,19 @@ import colors from '../utils/colors';
 import * as ImagePickerUtil from 'expo-image-picker';
 
 import useAvatar from '../hooks/api/useAvatar';
-import { getToken } from '../utils/storage';
-import { handleFetch, extractFileExt, extractFilename } from '../utils/forms';
-import { client, routes, setJWT } from '../utils/api';
-import { useContext } from 'react';
-import { GlobalContext } from '../context/GlobalContext';
+import {getToken} from '../utils/storage';
+import {handleFetch, extractFileExt, extractFilename} from '../utils/forms';
+import {client, routes, setJWT} from '../utils/api';
+import {useContext} from 'react';
+import {GlobalContext} from '../context/GlobalContext';
 
-const postAvatar = async (img, user, onSuccess) => {
+const postAvatar = async (img, user, avatar, onSuccess) => {
   const token = await getToken();
+
+  try {
+    await client.delete(routes.media.delete(avatar), {headers: setJWT(token)});
+  } catch (error) {}
+
   const formData = new FormData();
   const filename = extractFilename(img.uri);
   const fExtension = extractFileExt(filename);
@@ -37,26 +42,25 @@ const postAvatar = async (img, user, onSuccess) => {
     const options = {headers: setJWT(token)};
     const avatarTag = {
       file_id: result.file_id,
-      tag: `avatar_${user.user_id}`
+      tag: `avatar_${user.user_id}`,
     };
-    const res = await client.post(routes.tag.create, avatarTag, options)
+    const res = await client.post(routes.tag.create, avatarTag, options);
     if (res.status === 201) {
       onSuccess();
     }
   }
 };
 
-export default function UserInfo({user}) {
-  const avatar = useAvatar(user);
+export default function UserInfo({user, visitor}) {
+  const [avatar, avatarId] = useAvatar(user);
   const {apiActionComplete} = useContext(GlobalContext);
-
 
   return (
     <View
       style={{alignItems: 'center', width: '100%', marginBottom: 80, flex: 1}}
     >
       <View style={styles.backgroundCircle}></View>
-      <View>
+      {visitor && (
         <Avatar
           containerStyle={{backgroundColor: 'white'}}
           rounded
@@ -75,21 +79,43 @@ export default function UserInfo({user}) {
           }}
           source={avatar}
         />
-        <View
-          style={{
-            justifyContent: 'center',
-            right: 0,
-            position: 'absolute',
-            alignItems: 'center',
-            width: 30,
-            height: 30,
-            borderRadius: 15,
-            backgroundColor: 'white',
-          }}
-        >
-          <Icon name="photo" color={colors.dark}></Icon>
+      )}
+      {!visitor && (
+        <View>
+          <Avatar
+            containerStyle={{backgroundColor: 'white'}}
+            rounded
+            size={100}
+            onPress={async () => {
+              const img = await ImagePickerUtil.launchImageLibraryAsync({
+                mediaTypes: ImagePickerUtil.MediaTypeOptions.All,
+                allowsEditing: true,
+                quality: 0.7,
+              });
+
+              if (!img.cancelled) {
+                console.log(img);
+                await postAvatar(img, user, avatarId, apiActionComplete);
+              }
+            }}
+            source={avatar}
+          />
+          <View
+            style={{
+              justifyContent: 'center',
+              right: 0,
+              position: 'absolute',
+              alignItems: 'center',
+              width: 30,
+              height: 30,
+              borderRadius: 15,
+              backgroundColor: 'white',
+            }}
+          >
+            <Icon name="photo" color={colors.dark}></Icon>
+          </View>
         </View>
-      </View>
+      )}
 
       <View style={{width: '100%'}}>
         <View style={styles.infoTextContainer}>
