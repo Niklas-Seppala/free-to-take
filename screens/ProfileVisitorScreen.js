@@ -9,7 +9,7 @@ export function ProfileVisitorScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <UserInfo user={user} />
+      <UserInfo visitor={true} user={user} />
       <MiniContentList style={{flex: 4}} navigation={navigation} visitor={true} loading={loading} data={posts} />
     </View>
   );
