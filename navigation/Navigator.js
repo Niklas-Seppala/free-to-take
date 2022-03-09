@@ -11,7 +11,10 @@ import SingleScreen from '../screens/SingleScreen';
 import useTokenLogin from '../hooks/api/useTokenLogin';
 import BottomNavIcon from '../components/BottomNavIcon';
 import {ScreenLoader} from '../components/ScreenLoader';
+import EditProfile from '../screens/EditProfile';
 import colors from '../utils/colors';
+import {EditPost} from '../screens/EditPost';
+import {ProfileVisitorScreen} from '../screens/ProfileVisitorScreen';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -24,7 +27,10 @@ const stackOptions = {
 };
 
 const RootNavigator = () => {
-  const options = {headerShown: false};
+  const options = {
+    headerShown: false,
+    headerStyle: {backgroundColor: '#6ab07c', shadowColor: 'transparent'},
+  };
   const [onGoing, success] = useTokenLogin();
   if (onGoing) return <ScreenLoader />;
 
@@ -40,6 +46,21 @@ const RootNavigator = () => {
           <Stack.Screen
             name="Single"
             component={SingleScreen}
+            options={stackOptions}
+          />
+          <Stack.Screen
+            name="EditProfile"
+            component={EditProfile}
+            options={stackOptions}
+          />
+          <Stack.Screen
+            name="EditPost"
+            component={EditPost}
+            options={stackOptions}
+          />
+          <Stack.Screen
+            name="ProfileVisitor"
+            component={ProfileVisitorScreen}
             options={stackOptions}
           />
         </>
@@ -67,7 +88,7 @@ function BottomTabNavigator() {
    */
   const individualOptions = (name) => ({
     title: name,
-    headerTitleStyle: {color: 'white'},
+    headerTitleStyle: {color: colors.light},
     tabBarIcon: ({focused}) => <BottomNavIcon focused={focused} name={name} />,
   });
 

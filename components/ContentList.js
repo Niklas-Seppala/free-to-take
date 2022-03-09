@@ -15,7 +15,7 @@ export default function ContentList({data, navigation}) {
         <ContentListItem
           item={item}
           index={index}
-          onProfilePress={(owner) => console.log(owner)}
+          onProfilePress={(owner) => navigation.navigate('ProfileVisitor', {user: owner})}
           onFocus={(item) => navigation.navigate('Single', {item: item})}
         />
       )}

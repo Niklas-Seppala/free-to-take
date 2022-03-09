@@ -1,53 +1,38 @@
-import {useContext, useState} from 'react';
+import {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Button, Divider} from 'react-native-elements';
+import {Button} from 'react-native-elements';
 import useLogout from '../hooks/api/useLogout';
-import EditProfileForm from '../components/EditProfileForm';
 import UserInfo from '../components/UserInfo';
 import {GlobalContext} from '../context/GlobalContext';
 import colors from '../utils/colors';
+import useMyPosts from '../hooks/api/useMyPosts';
+import MiniContentList from '../components/MiniContentList';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({navigation}) => {
+  const user = useContext(GlobalContext).user;
+  const [posts, loading] = useMyPosts();
   const logout = useLogout();
-  const {user} = useContext(GlobalContext);
-  const [isEditingProfile, setIsEditingProfile] = useState(false);
 
   return (
     <View style={styles.container}>
-      {/* user info */}
-      {!isEditingProfile ? (
-        <UserInfo user={user} />
-      ) : (
-        <EditProfileForm
-          onEditSuccess={() => {
-            setIsEditingProfile(false);
-          }}
+      <UserInfo user={user} />
+      <MiniContentList navigation={navigation} loading={loading} data={posts} />
+      <View style={{flexDirection: 'row'}}>
+        <Button
+          buttonStyle={[styles.button, {marginRight: 15}]}
+          onPress={() => navigation.navigate('EditProfile')}
+          title={'Edit profile'}
         />
-      )}
-
-      <Divider />
-      {!isEditingProfile ? (
-        <>
-          <Button
-            buttonStyle={styles.button}
-            onPress={() => {
-              setIsEditingProfile(!isEditingProfile);
-            }}
-            title={'Edit profile'}
-          ></Button>
-
-          <Button
-            buttonStyle={styles.button}
-            title="Log out"
-            onPress={() => logout()}
-          ></Button>
-        </>
-      ) : (
-        <></>
-      )}
+        <Button
+          buttonStyle={styles.button}
+          title="Log out"
+          onPress={() => logout()}
+        />
+      </View>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   button: {
     width: 150,
@@ -57,9 +42,7 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
   },
   container: {
-    width: '100%',
     flex: 1,
-    justifyContent: 'space-around',
     alignItems: 'center',
   },
 });

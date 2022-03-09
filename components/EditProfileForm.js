@@ -1,29 +1,14 @@
 import {useContext, useEffect, React} from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  Alert,
-  Keyboard,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import {useForm, Controller} from 'react-hook-form';
-import useUserProfile from '../hooks/api/useUserProfile';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import {GlobalContext} from '../context/GlobalContext';
-
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
 import Toast from 'react-native-toast-message';
-import colors from '../utils/colors';
+import {client, routes, setJWT} from '../utils/api';
 
-const EditProfileForm = ({navigation, onEditSuccess}) => {
+const EditProfileForm = ({navigation}) => {
   const {setUser, user} = useContext(GlobalContext);
-  const setUserData = useUserProfile();
 
   //https://stackoverflow.com/a/201378
   const emailRegex =
@@ -34,8 +19,7 @@ const EditProfileForm = ({navigation, onEditSuccess}) => {
     handleSubmit,
     getValues,
     setValue,
-    trigger,
-    formState: {errors, isDirty},
+    formState: {errors},
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
@@ -54,27 +38,17 @@ const EditProfileForm = ({navigation, onEditSuccess}) => {
       })
     );
 
-    console.log('onSubmit');
-
-    await setUserData(data);
-    // bad hack to change user data locally
-    user.username = data.username;
-    user.email = data.email;
-    setUser(user);
-
-    console.log('SUBMITTING with data', data);
-    Toast.show({
-      type: 'success',
-      text1: 'The changes to your profile have been saved',
-    });
-    onEditSuccess();
-  };
-
-  const showErrorMsg = () => {
-    Toast.show({
-      type: 'error',
-      text1: 'Please fill all the form fields',
-    });
+    try {
+      await client.put(routes.user.modify, data, {headers: setJWT(user.token)});
+      setUser({...user, email: data.email, username: data.username});
+      Toast.show({
+        type: 'success',
+        text1: 'The changes to your profile have been saved',
+      });
+      navigation.popToTop();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const validatePassword = async (value) => {
@@ -109,14 +83,12 @@ const EditProfileForm = ({navigation, onEditSuccess}) => {
           width: '100%',
           height: '90%',
           justifyContent: 'flex-end',
-          paddingVertical: 20,
         }}
         activeOpacity={1}
       >
         <KeyboardAwareScrollView
-          style={{width: '75%'}}
+          style={{width: '75%', flex: 1, width: '100%'}}
           keyboardShouldPersistTaps={'always'}
-          style={{flex: 1, width: '100%'}}
           showsVerticalScrollIndicator={false}
         >
           <Controller
@@ -154,7 +126,6 @@ const EditProfileForm = ({navigation, onEditSuccess}) => {
             render={({field: {onChange, onBlur, value}}) => (
               <Input
                 placeholder="email"
-                style={styles.textInput}
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
@@ -173,11 +144,9 @@ const EditProfileForm = ({navigation, onEditSuccess}) => {
             render={({field: {onChange, onBlur, value}}) => (
               <Input
                 placeholder="password"
-                style={styles.textInput}
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}
-                value={value}
                 secureTextEntry={true}
                 errorMessage={errors.password && errors.password.message}
                 inputStyle={styles.inputField}
@@ -224,17 +193,17 @@ const EditProfileForm = ({navigation, onEditSuccess}) => {
           )}
           <View style={styles.buttonContainer}>
             <Button
-              containerStyle={{width: '45%'}}
+              containerStyle={{width: '50%'}}
               buttonStyle={styles.button}
               title="Save changes"
               disabled={Object.keys(errors).length > 0}
               onPress={handleSubmit(onSubmit)}
             ></Button>
             <Button
-              containerStyle={{width: '45%'}}
+              containerStyle={{width: '50%'}}
               buttonStyle={styles.button}
               title="Cancel"
-              onPress={() => onEditSuccess()}
+              onPress={() => navigation.popToTop()}
             ></Button>
           </View>
         </KeyboardAwareScrollView>

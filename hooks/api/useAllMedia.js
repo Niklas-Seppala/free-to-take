@@ -20,10 +20,12 @@ import { TAG, client, routes, setJWT } from '../../utils/api';
 export default function useAllMedia() {
   const { apiAction, user } = useContext(GlobalContext);
   const [media, setMedia] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(async () => {
     if (!user) return;
     try {
+      setLoading(true);
       const [users, posts] = await Promise.all([
         client.get(routes.user.all, { headers: setJWT(user.token) }),
         client.get(routes.tag.files(TAG)),
@@ -41,9 +43,11 @@ export default function useAllMedia() {
         })
       );
       setMedia(filesWithInfo);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   }, [apiAction, user]);
-  return media;
+  return [media, loading];
 }
