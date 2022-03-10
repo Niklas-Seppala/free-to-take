@@ -7,7 +7,7 @@ import ChatMessageList from '../components/ChatMessageList';
 import useMediaComments from '../hooks/api/useMediaComments';
 
 /**
- * 
+ * The component for the comments screen
  * 
  * @returns 
  */

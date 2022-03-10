@@ -15,6 +15,7 @@ export default function ChatMessageList({data, media, navigation, loadComments, 
     </View>
   );
 
+
   return (
     <FlatList
       reversed
