@@ -13,12 +13,8 @@ import PropTypes from 'prop-types'
 export function ChatMessageListItem({item, user, media, index, onFocus, onProfilePress}) {
   const isOwnComment = item.user_id == user.user_id;
   const isItemOwnerComment = item.user_id == media.owner.user_id;
-  console.log("Comment recipient", item.recipient_id, "poster", user.user_id, "isOwnComment", isOwnComment, "owner_id", media.owner.user_id)
-  const otherUserName = !isOwnComment ? media.owner.username : 'recipient'
+  const commentOwner = isItemOwnerComment ? media.owner : item.owner;
 
-  const date = new Date(item.time_added);
-  const dateFormat = 'fi-FI';
-  const formattedDate = `${date.toLocaleDateString(dateFormat)} ${date.toLocaleTimeString(dateFormat)}`;
 
   return (
     <View>
@@ -26,13 +22,14 @@ export function ChatMessageListItem({item, user, media, index, onFocus, onProfil
         <ListItem.Content>
           <View style={{flex: 1, width:'100%', backgroundColor: isOwnComment ? colors.active : colors.inactive }}>
             <View style={{flex: 1, flexDirection:'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-              <Avatar rounded containerStyle={{marginRight: 5}} source={{uri: 'https://www.placecage.com/c/64/64'}}/>
+              {commentOwner ? <MiniProfile user={commentOwner} style={{margin: 10}}/> : <></>}
               {isItemOwnerComment ? <Icon type="font-awesome" name="gift"/> : <></>}
             </View>
-            <View>
-              <Text style={{fontWeight: 'bold'}}>{!isOwnComment ? otherUserName : 'Me'}</Text>
+            <View style={{margin: 10}}>
               <Text>{item.comment}</Text>
-              <Time ISOString={item.time_added} />
+              <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-start'}}>
+                <Time ISOString={item.time_added} />
+              </View>
             </View>
           </View>
         </ListItem.Content>

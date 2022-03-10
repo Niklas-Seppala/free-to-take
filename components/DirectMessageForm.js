@@ -26,14 +26,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Toast from 'react-native-toast-message';
 import colors from '../utils/colors';
 
-const DirectMessageForm = ({ navigation, onMessageSent, item, send_to_id }) => {
+const DirectMessageForm = ({ navigation, onMessageSent, item }) => {
   const { setUser, user } = useContext(GlobalContext);
-
-  let recipient = item.owner.user_id;
-  if(item.owner.user_id == user.user_id) {
-    recipient = send_to_id;
-  }
-  console.log(user.user_id, item.owner.user_id,"send_to_id",send_to_id,"Recipient", recipient)
 
   const postComment = useCommentPost();
   const postTag = useTagPost();
@@ -55,22 +49,8 @@ const DirectMessageForm = ({ navigation, onMessageSent, item, send_to_id }) => {
     },
   });
 
-  /**
-    Check if the user has already posted a comment on this item
-  */
-  const canPost = item => {
-    return false
-  };
-
   const onSubmit = async (data) => {
-    const resp = await postComment(data.commentText, item, recipient).then(
-      r => {
-        const resp = postTag(
-          `${TAG_PART_RES}${user.user_id}`, // indicates the user is interested in the item
-          item
-        );
-      }
-    ).then(
+    const resp = await postComment(data.commentText, item).then(
       x => {
         reset();
         onMessageSent();
@@ -82,7 +62,7 @@ const DirectMessageForm = ({ navigation, onMessageSent, item, send_to_id }) => {
   const showErrorMsg = () => {
     Toast.show({
       type: 'error',
-      text1: 'Please fill all the form fields',
+      text1: 'Please  write a comment',
     });
   };
 
@@ -90,7 +70,7 @@ const DirectMessageForm = ({ navigation, onMessageSent, item, send_to_id }) => {
 
 
   return (
-    <View style={{ width: '100%', height: '50%' }}>
+    <View style={{ width: '100%', height: '30%' }}>
       <TouchableOpacity
         style={{ flex: 1, width: '100%', height: '90%', justifyContent: 'flex-end' }}
         activeOpacity={1}
@@ -121,16 +101,10 @@ const DirectMessageForm = ({ navigation, onMessageSent, item, send_to_id }) => {
 
           <View style={styles.buttonContainer}>
             <Button
-              containerStyle={{ width: '100%', marginBottom: 5 }}
-              buttonStyle={styles.button}
-              title="Send message"
-              disabled={canPost(item)}
-              onPress={handleSubmit(onSubmit)}
-            ></Button>
-            <Button
               containerStyle={{ width: '100%' }}
               buttonStyle={styles.button}
-              title="Cancel"
+              title="Send message"
+              onPress={handleSubmit(onSubmit)}
             ></Button>
           </View>
         </KeyboardAwareScrollView>
@@ -149,7 +123,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
     width: '100%',
-    height: '10%',
+    height: '5%',
     flexDirection: 'column',
     justifyContent: 'space-evenly',
   },

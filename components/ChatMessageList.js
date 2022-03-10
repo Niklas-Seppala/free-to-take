@@ -7,9 +7,10 @@ import { GlobalContext } from '../context/GlobalContext';
 
 export default function ChatMessageList({data, media, navigation}) {
   const { user } = useContext(GlobalContext);
+
   console.log("data", data)
-  console.log("comments", )
-  if (data.length === 0) return (
+  console.log("comments")
+  if (!data || data.length === 0) return (
     <View style={{width: '100%', flex:1, alignItems: 'center'}}>
       <Text style={{fontWeight: 'bold'}}>Loading comments</Text>
     </View>

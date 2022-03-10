@@ -12,31 +12,22 @@ export default function useMediaComments() {
       const resp = await client.get(routes.comment.getByFile(id), { headers: setJWT(user.token) })
       const comments = resp.data
 
-      const headerRegex = /\{.*?\}/;
-      const parsedComments = comments.map(comment => {
-        const headerMatch = comment.comment.match(headerRegex);
-        if (!headerMatch) return null;
-        if(headerMatch) {
-          // parse the header into an object
-          try {
-            //console.log("Header found: ", headerMatch[0])
-            const header = JSON.parse(headerMatch[0]);
+      const refinedComments = comments.map(comment => {
 
-            const commentText = comment.comment.substr(headerMatch[0].length, comment.comment.length);
-            console.log(`Recipient: ${header.rid} - text: ${commentText}`);
-            comment.recipient_id = header.rid;
-            comment.comment = commentText;
-            console.log(comment);
+          try {
+            // get the comment owner
+            console.log("GET", routes.user.info(comment.user_id))
+            const userResp = client.get(routes.user.info(comment.user_id), { headers: setJWT(user.token) }).then(
+              r => {comment.owner = r.data}
+            ).catch(e => console.log(e));
+            comment.comment = comment.comment.replace(/\{.*?\}/, ''); // remove legacy JSON header from existing comments that have it
             return comment
           } catch(error) {
-            console.log(error)
+            console.log(error, "in useMediaComments hook")
           }
-
-        }
+        })
         
-      }).filter(c => c != null);      
-      console.log("Comments", parsedComments);
-      return resp.data
+      return refinedComments
     } catch (error) {
       console.error(error);
       return null

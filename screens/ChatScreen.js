@@ -14,7 +14,6 @@ import useMediaComments from '../hooks/api/useMediaComments';
 const ChatScreen = ({route, navigation}) => {
   const { item } = route.params;
 
-  const send_to_id = 684; //placeholder
 
   const [comments, setComments] = useState([]);
   const [lastMessageReloadTime, setLastMessageReloadTime] = useState(new Date().getTime());
@@ -36,7 +35,6 @@ const ChatScreen = ({route, navigation}) => {
     <View style={{flex: 1, width: '100%', height:'100%', flexDirection:'column'}}>
       <ChatMessageList style={{flex:1}} media={item} data={comments} navigation={navigation}/>
       <DirectMessageForm
-        send_to_id={send_to_id}
         item={item} 
         onMessageSent={loadComments}
       />

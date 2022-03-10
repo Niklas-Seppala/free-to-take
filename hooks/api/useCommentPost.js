@@ -11,18 +11,14 @@ export default function useCommentPost() {
   const token = user.token;
 
   /**
-    Adds a comment to the item. Uses a small JSON header to correctly identify the sender 
-    and the recipient for a pseudo-"direct message" feature.
-    Awful hack, you should never utilize an API like this for direct messages.
+    Adds a comment to the item. 
   */
-  const postComment = async (comment, item, send_to_id=null) => {
+  const postComment = async (comment, item) => {
     try {
-
-      const header = JSON.stringify({rid:send_to_id});
 
       const commentData = {
         file_id: item.file_id,
-        comment: `${header}${comment}`
+        comment: `${comment}`
       }
       const resp = await client.post(routes.comment.post, commentData, {headers: setJWT(token)}).catch(x => console.log("error", x.data));
       console.log("postComment", resp.data)
