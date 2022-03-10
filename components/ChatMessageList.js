@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 import {EmptyResults} from './EmptyResults';
 import { GlobalContext } from '../context/GlobalContext';
 
-export default function ChatMessageList({data, media, navigation}) {
+export default function ChatMessageList({data, media, navigation, loadComments, isRefreshing}) {
   const { user } = useContext(GlobalContext);
 
-  console.log("data", data)
-  console.log("comments")
+  console.log("comments", isRefreshing)
   if (!data || data.length === 0) return (
     <View style={{width: '100%', flex:1, alignItems: 'center'}}>
       <Text style={{fontWeight: 'bold'}}>Loading comments</Text>
@@ -23,6 +22,8 @@ export default function ChatMessageList({data, media, navigation}) {
       keyExtractor={(item) => item.comment_id.toString()}
       data={data.reverse()}
       ListFooterComponent={<View style={{height: 20}}/>}
+      onRefresh={loadComments}
+      refreshing={isRefreshing}
       renderItem={({item, index}) => (
         <ChatMessageListItem
           item={item}

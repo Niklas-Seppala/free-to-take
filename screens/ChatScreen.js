@@ -16,15 +16,18 @@ const ChatScreen = ({route, navigation}) => {
 
 
   const [comments, setComments] = useState([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [lastMessageReloadTime, setLastMessageReloadTime] = useState(new Date().getTime());
 
   const getCommentsByMedia = useMediaComments();
 
   const loadComments = async x => {
       if(!item) return;
-      console.log("Triggering reload")
+      setIsRefreshing(true)
+      console.log("Triggering reload, isRefreshing")
       const comments = await getCommentsByMedia(item.file_id);
       setComments(comments);
+      setIsRefreshing(false);
   }
 
   useEffect(loadComments, [item]);
@@ -33,7 +36,7 @@ const ChatScreen = ({route, navigation}) => {
 
   return (
     <View style={{flex: 1, width: '100%', height:'100%', flexDirection:'column'}}>
-      <ChatMessageList style={{flex:1}} media={item} data={comments} navigation={navigation}/>
+      <ChatMessageList style={{flex:1}} media={item} data={comments} loadComments={loadComments} isRefreshing={isRefreshing} navigation={navigation}/>
       <DirectMessageForm
         item={item} 
         onMessageSent={loadComments}
