@@ -7,15 +7,16 @@ import {
   Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Icon } from 'react-native-elements';
+import { Icon, Button } from 'react-native-elements';
 import { routes } from '../utils/api';
 import PropTypes from 'prop-types';
+import colors from '../utils/colors';
 
 /**
- * 
+ * The screen for showing a singular item
  * @route contained navigation and single file data 
  */
-const SingleScreen = ({ route }) => {
+const SingleScreen = ({ route, navigation }) => {
 
   const file = route.params.item; // get a single file info
   const datetime = new Date(file.time_added); // convert the date string to Date format
@@ -53,6 +54,13 @@ const SingleScreen = ({ route }) => {
               <Text style={styles.timestr}>{datetime.toLocaleTimeString()}</Text>
               <Text style={styles.timestr}>{datetime.toLocaleDateString()}</Text>
             </View>
+            <Button 
+              buttonStyle={{backgroundColor: colors.main}}
+              item={file}
+              icon={{name: 'comment', size: 20, color: colors.light}} 
+              onPress={() => {navigation.navigate('Comments', {item: file})}}
+            >
+            </Button>
           </View>
         </View>
       </View>

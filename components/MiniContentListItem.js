@@ -65,9 +65,7 @@ export default function MiniContentListItem({
               containerStyle={{marginRight: 10}}
               buttonStyle={styles.button}
               icon={{name: 'comment', size: 20, color: colors.light}}
-              onPress={() => {
-                console.log('COMMENTS');
-              }}
+              onPress={x => {navigation.navigate('Comments', {item: item})} }
             />
             { !visitor && <Button
               containerStyle={{marginRight: 10}}
