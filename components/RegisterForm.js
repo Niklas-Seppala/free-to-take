@@ -60,6 +60,7 @@ const RegisterForm = () => {
               placeholder="Username"
               errorMessage={errors.username?.message}
               inputStyle={styles.inputField}
+              inputContainerStyle={{ borderBottomWidth: 0 }}
             />
           )}
           name="username"
@@ -84,6 +85,7 @@ const RegisterForm = () => {
               placeholder="Password"
               errorMessage={errors.password && errors.password.message}
               inputStyle={styles.inputField}
+              inputContainerStyle={{ borderBottomWidth: 0 }}
             />
           )}
           name="password"
@@ -114,6 +116,7 @@ const RegisterForm = () => {
                 errors.confirmPassword && errors.confirmPassword.message
               }
               inputStyle={styles.inputField}
+              inputContainerStyle={{ borderBottomWidth: 0 }}
             />
           )}
           name="confirmPassword"
@@ -137,6 +140,7 @@ const RegisterForm = () => {
               placeholder="Email"
               errorMessage={errors.email && errors.email.message}
               inputStyle={styles.inputField}
+              inputContainerStyle={{ borderBottomWidth: 0 }}
             />
           )}
           name="email"
@@ -159,6 +163,7 @@ const RegisterForm = () => {
               placeholder="Full name"
               errorMessage={errors.full_name && errors.full_name.message}
               inputStyle={styles.inputField}
+              inputContainerStyle={{ borderBottomWidth: 0 }}
             />
           )}
           name="full_name"

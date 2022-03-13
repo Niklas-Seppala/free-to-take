@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Alert, StyleSheet} from 'react-native';
+import {Alert, StyleSheet, TouchableOpacity} from 'react-native';
 import {Text, Button, Avatar} from 'react-native-elements';
 import {client, routes, setJWT} from '../utils/api';
 import {View} from 'react-native';
@@ -55,8 +55,9 @@ export default function MiniContentListItem({
       }}
     >
       <View style={{width: '100%', flexDirection: 'row', alignItems: 'center'}}>
-        <Avatar size={130} source={{uri: routes.uploads.file(item.filename)}} />
-
+        <TouchableOpacity activeOpacity = { .5 }  onPress={() => onFocus?.call(this, item)}>
+             <Avatar size={130}   source={{uri: routes.uploads.file(item.filename)}} />
+        </TouchableOpacity>
         <View style={{flex: 1}}>
           <Text style={{fontSize: 20, marginLeft: 10}}>{item.title}</Text>
 
