@@ -21,7 +21,7 @@ const RegisterForm = () => {
   });
 
   const onSubmit = (data) => {
-    delete data.confirmPassword
+    delete data.confirmPassword;
     console.log(data);
     client
       .post(routes.user.create, data)
@@ -44,8 +44,8 @@ const RegisterForm = () => {
             },
             validate: async (value) => {
               try {
-               const res = await client.get(routes.user.nameExists(value));
-               return res.data.available ? true : 'This username is taken.';
+                const res = await client.get(routes.user.nameExists(value));
+                return res.data.available ? true : 'This username is taken.';
               } catch (error) {
                 return true;
               }
@@ -60,7 +60,7 @@ const RegisterForm = () => {
               placeholder="Username"
               errorMessage={errors.username?.message}
               inputStyle={styles.inputField}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="username"
@@ -85,7 +85,7 @@ const RegisterForm = () => {
               placeholder="Password"
               errorMessage={errors.password && errors.password.message}
               inputStyle={styles.inputField}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="password"
@@ -116,7 +116,7 @@ const RegisterForm = () => {
                 errors.confirmPassword && errors.confirmPassword.message
               }
               inputStyle={styles.inputField}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="confirmPassword"
@@ -140,7 +140,7 @@ const RegisterForm = () => {
               placeholder="Email"
               errorMessage={errors.email && errors.email.message}
               inputStyle={styles.inputField}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="email"
@@ -163,13 +163,17 @@ const RegisterForm = () => {
               placeholder="Full name"
               errorMessage={errors.full_name && errors.full_name.message}
               inputStyle={styles.inputField}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="full_name"
         />
 
-        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        <Button
+          title="Submit"
+          buttonStyle={styles.button}
+          onPress={handleSubmit(onSubmit)}
+        />
       </View>
     </ScrollView>
   );
@@ -190,7 +194,7 @@ const styles = StyleSheet.create({
     marginVertical: 9,
   },
   button: {
-    width: 150,
+    width: '100%',
     backgroundColor: '#5F9A3B',
     borderRadius: 24,
     marginVertical: 9,
