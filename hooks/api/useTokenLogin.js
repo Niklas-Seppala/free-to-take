@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { client, routes, setJWT } from '../../utils/api';
 import { getToken } from '../../utils/storage';

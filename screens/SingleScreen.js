@@ -6,7 +6,6 @@ import {
   View,
   Image,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icon, Button } from 'react-native-elements';
 import { routes } from '../utils/api';
 import PropTypes from 'prop-types';
