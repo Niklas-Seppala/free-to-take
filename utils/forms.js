@@ -27,7 +27,10 @@ export const extractFileData = (file) => {
 
 export const handleFetch = async (url, options = {}, nested) => {
   try {
-    const resp = await fetch('https://media.mw.metropolia.fi/wbma/media', options);
+    const resp = await fetch(
+      'https://media.mw.metropolia.fi/wbma/media',
+      options
+    );
 
     if (resp.status >= 500) {
       throw new Error('Oopsie woopsie: ' + resp.status);
@@ -37,12 +40,15 @@ export const handleFetch = async (url, options = {}, nested) => {
     if (resp.ok) {
       if (nested) {
         // Execute nested fetch (ifdef), and return aggregated results.
-        if (!(json instanceof Array)) throw new Error(`Response cant be mapped.`);
+        if (!(json instanceof Array))
+          throw new Error(`Response cant be mapped.`);
         return await Promise.all(json.map(nested));
       }
       return json;
     } else {
-      const message = json.error ? `${json.message}: ${json.error}` : json.message;
+      const message = json.error
+        ? `${json.message}: ${json.error}`
+        : json.message;
       throw new Error(message || resp.statusText);
     }
   } catch (err) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, ActivityIndicator} from 'react-native';
+import colors from '../utils/colors';
 
 /**
  * Screen sized loading spinner.
@@ -7,7 +8,7 @@ import {View, ActivityIndicator} from 'react-native';
 export function ScreenLoader() {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <ActivityIndicator size={120} color="#5F9A3B" />
+      <ActivityIndicator size={120} color={colors.main} />
     </View>
   );
 }

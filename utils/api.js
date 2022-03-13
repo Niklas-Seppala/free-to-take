@@ -7,45 +7,44 @@ export const TAG_PART_RES = 'RES';
 
 export const client = axios;
 
-export const CATEGORY_TAGS =
-[
+export const CATEGORY_TAGS = [
   {
     tag: '897d7ed4',
     name: 'Kitchen',
     icon: 'restaurant',
-    color: '#f8b88b'
+    color: '#f8b88b',
   },
   {
     tag: '5b03afa1',
     name: 'Sport',
     icon: 'sports-football',
-    color: '#faf884'
+    color: '#faf884',
   },
   {
     tag: '50e76249',
     name: 'Clothes',
     icon: 'dry-cleaning',
-    color: '#baed91'
+    color: '#baed91',
   },
   {
     tag: 'f6a462c9',
     name: 'Furniture',
     icon: 'hotel',
-    color: '#b2cefe'
+    color: '#b2cefe',
   },
   {
     tag: '8ce53d34',
     name: 'Electornics',
     icon: 'power',
-    color: '#f2a2e8'
+    color: '#f2a2e8',
   },
   {
     tag: '87e93b34',
     name: 'Other',
     icon: 'explore',
-    color: '#f2a2e8'
+    color: '#f2a2e8',
   },
-] 
+];
 
 /**
  * Helper function for building API URL routes.
@@ -64,7 +63,7 @@ const urlBuilder = (route, param) => {
  * @param {string} token
  * @returns {{'x-access-token': string}} Header with JWT set.
  */
-export const setJWT = (token) => ({ 'x-access-token': token });
+export const setJWT = (token) => ({'x-access-token': token});
 
 export const routes = {
   auth: {

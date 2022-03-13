@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -36,4 +36,4 @@ GlobalProvider.propTypes = {
   children: PropTypes.node,
 };
 
-export { GlobalContext, GlobalProvider };
+export {GlobalContext, GlobalProvider};

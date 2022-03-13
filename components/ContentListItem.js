@@ -1,12 +1,11 @@
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {Card, ListItem, Text, Button} from 'react-native-elements';
 import {routes} from '../utils/api';
 import {View} from 'react-native';
 import Time from './DateTime';
 import MiniProfile from './MiniProfile';
 import colors from '../utils/colors';
-import {TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 
 /**
@@ -46,10 +45,12 @@ export function ContentListItem({item, index, onFocus, onProfilePress}) {
           buttonStyle={{backgroundColor: colors.main, padding: 0}}
         />
       </View>
+      <TouchableOpacity activeOpacity={.7} onPress={() => onFocus?.call(this, item)}>
       <Image
         style={styles.img}
         source={{uri: routes.uploads.file(item.thumbnails.w640)}}
       />
+      </TouchableOpacity>
       <View style={{flex: 1, padding: 5, paddingTop: 0}}>
         <View style={styles.panel}>
           <TouchableOpacity

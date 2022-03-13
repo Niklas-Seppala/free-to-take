@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
 import useFormLogin from '../hooks/api/useFormLogin';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Input, Text, Button } from 'react-native-elements';
+import {Input, Text, Button} from 'react-native-elements';
 
 /**
  * it contains login form and action that takes
  * @navigation for navigate the screen back and front
  */
-const LoginForm = ({ navigation }) => {
+const LoginForm = ({navigation}) => {
   const loginWithForm = useFormLogin(); // user auth fuction expect JSON
   /**
    * login form init validation
@@ -17,7 +17,7 @@ const LoginForm = ({ navigation }) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
       username: '',
@@ -44,14 +44,14 @@ const LoginForm = ({ navigation }) => {
         rules={{
           required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <Input
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
             autoCapitalize="none"
             placeholder="Username"
-            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputContainerStyle={{borderBottomWidth: 0}}
             inputStyle={styles.inputField}
             errorMessage={errors.username && 'Username is required.'}
             errorStyle={styles.errorsField}
@@ -65,7 +65,7 @@ const LoginForm = ({ navigation }) => {
         rules={{
           required: true,
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
+        render={({field: {onChange, onBlur, value}}) => (
           <Input
             onBlur={onBlur}
             onChangeText={onChange}
@@ -73,7 +73,7 @@ const LoginForm = ({ navigation }) => {
             autoCapitalize="none"
             secureTextEntry={true}
             placeholder="Password"
-            inputContainerStyle={{ borderBottomWidth: 0 }}
+            inputContainerStyle={{borderBottomWidth: 0}}
             inputStyle={styles.inputField}
             errorMessage={errors.password && 'Password is required.'}
             errorStyle={styles.errorsField}
@@ -81,13 +81,13 @@ const LoginForm = ({ navigation }) => {
         )}
         name="password"
       />
-     
+
       <View>
         <Button
           title="Login"
           onPress={handleSubmit(onSubmit)}
           loading={false}
-          loadingProps={{ size: 'small', color: 'white' }}
+          loadingProps={{size: 'small', color: 'white'}}
           buttonStyle={styles.buttonField}
           containerStyle={{
             alignItems: 'center',
@@ -108,10 +108,10 @@ const LoginForm = ({ navigation }) => {
   );
 };
 const styles = StyleSheet.create({
-  container:{
-    top:'20%',
-    margin:40,
-    alignItems: 'center'
+  container: {
+    top: '20%',
+    margin: 40,
+    alignItems: 'center',
   },
   inputField: {
     width: 100,
@@ -125,21 +125,20 @@ const styles = StyleSheet.create({
   errorsField: {
     color: 'red',
     marginHorizontal: 15,
-    marginTop:1,
+    marginTop: 1,
   },
   buttonField: {
-    marginTop:5,
+    marginTop: 5,
     backgroundColor: '#5F9A3B',
     borderRadius: 5,
     borderWidth: 2,
     width: 150,
-    height:50,
+    height: 50,
     borderColor: 'white',
     borderRadius: 30,
-   
   },
   registerContainer: {
-    top:15,
+    top: 15,
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'flex-end',

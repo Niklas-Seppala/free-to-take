@@ -3,11 +3,22 @@ import {FlatList} from 'react-native';
 import PropTypes from 'prop-types';
 import {EmptyResults} from './EmptyResults';
 import MiniContentListItem from './MiniContentListItem';
-import { ScreenLoader } from './ScreenLoader';
-import { View } from 'react-native';
+import {ScreenLoader} from './ScreenLoader';
+import {View} from 'react-native';
 
-export default function MiniContentList({data, visitor, navigation, loading, style}) {
-  if (loading) return <View style={{flex: 3}}><ScreenLoader /></View> ;
+export default function MiniContentList({
+  data,
+  visitor,
+  navigation,
+  loading,
+  style,
+}) {
+  if (loading)
+    return (
+      <View style={{flex: 3}}>
+        <ScreenLoader />
+      </View>
+    );
   if (!data || data.length === 0) return <EmptyResults style={{flex: 3}} />;
 
   return (
@@ -23,7 +34,9 @@ export default function MiniContentList({data, visitor, navigation, loading, sty
             navigation={navigation}
             index={index}
             navigation={navigation}
-            onFocus={(item) => navigation.navigate('Single', {item: item, owner: true})}
+            onFocus={(item) =>
+              navigation.navigate('Single', {item: item, owner: true})
+            }
           />
         )}
       />

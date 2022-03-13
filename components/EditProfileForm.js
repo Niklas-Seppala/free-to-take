@@ -5,6 +5,7 @@ import {useForm, Controller} from 'react-hook-form';
 import {GlobalContext} from '../context/GlobalContext';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
+import colors from '../utils/colors';
 import {client, routes, setJWT} from '../utils/api';
 
 const EditProfileForm = ({navigation}) => {
@@ -103,7 +104,6 @@ const EditProfileForm = ({navigation}) => {
             render={({field: {onChange, onBlur, value}}) => (
               <Input
                 style={{width: '100%'}}
-                style={styles.textInput}
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}

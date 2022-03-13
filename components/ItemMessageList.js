@@ -1,12 +1,11 @@
-import { View, StyleSheet, Dimensions } from 'react-native';
-import { Text, Divider, Avatar, Icon } from 'react-native-elements';
-import colors from '../utils/colors'
+import {View, StyleSheet, Dimensions} from 'react-native';
+import {Text, Divider, Avatar, Icon} from 'react-native-elements';
+import colors from '../utils/colors';
 
 import Toast from 'react-native-toast-message';
 
 const ItemMessageList = (props) => {
   const user = props.user;
-
 
   return (
     <>
@@ -14,13 +13,13 @@ const ItemMessageList = (props) => {
 
       <Avatar
         size={32}
-        source={{ uri: 'https://www.placecage.com/c/800/800' }}
-        containerStyle={{ marginBottom: 50 }}
+        source={{uri: 'https://www.placecage.com/c/800/800'}}
+        containerStyle={{marginBottom: 50}}
         onPress={showAvatarTapToast}
         onLongPress={initiateProfilePictureChange}
         rounded
       />
-      <View style={{ width: '100%', flex: 1, alignItems: 'flex-start' }}>
+      <View style={{width: '100%', flex: 1, alignItems: 'flex-start'}}>
         {/* user info */}
         <View style={styles.vertical}>
           <Icon
@@ -43,7 +42,6 @@ const ItemMessageList = (props) => {
           />
           <Text>{user.email}</Text>
         </View>
-
       </View>
     </>
   );

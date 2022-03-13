@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import PropTypes from 'prop-types';
 
 const ICON_MAP = {
@@ -14,8 +14,14 @@ const ICON_MAP = {
  * @param {{focused: boolean, name: 'Upload' | 'Home' | 'Profile'}} param0
  * @returns
  */
-export default function BottomNavIcon({ focused, name }) {
-  return <Icon name={ICON_MAP[name]} size={35} color={focused ? '#eff7e6' : '#d2f0c9'} />;
+export default function BottomNavIcon({focused, name}) {
+  return (
+    <Icon
+      name={ICON_MAP[name]}
+      size={35}
+      color={focused ? '#eff7e6' : '#d2f0c9'}
+    />
+  );
 }
 
 BottomNavIcon.propTypes = {

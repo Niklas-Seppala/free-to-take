@@ -3,8 +3,9 @@ import {View, Dimensions, StyleSheet, ScrollView} from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {Input, Button} from 'react-native-elements';
 import {client, routes} from '../utils/api';
+import colors from '../utils/colors';
 
-const RegisterForm = () => {
+const RegisterForm = ({navigation}) => {
   const {
     control,
     handleSubmit,
@@ -22,11 +23,11 @@ const RegisterForm = () => {
 
   const onSubmit = (data) => {
     delete data.confirmPassword;
-    console.log(data);
     client
       .post(routes.user.create, data)
       .then((response) => {
         console.log(response.data);
+        navigation.popToTop();
       })
       .catch((e) => console.error(e));
   };
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    backgroundColor: '#5F9A3B',
+    backgroundColor: colors.main,
     borderRadius: 24,
     marginVertical: 9,
     paddingVertical: 11,

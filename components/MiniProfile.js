@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {Text} from 'react-native-elements';
 import PropTypes from 'prop-types';
 import {UserPropType} from '../utils/appPropTypes';
-import { client, routes } from '../utils/api';
-import defaultAvatar from '../assets/user.png'
+import {client, routes} from '../utils/api';
+import defaultAvatar from '../assets/user.png';
 
 /**
  *
@@ -17,14 +17,16 @@ import defaultAvatar from '../assets/user.png'
  *   }
  * }} props
  */
-export default function MiniProfile({user, style}) {
+export default function MiniProfile({user, style, fontColor}) {
   const [avatar, setAvatar] = useState(defaultAvatar);
   useEffect(async () => {
-    const avatarResponse = await client.get(routes.tag.files(`avatar_${user.user_id}`));
-    if (avatarResponse.data?.length > 0) {
-      setAvatar({uri: routes.uploads.file(avatarResponse.data[0].filename)})
+    const avatarResponse = await client.get(
+      routes.tag.files(`avatar_${user.user_id}`)
+    );
+    if (avatarResponse?.data?.length > 0) {
+      setAvatar({uri: routes.uploads.file(avatarResponse.data[0].filename)});
     }
-  }, [user])
+  }, [user]);
 
   return (
     <View style={[style, styles.container]}>
@@ -33,7 +35,9 @@ export default function MiniProfile({user, style}) {
         source={avatar}
       />
       <View style={{alignItems: 'flex-start', marginLeft: 5}}>
-        <Text style={styles.name}>{user.username}</Text>
+        <Text style={[fontColor && {color: fontColor}, styles.name]}>
+          {user.username}
+        </Text>
         <View
           style={{
             flexDirection: 'row',
@@ -49,6 +53,7 @@ export default function MiniProfile({user, style}) {
 MiniProfile.propTypes = {
   user: UserPropType,
   style: PropTypes.object,
+  fontColor: PropTypes.string,
 };
 
 const styles = StyleSheet.create({

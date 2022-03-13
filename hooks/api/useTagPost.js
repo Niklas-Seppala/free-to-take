@@ -1,14 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { GlobalContext } from '../../context/GlobalContext';
-import { client, routes, setJWT } from '../../utils/api';
-import { storeToken } from '../../utils/storage';
+import {useContext} from 'react';
+import {GlobalContext} from '../../context/GlobalContext';
+import {client, routes, setJWT} from '../../utils/api';
 
-import { getToken } from '../../utils/storage';
-
-import { TAG } from '../../utils/api';
+import {TAG} from '../../utils/api';
 
 export default function useTagPost() {
-  const { user } = useContext(GlobalContext);
+  const {user} = useContext(GlobalContext);
   const token = user.token;
 
   /**
@@ -17,20 +14,20 @@ export default function useTagPost() {
   */
   const postTag = async (tagContent, item) => {
     try {
-
       const tagData = {
         file_id: item.file_id,
-        tag: `${TAG}${tagContent}`
-      }
-      console.log("tagData", tagData)
-      const resp = await client.post(routes.tag.create, tagData, {headers: setJWT(token)});
+        tag: `${TAG}${tagContent}`,
+      };
+      console.log('tagData', tagData);
+      const resp = await client.post(routes.tag.create, tagData, {
+        headers: setJWT(token),
+      });
 
-      return resp
+      return resp;
     } catch (error) {
       console.error(error, 'at useCommentTag hook');
     }
   };
 
-
-  return postTag
+  return postTag;
 }

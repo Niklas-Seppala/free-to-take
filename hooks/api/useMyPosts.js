@@ -24,10 +24,12 @@ export function useUsersPosts(user) {
       );
 
       setPosts(
-        detailed.filter(
-          (post) =>
-            !post.tags.some((tag) => tag.tag === `avatar_${user.user_id}`)
-        ).filter(post => post.tags.some((tag) => tag.tag === TAG))
+        detailed
+          .filter(
+            (post) =>
+              !post.tags.some((tag) => tag.tag === `avatar_${user.user_id}`)
+          )
+          .filter((post) => post.tags.some((tag) => tag.tag === TAG))
       );
       setLoading(false);
     } catch (error) {
@@ -59,10 +61,12 @@ export default function useMyPosts() {
         })
       );
       setPosts(
-        detailed.filter(
-          (post) =>
-            !post.tags.some((tag) => tag.tag === `avatar_${user.user_id}`)
-        ).filter(post => post.tags.some((tag) => tag.tag === TAG))
+        detailed
+          .filter(
+            (post) =>
+              !post.tags.some((tag) => tag.tag === `avatar_${user.user_id}`)
+          )
+          .filter((post) => post.tags.some((tag) => tag.tag === TAG))
       );
       setLoading(false);
     } catch (error) {

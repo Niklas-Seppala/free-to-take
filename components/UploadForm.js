@@ -52,10 +52,11 @@ export const UploadForm = ({onSuccess}) => {
   const {apiActionComplete} = useContext(GlobalContext);
   const [tag, setTag] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [clearTags, setClearTags] = useState(false);
 
   useEffect(() => {
-    setInputIsValid(tag && img)
-  }, [img, tag])
+    setInputIsValid(tag && img);
+  }, [img, tag]);
 
   const {
     control,
@@ -104,20 +105,23 @@ export const UploadForm = ({onSuccess}) => {
         const options = {headers: setJWT(token)};
         const appTag = {
           file_id: result.file_id,
-          tag: TAG
+          tag: TAG,
         };
         const categoryTag = {
           file_id: result.file_id,
-          tag: tag
+          tag: tag,
         };
 
-        const [appTagRes, categoryTagRes] =  await Promise.all([
+        const [appTagRes, categoryTagRes] = await Promise.all([
           client.post(routes.tag.create, appTag, options),
-          client.post(routes.tag.create, categoryTag, options)
+          client.post(routes.tag.create, categoryTag, options),
         ]);
 
         if (appTagRes.status === 201 && categoryTagRes.status === 201) {
           apiActionComplete();
+          reset();
+          setClearTags(!clearTags);
+          setImg(null);
           onSuccess?.call();
           setLoading(false);
         }
@@ -168,7 +172,10 @@ export const UploadForm = ({onSuccess}) => {
           />
         )}
       />
-      <TagSelector onChange={(_, t) => setTag(tag !== t ? t : '')} />
+      <TagSelector
+        clear={clearTags}
+        onChange={(_, t) => setTag(tag !== t ? t : '')}
+      />
       <Card.Divider>
         <ImagePicker
           selected={img}
@@ -180,6 +187,7 @@ export const UploadForm = ({onSuccess}) => {
       <View style={styles.horizontal}>
         <Button
           onPress={() => {
+            setClearTags(!clearTags);
             reset();
             setImg(null);
           }}

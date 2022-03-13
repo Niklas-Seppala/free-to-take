@@ -10,12 +10,14 @@ export default function ContentList({data, navigation}) {
     <FlatList
       style={{margin: 10, marginTop: 5}}
       keyExtractor={(item) => item.file_id.toString()}
-      data={data}
+      data={data.slice().reverse()}
       renderItem={({item, index}) => (
         <ContentListItem
           item={item}
           index={index}
-          onProfilePress={(owner) => navigation.navigate('ProfileVisitor', {user: owner})}
+          onProfilePress={(owner) =>
+            navigation.navigate('ProfileVisitor', {user: owner})
+          }
           onFocus={(item) => navigation.navigate('Single', {item: item})}
         />
       )}
@@ -25,5 +27,5 @@ export default function ContentList({data, navigation}) {
 
 ContentList.propTypes = {
   data: PropTypes.array.isRequired,
-  navigation: PropTypes.object.isRequired
-}
+  navigation: PropTypes.object.isRequired,
+};

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { CATEGORY_TAGS } from '../utils/api';
+import {useState} from 'react';
+import {CATEGORY_TAGS} from '../utils/api';
 
 const reduceCategories = (categories, tag) => {
   categories[tag.tag] = true;
@@ -7,7 +7,7 @@ const reduceCategories = (categories, tag) => {
 };
 
 const toggleCategory = (state, tag, prev) => {
-  const copy = { ...prev };
+  const copy = {...prev};
   copy[tag] = !state;
   return copy;
 };
@@ -16,7 +16,9 @@ const toggleCategory = (state, tag, prev) => {
  * @returns filters
  */
 export function useCategories() {
-  const [filters, setFilters] = useState(CATEGORY_TAGS.reduce(reduceCategories, {}));
+  const [filters, setFilters] = useState(
+    CATEGORY_TAGS.reduce(reduceCategories, {})
+  );
   return [
     filters,
     (state, tag) => {

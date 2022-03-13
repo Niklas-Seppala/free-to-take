@@ -1,47 +1,19 @@
-import { useContext, useEffect, React } from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  Alert,
-  Keyboard,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
-import { Input, Button } from 'react-native-elements';
-import { useForm, Controller } from 'react-hook-form';
+import {React} from 'react';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {Input, Button} from 'react-native-elements';
+import {useForm, Controller} from 'react-hook-form';
 import useCommentPost from '../hooks/api/useCommentPost';
-import useMediaTags from '../hooks/api/useMediaTags';
-import useTagPost from '../hooks/api/useTagPost';
-
-import { TAG, TAG_PART_RES } from '../utils/api';
-
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { GlobalContext } from '../context/GlobalContext';
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
-import Toast from 'react-native-toast-message';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import colors from '../utils/colors';
 
-const DirectMessageForm = ({ navigation, onMessageSent, item }) => {
-  const { setUser, user } = useContext(GlobalContext);
-
+const DirectMessageForm = ({onMessageSent, item}) => {
   const postComment = useCommentPost();
-  const postTag = useTagPost();
-  const getTagsByMedia = useTagPost();
-
 
   const {
     control,
     handleSubmit,
-    getValues,
-    setValue,
-    trigger,
     reset,
-    formState: { errors, isDirty },
+    formState: {errors},
   } = useForm({
     mode: 'onBlur',
     defaultValues: {
@@ -50,35 +22,26 @@ const DirectMessageForm = ({ navigation, onMessageSent, item }) => {
   });
 
   const onSubmit = async (data) => {
-    const resp = await postComment(data.commentText, item).then(
-      x => {
-        reset();
-        onMessageSent();
-      }
-    );
-
-  };
-
-  const showErrorMsg = () => {
-    Toast.show({
-      type: 'error',
-      text1: 'Please  write a comment',
+    await postComment(data.commentText, item).then((x) => {
+      reset();
+      onMessageSent();
     });
   };
 
-
-
-
   return (
-    <View style={{ width: '100%', height: '30%' }}>
+    <View style={{width: '100%', height: '30%'}}>
       <TouchableOpacity
-        style={{ flex: 1, width: '100%', height: '90%', justifyContent: 'flex-end' }}
+        style={{
+          flex: 1,
+          width: '100%',
+          height: '90%',
+          justifyContent: 'flex-end',
+        }}
         activeOpacity={1}
       >
         <KeyboardAwareScrollView
-          style={{ width: '75%' }}
+          style={{width: '75%', flex: 1, width: '100%'}}
           keyboardShouldPersistTaps={'always'}
-          style={{ flex: 1, width: '100%' }}
           showsVerticalScrollIndicator={false}
         >
           <Controller
@@ -86,10 +49,10 @@ const DirectMessageForm = ({ navigation, onMessageSent, item }) => {
             rules={{
               required: true,
             }}
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({field: {onChange, onBlur, value}}) => (
               <Input
-                style={{ width: '100%' }}
-                style={styles.textInput}
+                leftIcon={{size: 20, name: 'comment', color: colors.main}}
+                placeholder="Comment"
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}
@@ -101,7 +64,7 @@ const DirectMessageForm = ({ navigation, onMessageSent, item }) => {
 
           <View style={styles.buttonContainer}>
             <Button
-              containerStyle={{ width: '100%' }}
+              containerStyle={{width: '100%'}}
               buttonStyle={styles.button}
               title="Send message"
               onPress={handleSubmit(onSubmit)}

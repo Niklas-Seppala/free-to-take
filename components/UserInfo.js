@@ -10,7 +10,6 @@ import {client, routes, setJWT} from '../utils/api';
 import {useContext} from 'react';
 import {GlobalContext} from '../context/GlobalContext';
 
-
 const postAvatar = async (img, user, avatar, onSuccess) => {
   const token = await getToken();
 
