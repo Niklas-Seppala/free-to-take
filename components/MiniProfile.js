@@ -35,7 +35,9 @@ export default function MiniProfile({user, style, fontColor}) {
         source={avatar}
       />
       <View style={{alignItems: 'flex-start', marginLeft: 5}}>
-        <Text style={[fontColor && {color: fontColor}, styles.name]}>{user.username}</Text>
+        <Text style={[fontColor && {color: fontColor}, styles.name]}>
+          {user.username}
+        </Text>
         <View
           style={{
             flexDirection: 'row',
@@ -51,7 +53,7 @@ export default function MiniProfile({user, style, fontColor}) {
 MiniProfile.propTypes = {
   user: UserPropType,
   style: PropTypes.object,
-  fontColor: PropTypes.string
+  fontColor: PropTypes.string,
 };
 
 const styles = StyleSheet.create({

@@ -6,7 +6,7 @@ import CategoryTag from './CategoryTag';
 
 export default function TagSelector({onChange, clear}) {
   const [current, setCurrent] = useState('');
-  useEffect(() => setCurrent(''), [clear])
+  useEffect(() => setCurrent(''), [clear]);
 
   return (
     <View style={styles.container}>

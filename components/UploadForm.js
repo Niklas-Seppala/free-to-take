@@ -172,7 +172,10 @@ export const UploadForm = ({onSuccess}) => {
           />
         )}
       />
-      <TagSelector clear={clearTags} onChange={(_, t) => setTag(tag !== t ? t : '')} />
+      <TagSelector
+        clear={clearTags}
+        onChange={(_, t) => setTag(tag !== t ? t : '')}
+      />
       <Card.Divider>
         <ImagePicker
           selected={img}
@@ -184,7 +187,7 @@ export const UploadForm = ({onSuccess}) => {
       <View style={styles.horizontal}>
         <Button
           onPress={() => {
-            setClearTags(!clearTags)
+            setClearTags(!clearTags);
             reset();
             setImg(null);
           }}

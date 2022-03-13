@@ -22,8 +22,12 @@ export default function Time({ISOString, light, row = true, icon = true}) {
         ></Icon>
       )}
       <View style={row === true ? {flexDirection: 'row'} : null}>
-        <Text style={[{color: light ? colors.light : '#888'}, styles.dateTime]}>{datetime.toLocaleTimeString()} </Text>
-        <Text style={[{color: light ? colors.light : '#888'}, styles.dateTime]}>{datetime.toLocaleDateString()} </Text>
+        <Text style={[{color: light ? colors.light : '#888'}, styles.dateTime]}>
+          {datetime.toLocaleTimeString()}{' '}
+        </Text>
+        <Text style={[{color: light ? colors.light : '#888'}, styles.dateTime]}>
+          {datetime.toLocaleDateString()}{' '}
+        </Text>
       </View>
     </View>
   );
@@ -33,7 +37,7 @@ Time.propTypes = {
   ISOString: PropTypes.string.isRequired,
   row: PropTypes.bool,
   icon: PropTypes.bool,
-  light: PropTypes.bool
+  light: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({
