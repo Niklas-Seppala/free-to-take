@@ -1,6 +1,6 @@
 import React from 'react';
 import {ListItem, Text, Icon} from 'react-native-elements';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Time from './DateTime';
 import MiniProfile from './MiniProfile';
 import colors from '../utils/colors';
@@ -19,6 +19,7 @@ export function ChatMessageListItem({item, user, media, index}) {
             style={{
               flex: 1,
               width: '100%',
+              borderRadius: 5,
               backgroundColor: isOwnComment ? colors.active : colors.inactive,
             }}
           >
@@ -30,19 +31,19 @@ export function ChatMessageListItem({item, user, media, index}) {
                 alignItems: 'center',
               }}
             >
-              {commentOwner ? (
-                <MiniProfile user={commentOwner} style={{margin: 10}} />
-              ) : (
-                <></>
+              {commentOwner && (
+                <MiniProfile
+                  fontColor={colors.light}
+                  user={commentOwner}
+                  style={{margin: 10}}
+                />
               )}
-              {isItemOwnerComment ? (
-                <Icon type="font-awesome" name="gift" />
-              ) : (
-                <></>
+              {isItemOwnerComment && (
+                <Icon type="font-awesome" name="gift" color={colors.light} />
               )}
             </View>
             <View style={{margin: 10}}>
-              <Text>{item.comment}</Text>
+              <Text style={{color: colors.light}}>{item.comment}</Text>
               <View
                 style={{
                   flex: 1,
@@ -50,7 +51,7 @@ export function ChatMessageListItem({item, user, media, index}) {
                   justifyContent: 'flex-start',
                 }}
               >
-                <Time ISOString={item.time_added} />
+                <Time light ISOString={item.time_added} />
               </View>
             </View>
           </View>

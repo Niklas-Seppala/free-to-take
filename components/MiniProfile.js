@@ -17,7 +17,7 @@ import defaultAvatar from '../assets/user.png';
  *   }
  * }} props
  */
-export default function MiniProfile({user, style}) {
+export default function MiniProfile({user, style, fontColor}) {
   const [avatar, setAvatar] = useState(defaultAvatar);
   useEffect(async () => {
     const avatarResponse = await client.get(
@@ -35,7 +35,7 @@ export default function MiniProfile({user, style}) {
         source={avatar}
       />
       <View style={{alignItems: 'flex-start', marginLeft: 5}}>
-        <Text style={styles.name}>{user.username}</Text>
+        <Text style={[fontColor && {color: fontColor}, styles.name]}>{user.username}</Text>
         <View
           style={{
             flexDirection: 'row',
@@ -51,6 +51,7 @@ export default function MiniProfile({user, style}) {
 MiniProfile.propTypes = {
   user: UserPropType,
   style: PropTypes.object,
+  fontColor: PropTypes.string
 };
 
 const styles = StyleSheet.create({
