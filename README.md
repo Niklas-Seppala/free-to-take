@@ -35,15 +35,13 @@ Application enables users to recycle their stuff by giving them for other users 
 
 - User can leave comments on each post
 
-### Screen record IOS
+## Screen record IOS
 
 - https://youtu.be/GiCRYWGZSq4
 
-## Technical
-
-Project is managed with Expo.
-
-3rd Party libraries
+## Changes based on feedback
+  - Posted content now displays first in the home view.
+  - When pressing the post image -> Single screen.
 
 ## Build
 
