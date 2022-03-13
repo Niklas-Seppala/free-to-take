@@ -38,9 +38,7 @@ export default function useFormLogin() {
         await login(resp.data);
       } catch (error) {
         Alert.alert(
-          `Your username or password incorrect\n
-          or \n
-          Your saved login data has been deleted`,
+          `Your username or password incorrect. OR saved login data has been deleted`,
         );
       }
     }

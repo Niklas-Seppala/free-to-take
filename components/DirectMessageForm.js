@@ -76,7 +76,6 @@ const DirectMessageForm = ({ navigation, onMessageSent, item }) => {
         activeOpacity={1}
       >
         <KeyboardAwareScrollView
-          style={{ width: '75%' }}
           keyboardShouldPersistTaps={'always'}
           style={{ flex: 1, width: '100%' }}
           showsVerticalScrollIndicator={false}
@@ -89,7 +88,6 @@ const DirectMessageForm = ({ navigation, onMessageSent, item }) => {
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 style={{ width: '100%' }}
-                style={styles.textInput}
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}
