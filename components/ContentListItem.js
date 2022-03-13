@@ -46,10 +46,13 @@ export function ContentListItem({item, index, onFocus, onProfilePress}) {
           buttonStyle={{backgroundColor: colors.main, padding: 0}}
         />
       </View>
+      <TouchableOpacity activeOpacity = { .5 }  onPress={() => onFocus?.call(this, item)}>
       <Image
+       
         style={styles.img}
         source={{uri: routes.uploads.file(item.thumbnails.w640)}}
       />
+      </TouchableOpacity>
       <View style={{flex: 1, padding: 5, paddingTop: 0}}>
         <View style={styles.panel}>
           <TouchableOpacity

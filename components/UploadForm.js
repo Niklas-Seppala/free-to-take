@@ -117,9 +117,12 @@ export const UploadForm = ({onSuccess}) => {
         ]);
 
         if (appTagRes.status === 201 && categoryTagRes.status === 201) {
+          reset();
+          setImg(null);
           apiActionComplete();
           onSuccess?.call();
           setLoading(false);
+        
         }
       }
     } catch (error) {

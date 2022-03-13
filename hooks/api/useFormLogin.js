@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { GlobalContext } from '../../context/GlobalContext';
 import { client, routes } from '../../utils/api';
 import { storeToken } from '../../utils/storage';
-
+import { Alert } from 'react-native';
 /**
  * Hook for logging in with form. Setting login values (username, password)
  * triggeres effect that attempts to authenticate with those values.
@@ -37,7 +37,9 @@ export default function useFormLogin() {
         const resp = await client.post(routes.auth.login, loginData);
         await login(resp.data);
       } catch (error) {
-        console.error(error.message, 'at use FromLogin hook');
+        Alert.alert(
+          `Your username or password incorrect. OR saved login data has been deleted`,
+        );
       }
     }
   }, [loginData]); // re-run when username and password change.
