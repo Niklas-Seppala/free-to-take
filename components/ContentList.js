@@ -10,7 +10,7 @@ export default function ContentList({data, navigation}) {
     <FlatList
       style={{margin: 10, marginTop: 5}}
       keyExtractor={(item) => item.file_id.toString()}
-      data={data}
+      data={data.reverse()}
       renderItem={({item, index}) => (
         <ContentListItem
           item={item}
