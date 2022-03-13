@@ -38,9 +38,10 @@ export default function useFormLogin() {
         await login(resp.data);
       } catch (error) {
         Alert.alert(
-          `Your username or password incorrect`,
-          );
-        //console.error(error.message, 'at use FromLogin hook');
+          `Your username or password incorrect\n
+          or \n
+          Your saved login data has been deleted`,
+        );
       }
     }
   }, [loginData]); // re-run when username and password change.
