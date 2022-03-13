@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Card} from 'react-native-elements';
 import {CATEGORY_TAGS} from '../utils/api';
 import CategoryTag from './CategoryTag';
 
-export default function TagSelector({onChange}) {
+export default function TagSelector({onChange, clear}) {
   const [current, setCurrent] = useState('');
+  useEffect(() => setCurrent(''), [clear])
 
   return (
     <View style={styles.container}>

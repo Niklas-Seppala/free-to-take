@@ -61,6 +61,7 @@ const RegisterForm = ({navigation}) => {
               placeholder="Username"
               errorMessage={errors.username?.message}
               inputStyle={styles.inputField}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="username"
@@ -85,6 +86,7 @@ const RegisterForm = ({navigation}) => {
               placeholder="Password"
               errorMessage={errors.password && errors.password.message}
               inputStyle={styles.inputField}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="password"
@@ -115,6 +117,7 @@ const RegisterForm = ({navigation}) => {
                 errors.confirmPassword && errors.confirmPassword.message
               }
               inputStyle={styles.inputField}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="confirmPassword"
@@ -138,6 +141,7 @@ const RegisterForm = ({navigation}) => {
               placeholder="Email"
               errorMessage={errors.email && errors.email.message}
               inputStyle={styles.inputField}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="email"
@@ -160,12 +164,17 @@ const RegisterForm = ({navigation}) => {
               placeholder="Full name"
               errorMessage={errors.full_name && errors.full_name.message}
               inputStyle={styles.inputField}
+              inputContainerStyle={{borderBottomWidth: 0}}
             />
           )}
           name="full_name"
         />
 
-        <Button buttonStyle={{backgroundColor: colors.main}} title="Submit" onPress={handleSubmit(onSubmit)} />
+        <Button
+          title="Submit"
+          buttonStyle={styles.button}
+          onPress={handleSubmit(onSubmit)}
+        />
       </View>
     </ScrollView>
   );
@@ -186,8 +195,8 @@ const styles = StyleSheet.create({
     marginVertical: 9,
   },
   button: {
-    width: 150,
-    backgroundColor: '#5F9A3B',
+    width: '100%',
+    backgroundColor: colors.main,
     borderRadius: 24,
     marginVertical: 9,
     paddingVertical: 11,

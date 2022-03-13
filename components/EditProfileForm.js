@@ -108,6 +108,8 @@ const EditProfileForm = ({navigation}) => {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 errorMessage={errors.username && errors.username.message}
+                inputStyle={styles.inputField}
+                inputContainerStyle={{borderBottomWidth: 0}}
               />
             )}
             name="username"
@@ -128,6 +130,8 @@ const EditProfileForm = ({navigation}) => {
                 onChangeText={onChange}
                 value={value}
                 errorMessage={errors.email && errors.email.message}
+                inputStyle={styles.inputField}
+                inputContainerStyle={{borderBottomWidth: 0}}
               />
             )}
             name="email"
@@ -145,6 +149,8 @@ const EditProfileForm = ({navigation}) => {
                 onChangeText={onChange}
                 secureTextEntry={true}
                 errorMessage={errors.password && errors.password.message}
+                inputStyle={styles.inputField}
+                inputContainerStyle={{borderBottomWidth: 0}}
               />
             )}
             name="password"
@@ -176,6 +182,8 @@ const EditProfileForm = ({navigation}) => {
                   secureTextEntry={true}
                   placeholder="confirm password"
                   errorMessage={errors.password2 && errors.password2.message}
+                  inputStyle={styles.inputField}
+                  inputContainerStyle={{borderBottomWidth: 0}}
                 />
               )}
               name="password2"
@@ -205,11 +213,22 @@ const EditProfileForm = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  inputField: {
+    width: 250,
+    height: 30,
+    backgroundColor: 'rgba(96, 162, 23, 0.3)',
+    borderRadius: 24,
+    paddingHorizontal: 15,
+    fontSize: 15,
+    color: 'rgba(0, 0, 0, 0.42)',
+    marginVertical: 9,
+  },
   button: {
-    backgroundColor: colors.main,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    width: '90%',
+    width: 150,
+    backgroundColor: '#5F9A3B',
+    borderRadius: 24,
+    marginVertical: 9,
+    paddingVertical: 11,
   },
   buttonContainer: {
     flex: 1,

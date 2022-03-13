@@ -43,7 +43,7 @@ export function ContentListItem({item, index, onFocus, onProfilePress}) {
         <Button
           onPress={() => onFocus?.call(this, item)}
           icon={{name: 'chevron-right', color: '#daf2d3', size: 30}}
-          buttonStyle={{backgroundColor: '#6ab07c', padding: 0}}
+          buttonStyle={{backgroundColor: colors.main, padding: 0}}
         />
       </View>
       <Image

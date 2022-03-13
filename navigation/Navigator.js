@@ -22,10 +22,8 @@ const BottomTab = createBottomTabNavigator();
 
 const stackOptions = {
   headerShown: true,
-  headerStyle: {backgroundColor: '#6ab07c', shadowColor: 'transparent'},
-  tabBarStyle: {backgroundColor: '#6ab07c'},
-  headerTitleStyle: {color: colors.light},
-  headerTintColor: colors.light,
+  headerStyle: {backgroundColor: colors.main, shadowColor: 'transparent'},
+  tabBarStyle: {backgroundColor: colors.main},
   tabBarShowLabel: false,
 };
 

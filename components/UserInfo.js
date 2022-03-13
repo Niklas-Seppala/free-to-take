@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(0, 0, 0, 0.5)',
     borderBottomWidth: 0.5,
     width: '100%',
-    color: '#3f3f3f',
+    color: colors.main,
   },
   iconContainerStyle: {
     width: '15%',
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.main,
     height: Dimensions.get('window').width * 2,
     width: Dimensions.get('window').width * 2,
-    borderRadius: 1200,
+    borderRadius: 1500,
     position: 'absolute',
     top: -Dimensions.get('window').width * 1.53,
   },

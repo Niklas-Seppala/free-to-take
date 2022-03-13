@@ -52,6 +52,7 @@ export const UploadForm = ({onSuccess}) => {
   const {apiActionComplete} = useContext(GlobalContext);
   const [tag, setTag] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [clearTags, setClearTags] = useState(false);
 
   useEffect(() => {
     setInputIsValid(tag && img);
@@ -118,6 +119,9 @@ export const UploadForm = ({onSuccess}) => {
 
         if (appTagRes.status === 201 && categoryTagRes.status === 201) {
           apiActionComplete();
+          reset();
+          setClearTags(!clearTags);
+          setImg(null);
           onSuccess?.call();
           setLoading(false);
         }
@@ -168,7 +172,7 @@ export const UploadForm = ({onSuccess}) => {
           />
         )}
       />
-      <TagSelector onChange={(_, t) => setTag(tag !== t ? t : '')} />
+      <TagSelector clear={clearTags} onChange={(_, t) => setTag(tag !== t ? t : '')} />
       <Card.Divider>
         <ImagePicker
           selected={img}
@@ -180,6 +184,7 @@ export const UploadForm = ({onSuccess}) => {
       <View style={styles.horizontal}>
         <Button
           onPress={() => {
+            setClearTags(!clearTags)
             reset();
             setImg(null);
           }}
