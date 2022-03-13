@@ -18,7 +18,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <>
       <TagFilter onChange={toggle} />
-      <ContentList data={filteredData} navigation={navigation}/>
+      <ContentList data={filteredData} navigation={navigation} />
     </>
   );
 };

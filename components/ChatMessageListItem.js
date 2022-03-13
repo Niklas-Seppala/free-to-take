@@ -1,21 +1,12 @@
 import React from 'react';
-import {
-  ListItem,
-  Text,
-  Icon,
-} from 'react-native-elements';
+import {ListItem, Text, Icon} from 'react-native-elements';
 import {View} from 'react-native';
 import Time from './DateTime';
 import MiniProfile from './MiniProfile';
 import colors from '../utils/colors';
 import PropTypes from 'prop-types';
 
-export function ChatMessageListItem({
-  item,
-  user,
-  media,
-  index,
-}) {
+export function ChatMessageListItem({item, user, media, index}) {
   const isOwnComment = item.user_id == user.user_id;
   const isItemOwnerComment = item.user_id == media.owner.user_id;
   const commentOwner = isItemOwnerComment ? media.owner : item.owner;

@@ -21,7 +21,7 @@ const RegisterForm = () => {
   });
 
   const onSubmit = (data) => {
-    delete data.confirmPassword
+    delete data.confirmPassword;
     console.log(data);
     client
       .post(routes.user.create, data)
@@ -44,8 +44,8 @@ const RegisterForm = () => {
             },
             validate: async (value) => {
               try {
-               const res = await client.get(routes.user.nameExists(value));
-               return res.data.available ? true : 'This username is taken.';
+                const res = await client.get(routes.user.nameExists(value));
+                return res.data.available ? true : 'This username is taken.';
               } catch (error) {
                 return true;
               }

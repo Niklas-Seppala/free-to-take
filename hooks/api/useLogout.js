@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
-import { GlobalContext } from '../../context/GlobalContext';
-import { clearStorage } from '../../utils/storage';
+import {useContext, useEffect, useState} from 'react';
+import {GlobalContext} from '../../context/GlobalContext';
+import {clearStorage} from '../../utils/storage';
 
 /**
  * Hook for logging out. Clears @see GlobalContext of active user and JWT,
@@ -10,7 +10,7 @@ import { clearStorage } from '../../utils/storage';
  * @returns {() => void} logout
  */
 export default function useLogout() {
-  const { setUser, user } = useContext(GlobalContext);
+  const {setUser, user} = useContext(GlobalContext);
   const [logoutRequested, setLogoutRequested] = useState(false);
   const logout = () => setLogoutRequested(true);
 

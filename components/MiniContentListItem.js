@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import {getToken} from '../utils/storage';
 import {GlobalContext} from '../context/GlobalContext';
 
-
 /**
  * @param {{
  * index: number,
@@ -43,7 +42,7 @@ export default function MiniContentListItem({
 }) {
   const {apiActionComplete} = useContext(GlobalContext);
   const [delAction, setDelAction] = useState(false);
-  
+
   return (
     <View
       style={{
@@ -65,52 +64,57 @@ export default function MiniContentListItem({
               containerStyle={{marginRight: 10}}
               buttonStyle={styles.button}
               icon={{name: 'comment', size: 20, color: colors.light}}
-              onPress={x => {navigation.navigate('Comments', {item: item})} }
+              onPress={(x) => {
+                navigation.navigate('Comments', {item: item});
+              }}
             />
-            { !visitor && <Button
-              containerStyle={{marginRight: 10}}
-              buttonStyle={styles.button}
-              icon={{name: 'edit', size: 20, color: colors.light}}
-              onPress={() => {
-                navigation.navigate('EditPost', {item: item});
-              }}
-            />}
-            {!visitor && 
-            <Button
-              loadingProps={{size: 20}}
-              loading={delAction}
-              containerStyle={{marginRight: 10}}
-              buttonStyle={styles.button}
-              icon={{name: 'delete', size: 20, color: colors.light}}
-              onPress={() => {
-                Alert.alert(
-                  'Warning',
-                  'Are you sure you want to delete this post?',
-                  [
-                    {text: 'cancel', style: 'cancel'},
-                    {
-                      text: 'ok',
-                      onPress: async () => {
-                        try {
-                          setDelAction(true);
-                          const token = await getToken();
-                          await client.delete(
-                            routes.media.delete(item.file_id),
-                            {headers: setJWT(token)}
-                          );
-                          apiActionComplete();
-                          setDelAction(false);
-                        } catch (error) {
-                          setDelAction(false);
-                          console.error(error);
-                        }
+            {!visitor && (
+              <Button
+                containerStyle={{marginRight: 10}}
+                buttonStyle={styles.button}
+                icon={{name: 'edit', size: 20, color: colors.light}}
+                onPress={() => {
+                  navigation.navigate('EditPost', {item: item});
+                }}
+              />
+            )}
+            {!visitor && (
+              <Button
+                loadingProps={{size: 20}}
+                loading={delAction}
+                containerStyle={{marginRight: 10}}
+                buttonStyle={styles.button}
+                icon={{name: 'delete', size: 20, color: colors.light}}
+                onPress={() => {
+                  Alert.alert(
+                    'Warning',
+                    'Are you sure you want to delete this post?',
+                    [
+                      {text: 'cancel', style: 'cancel'},
+                      {
+                        text: 'ok',
+                        onPress: async () => {
+                          try {
+                            setDelAction(true);
+                            const token = await getToken();
+                            await client.delete(
+                              routes.media.delete(item.file_id),
+                              {headers: setJWT(token)}
+                            );
+                            apiActionComplete();
+                            setDelAction(false);
+                          } catch (error) {
+                            setDelAction(false);
+                            console.error(error);
+                          }
+                        },
+                        style: 'cancel',
                       },
-                      style: 'cancel',
-                    },
-                  ]
-                );
-              }}
-            /> }
+                    ]
+                  );
+                }}
+              />
+            )}
             <Button
               containerStyle={{marginRight: 10}}
               buttonStyle={styles.button}

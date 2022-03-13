@@ -1,14 +1,14 @@
-import { View } from 'react-native';
+import {View} from 'react-native';
 import LoginForm from '../components/LoginForm';
 /**
- * 
+ *
  * @navigation for navigate the screen back and front
- * @returns 
+ * @returns
  */
 const LoginScreen = ({navigation}) => {
   return (
-    <View style={{flex: 1,}}>
-      <LoginForm navigation={navigation}/>
+    <View style={{flex: 1}}>
+      <LoginForm navigation={navigation} />
     </View>
   );
 };

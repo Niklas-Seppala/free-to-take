@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import { UploadScreen } from '../screens/UploadScreen';
+import {UploadScreen} from '../screens/UploadScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import SingleScreen from '../screens/SingleScreen';
 import ChatScreen from '../screens/ChatScreen';
@@ -14,9 +14,8 @@ import BottomNavIcon from '../components/BottomNavIcon';
 import {ScreenLoader} from '../components/ScreenLoader';
 import EditProfile from '../screens/EditProfile';
 import colors from '../utils/colors';
-import { EditPost } from '../screens/EditPost';
-import { ProfileVisitorScreen } from '../screens/ProfileVisitorScreen';
-
+import {EditPost} from '../screens/EditPost';
+import {ProfileVisitorScreen} from '../screens/ProfileVisitorScreen';
 
 const Stack = createNativeStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -31,7 +30,10 @@ const stackOptions = {
 };
 
 const RootNavigator = () => {
-  const options = {headerShown: false, headerStyle: {backgroundColor: '#6ab07c', shadowColor: 'transparent'}};
+  const options = {
+    headerShown: false,
+    headerStyle: {backgroundColor: '#6ab07c', shadowColor: 'transparent'},
+  };
   const [onGoing, success] = useTokenLogin();
   if (onGoing) return <ScreenLoader />;
 
@@ -49,9 +51,21 @@ const RootNavigator = () => {
             component={SingleScreen}
             options={stackOptions}
           />
-          <Stack.Screen name='EditProfile' component={EditProfile} options={stackOptions} />
-          <Stack.Screen name='EditPost' component={EditPost} options={stackOptions} />
-          <Stack.Screen name='ProfileVisitor' component={ProfileVisitorScreen} options={stackOptions} />
+          <Stack.Screen
+            name="EditProfile"
+            component={EditProfile}
+            options={stackOptions}
+          />
+          <Stack.Screen
+            name="EditPost"
+            component={EditPost}
+            options={stackOptions}
+          />
+          <Stack.Screen
+            name="ProfileVisitor"
+            component={ProfileVisitorScreen}
+            options={stackOptions}
+          />
           <Stack.Screen
             name="Comments"
             component={ChatScreen}

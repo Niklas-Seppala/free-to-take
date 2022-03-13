@@ -9,7 +9,7 @@ import useMyPosts from '../hooks/api/useMyPosts';
 import MiniContentList from '../components/MiniContentList';
 
 const ProfileScreen = ({navigation}) => {
-  const user = useContext(GlobalContext).user
+  const user = useContext(GlobalContext).user;
   const [posts, loading] = useMyPosts();
   const logout = useLogout();
 

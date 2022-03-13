@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {Card} from 'react-native-elements';
 import {CATEGORY_TAGS} from '../utils/api';
@@ -17,7 +17,7 @@ export default function TagSelector({onChange}) {
             tag={tag}
             onPress={(active) => {
               setCurrent(current === tag.tag ? '' : tag.tag);
-              onChange?.call(this, active, tag.tag)
+              onChange?.call(this, active, tag.tag);
             }}
           />
         ))}
@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   scroll: {
-    paddingBottom: 10
-  }
+    paddingBottom: 10,
+  },
 });

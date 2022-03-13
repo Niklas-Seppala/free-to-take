@@ -51,8 +51,8 @@ const DirectMessageForm = ({onMessageSent, item}) => {
             }}
             render={({field: {onChange, onBlur, value}}) => (
               <Input
-                leftIcon={{size: 20, name:'comment', color: colors.main}}
-                placeholder='Comment'
+                leftIcon={{size: 20, name: 'comment', color: colors.main}}
+                placeholder="Comment"
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}

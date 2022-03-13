@@ -3,7 +3,7 @@ import {FlatList, View, Text} from 'react-native';
 import {ChatMessageListItem} from './ChatMessageListItem';
 import PropTypes from 'prop-types';
 import {GlobalContext} from '../context/GlobalContext';
-import {EmptyResults} from './EmptyResults'
+import {EmptyResults} from './EmptyResults';
 
 export default function ChatMessageList({
   data,
@@ -18,7 +18,7 @@ export default function ChatMessageList({
       <View style={{flex: 1, justifyContent: 'center'}}>
         <EmptyResults></EmptyResults>
       </View>
-    )
+    );
   }
 
   return (

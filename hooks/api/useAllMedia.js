@@ -1,6 +1,6 @@
-import { useContext, useState, useEffect } from 'react';
-import { GlobalContext } from '../../context/GlobalContext';
-import { TAG, client, routes, setJWT } from '../../utils/api';
+import {useContext, useState, useEffect} from 'react';
+import {GlobalContext} from '../../context/GlobalContext';
+import {TAG, client, routes, setJWT} from '../../utils/api';
 
 /**
  * Get all of the latest media uploads by tag unique to this app.
@@ -18,7 +18,7 @@ import { TAG, client, routes, setJWT } from '../../utils/api';
  *  description: string}>} Media
  */
 export default function useAllMedia() {
-  const { apiAction, user } = useContext(GlobalContext);
+  const {apiAction, user} = useContext(GlobalContext);
   const [media, setMedia] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -27,7 +27,7 @@ export default function useAllMedia() {
     try {
       setLoading(true);
       const [users, posts] = await Promise.all([
-        client.get(routes.user.all, { headers: setJWT(user.token) }),
+        client.get(routes.user.all, {headers: setJWT(user.token)}),
         client.get(routes.tag.files(TAG)),
       ]);
       const userMap = new Map(users.data.map((i) => [i.user_id, i]));
@@ -35,11 +35,15 @@ export default function useAllMedia() {
         posts.data.map(async (file) => {
           const [tags, details] = await Promise.all([
             client.get(routes.tag.filesTags(file.file_id)),
-            client.get(routes.media.file(file.file_id))]
-          )
+            client.get(routes.media.file(file.file_id)),
+          ]);
           const id = details.data.user_id;
           delete details.data.user_id;
-          return { ...details.data, tags: tags.data.map(t => t.tag), owner: userMap.get(id) };
+          return {
+            ...details.data,
+            tags: tags.data.map((t) => t.tag),
+            owner: userMap.get(id),
+          };
         })
       );
       setMedia(filesWithInfo);

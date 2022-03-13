@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { GlobalContext } from '../../context/GlobalContext';
-import { client, routes } from '../../utils/api';
-import { storeToken } from '../../utils/storage';
+import React, {useContext, useState, useEffect} from 'react';
+import {GlobalContext} from '../../context/GlobalContext';
+import {client, routes} from '../../utils/api';
+import {storeToken} from '../../utils/storage';
 
 /**
  * Hook for logging in with form. Setting login values (username, password)
@@ -16,7 +16,7 @@ import { storeToken } from '../../utils/storage';
 export default function useFormLogin() {
   // Form values for password and username.
   const [loginData, setLoginData] = useState(null);
-  const { setUser } = useContext(GlobalContext);
+  const {setUser} = useContext(GlobalContext);
 
   /**
    * Set response payload data to GlobalContext and device
@@ -25,7 +25,7 @@ export default function useFormLogin() {
    * @param {{token: string: user: object}} response Server response payload.
    */
   const login = async (response) => {
-    const { user, token } = response;
+    const {user, token} = response;
     const storage = storeToken(token); // Start IO.
     user.token = token;
     setUser(user);

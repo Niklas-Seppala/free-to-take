@@ -5,5 +5,5 @@ export default {
   light: '#daf2d3',
   active: '#e2f5dc',
   inactive: '#6ab07caa',
-  negative: '#d46453'
+  negative: '#d46453',
 };

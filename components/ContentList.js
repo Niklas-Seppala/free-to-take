@@ -15,7 +15,9 @@ export default function ContentList({data, navigation}) {
         <ContentListItem
           item={item}
           index={index}
-          onProfilePress={(owner) => navigation.navigate('ProfileVisitor', {user: owner})}
+          onProfilePress={(owner) =>
+            navigation.navigate('ProfileVisitor', {user: owner})
+          }
           onFocus={(item) => navigation.navigate('Single', {item: item})}
         />
       )}
@@ -25,5 +27,5 @@ export default function ContentList({data, navigation}) {
 
 ContentList.propTypes = {
   data: PropTypes.array.isRequired,
-  navigation: PropTypes.object.isRequired
-}
+  navigation: PropTypes.object.isRequired,
+};

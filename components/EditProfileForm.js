@@ -6,7 +6,7 @@ import {GlobalContext} from '../context/GlobalContext';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
 import colors from '../utils/colors';
-import { client, routes, setJWT } from '../utils/api';
+import {client, routes, setJWT} from '../utils/api';
 
 const EditProfileForm = ({navigation}) => {
   const {setUser, user} = useContext(GlobalContext);
@@ -39,17 +39,17 @@ const EditProfileForm = ({navigation}) => {
       })
     );
 
-      try {
-        await client.put(routes.user.modify, data, {headers: setJWT(user.token)});
-        setUser({...user, email: data.email, username: data.username});
-        Toast.show({
-          type: 'success',
-          text1: 'The changes to your profile have been saved',
-        });
-        navigation.popToTop();
-      } catch (error) {
-        console.error(error);
-      }
+    try {
+      await client.put(routes.user.modify, data, {headers: setJWT(user.token)});
+      setUser({...user, email: data.email, username: data.username});
+      Toast.show({
+        type: 'success',
+        text1: 'The changes to your profile have been saved',
+      });
+      navigation.popToTop();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const validatePassword = async (value) => {
